@@ -26,3 +26,9 @@ window.onload = () => {
     intro.style.display = 'none';
   }, 1500);
 };
+const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+});
