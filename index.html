@@ -1,248 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FaloVerse</title>
+    <title>FaloVerse</title>
 
-<link rel="icon" type="image/png" href="logo.png">
-
-<link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- =========================
-     SVG DISTORTION FILTER
-     ========================= -->
+    <!-- =================================
+         BACKGROUND FALOVERSE
+    ================================== -->
 
-<svg class="filters" aria-hidden="true">
-    <filter id="cursorDistortion">
-        <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.018 0.08"
-            numOctaves="2"
-            seed="8"
-            result="noise"
-        />
+    <div class="background-word" aria-hidden="true">
 
-        <feDisplacementMap
-            in="SourceGraphic"
-            in2="noise"
-            scale="0"
-            xChannelSelector="R"
-            yChannelSelector="G"
-        />
-    </filter>
-</svg>
-
-
-<!-- =========================
-     BACKGROUND WORD
-     ========================= -->
-
-<div class="background-word">
-
-    <!-- Normal word -->
-    <span class="word-base">FALOVERSE</span>
-
-    <!-- Distorted copy -->
-    <span class="word-distorted">FALOVERSE</span>
-
-</div>
-
-
-<!-- =========================
-     RED CURSOR
-     ========================= -->
-
-<div class="cursor"></div>
-
-
-<!-- =========================
-     INTRO
-     ========================= -->
-
-<div id="intro">
-    <img src="logo.png" alt="logo">
-</div>
-
-
-<!-- =========================
-     HOME
-     ========================= -->
-
-<section class="page active" id="home">
-
-    <div class="center">
-
-        <h1>FALOVERSE</h1>
-
-        <button
-            class="btn"
-            onclick="goTo('comics')"
-        >
-            Enter The World
-        </button>
+        <span class="letter">F</span>
+        <span class="letter">A</span>
+        <span class="letter">L</span>
+        <span class="letter">O</span>
+        <span class="letter">V</span>
+        <span class="letter">E</span>
+        <span class="letter">R</span>
+        <span class="letter">S</span>
+        <span class="letter">E</span>
 
     </div>
 
-</section>
+
+    <!-- =================================
+         RED CURSOR
+    ================================== -->
+
+    <div class="cursor"></div>
 
 
-<!-- =========================
-     COMICS
-     ========================= -->
+    <!-- =================================
+         INTRO
+    ================================== -->
 
-<section class="page" id="comics">
+    <div id="intro">
 
-    <div class="center">
+        <img src="logo.png" alt="FaloVerse Logo">
 
-        <h2>Comics</h2>
+    </div>
 
-        <div class="card">
 
-            <h3>Silent Kill</h3>
+    <!-- =================================
+         HOME
+    ================================== -->
+
+    <section class="page active" id="home">
+
+        <div class="center">
+
+            <h1>FALOVERSE</h1>
+
+            <button class="btn" onclick="goTo('comics')">
+                Enter The World
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         COMICS
+    ================================== -->
+
+    <section class="page" id="comics">
+
+        <div class="center">
+
+            <h2>Comics</h2>
+
+
+            <div class="card">
+
+                <h3>Silent Kill</h3>
+
+                <p>
+                    A dark story of power, death, and chaos...
+                </p>
+
+                <button class="btn" onclick="goTo('book')">
+                    Read More
+                </button>
+
+            </div>
+
+
+            <div class="nav">
+
+                <button class="btn" onclick="goTo('home')">
+                    Before
+                </button>
+
+                <button class="btn" onclick="goTo('members')">
+                    Next
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         SILENT KILL
+    ================================== -->
+
+    <section class="page" id="book">
+
+        <div class="center">
+
+            <h2>Silent Kill</h2>
 
             <p>
-                A dark story of power, death, and chaos...
+                ADD YOUR FULL DESCRIPTION HERE
             </p>
 
-            <button
-                class="btn"
-                onclick="goTo('book')"
-            >
-                Read More
-            </button>
 
-        </div>
+            <div class="nav">
 
+                <button class="btn" onclick="goTo('comics')">
+                    Before
+                </button>
 
-        <div class="nav">
-
-            <button
-                class="btn"
-                onclick="goTo('home')"
-            >
-                Before
-            </button>
-
-            <button
-                class="btn"
-                onclick="goTo('members')"
-            >
-                Next
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     BOOK
-     ========================= -->
-
-<section class="page" id="book">
-
-    <div class="center">
-
-        <h2>Silent Kill</h2>
-
-        <p>
-            ADD YOUR FULL DESCRIPTION HERE
-        </p>
-
-        <div class="nav">
-
-            <button
-                class="btn"
-                onclick="goTo('comics')"
-            >
-                Before
-            </button>
-
-            <button
-                class="btn"
-                onclick="goTo('members')"
-            >
-                Next
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     MEMBERS
-     ========================= -->
-
-<section class="page" id="members">
-
-    <div class="center">
-
-        <h2>Members</h2>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <h3>Member 1</h3>
-
-                <p>
-                    Role / description
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>Member 2</h3>
-
-                <p>
-                    Role / description
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>Member 3</h3>
-
-                <p>
-                    Role / description
-                </p>
+                <button class="btn" onclick="goTo('members')">
+                    Next
+                </button>
 
             </div>
 
         </div>
 
+    </section>
 
-        <div class="nav">
 
-            <button
-                class="btn"
-                onclick="goTo('comics')"
-            >
-                Before
-            </button>
+    <!-- =================================
+         MEMBERS
+    ================================== -->
+
+    <section class="page" id="members">
+
+        <div class="center">
+
+            <h2>Members</h2>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>Member 1</h3>
+
+                    <p>
+                        Role / description
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Member 2</h3>
+
+                    <p>
+                        Role / description
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Member 3</h3>
+
+                    <p>
+                        Role / description
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="nav">
+
+                <button class="btn" onclick="goTo('comics')">
+                    Before
+                </button>
+
+            </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
