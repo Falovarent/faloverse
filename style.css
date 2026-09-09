@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 
-/* =========================
+/* =================================
    RESET
-   ========================= */
+================================= */
 
 * {
     box-sizing: border-box;
+
     margin: 0;
     padding: 0;
 }
@@ -15,7 +16,7 @@
 html,
 body {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
 }
 
 
@@ -27,32 +28,15 @@ body {
 
     font-family: "Manrope", sans-serif;
 
-    overflow: hidden;
-
     cursor: none;
-}
-
-
-/* =========================
-   HIDDEN SVG
-   ========================= */
-
-.filters {
-
-    position: absolute;
-
-    width: 0;
-    height: 0;
 
     overflow: hidden;
-
-    pointer-events: none;
 }
 
 
-/* =========================
-   BACKGROUND WORD
-   ========================= */
+/* =================================
+   BACKGROUND FALOVERSE
+================================= */
 
 .background-word {
 
@@ -76,89 +60,64 @@ body {
 }
 
 
-/* Both copies */
+/* =================================
+   LETTERS
+================================= */
 
-.background-word span {
+.letter {
 
-    position: absolute;
+    display: inline-block;
 
     font-family: "Anton", sans-serif;
 
     font-size: clamp(
-        9rem,
-        25vw,
-        30rem
+        8rem,
+        22vw,
+        28rem
     );
 
     font-weight: 400;
 
     line-height: 0.75;
 
-    letter-spacing: -0.045em;
-
-    white-space: nowrap;
+    letter-spacing: -0.055em;
 
     color: #300306;
 
-    user-select: none;
-}
-
-
-/* Normal word */
-
-.word-base {
-
     opacity: 0.95;
 
-    transform: scaleX(0.9);
+    transform-origin: center center;
 
+    will-change: transform, filter;
+
+    backface-visibility: hidden;
+
+    filter:
+
+        drop-shadow(
+            0 0 25px
+            rgba(100, 0, 10, 0.15)
+        );
 }
 
 
-/* Distorted word */
-
-.word-distorted {
-
-    opacity: 0.95;
-
-    transform: scaleX(0.9);
-
-    filter: url(#cursorDistortion);
-
-    clip-path: circle(
-        0px at var(--mouse-x) var(--mouse-y)
-    );
-
-}
-
-
-/* =========================
-   CURSOR
-   ========================= */
+/* =================================
+   RED CURSOR
+================================= */
 
 .cursor {
 
     position: fixed;
 
-    width: 16px;
-    height: 16px;
-
-    left: 0;
     top: 0;
+    left: 0;
+
+    width: 18px;
+    height: 18px;
 
     border-radius: 50%;
 
-    background: #ff1111;
-
-    box-shadow:
-
-        0 0 8px rgba(255, 20, 20, 1),
-
-        0 0 20px rgba(255, 20, 20, 0.85),
-
-        0 0 45px rgba(255, 20, 20, 0.45),
-
-        0 0 80px rgba(255, 20, 20, 0.2);
+    background: #ff1515;
 
     pointer-events: none;
 
@@ -167,198 +126,140 @@ body {
     transform:
         translate(-50%, -50%);
 
-    transition:
+    box-shadow:
 
-        width 0.2s ease,
+        0 0 8px
+        rgba(255, 20, 20, 1),
 
-        height 0.2s ease;
+        0 0 20px
+        rgba(255, 20, 20, 0.8),
+
+        0 0 45px
+        rgba(255, 20, 20, 0.45);
+
+    will-change:
+        left,
+        top,
+        width,
+        height,
+        box-shadow;
 }
 
 
-/* =========================
-   INTRO
-   ========================= */
-
-#intro {
-
-    position: fixed;
-
-    inset: 0;
-
-    background: #050505;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    z-index: 100000;
-
-}
-
-
-#intro img {
-
-    width: 90px;
-
-    height: auto;
-
-}
-
-
-/* =========================
-   PAGES
-   ========================= */
+/* =================================
+   PAGE
+================================= */
 
 .page {
 
-    position: fixed;
+    position: absolute;
 
     inset: 0;
-
-    width: 100vw;
-    height: 100vh;
 
     display: none;
 
     align-items: center;
     justify-content: center;
 
-    z-index: 2;
+    z-index: 10;
 
+    text-align: center;
 }
 
 
 .page.active {
 
     display: flex;
-
 }
 
 
-/* =========================
+/* =================================
    CENTER
-   ========================= */
+================================= */
 
 .center {
-
-    width: 100%;
-
-    max-width: 1000px;
-
-    padding: 40px;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
-    text-align: center;
-
+    gap: 25px;
 }
 
 
-/* =========================
-   HEADINGS
-   ========================= */
+/* =================================
+   TITLES
+================================= */
+
+h1,
+h2,
+h3 {
+
+    position: relative;
+
+    z-index: 20;
+}
+
 
 h1 {
 
-    font-family: "Manrope", sans-serif;
-
     font-size: clamp(
-        3rem,
-        8vw,
-        8rem
+        2rem,
+        5vw,
+        5rem
     );
 
     font-weight: 600;
-
-    letter-spacing: -0.06em;
-
 }
 
 
 h2 {
 
     font-size: clamp(
-        3rem,
-        7vw,
-        7rem
+        2rem,
+        5vw,
+        4rem
     );
-
-    font-weight: 600;
-
-    letter-spacing: -0.06em;
-
 }
 
 
 h3 {
 
     font-size: 1.5rem;
-
-    font-weight: 600;
-
 }
 
 
-/* =========================
-   PARAGRAPHS
-   ========================= */
+/* =================================
+   BUTTONS
+================================= */
 
-p {
+button {
 
-    margin-top: 12px;
+    position: relative;
 
-    color: rgba(
-        255,
-        255,
-        255,
-        0.55
-    );
-
-    font-size: 0.95rem;
-
-    line-height: 1.6;
-
-}
-
-
-/* =========================
-   BUTTON
-   ========================= */
-
-.btn {
-
-    margin-top: 30px;
-
-    padding: 13px 25px;
+    z-index: 20;
 
     border: 1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.35
-        );
+        rgba(255, 255, 255, 0.3);
 
-    background: transparent;
+    background:
+        rgba(0, 0, 0, 0.4);
 
     color: white;
 
-    font-family: "Manrope",
-        sans-serif;
+    padding: 14px 25px;
+
+    font-family:
+        "Manrope", sans-serif;
 
     font-size: 0.8rem;
 
     font-weight: 500;
 
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
 
     text-transform: uppercase;
 
@@ -366,15 +267,17 @@ p {
 
     transition:
 
-        background 0.3s ease,
+        background 0.25s ease,
 
-        color 0.3s ease,
+        color 0.25s ease,
 
-        border 0.3s ease;
+        border 0.25s ease,
+
+        transform 0.25s ease;
 }
 
 
-.btn:hover {
+button:hover {
 
     background: white;
 
@@ -382,75 +285,76 @@ p {
 
     border-color: white;
 
+    transform:
+        translateY(-2px);
 }
 
 
-/* =========================
-   CARD
-   ========================= */
+/* =================================
+   CARDS
+================================= */
 
 .card {
 
+    position: relative;
+
+    z-index: 20;
+
     width: min(
-        420px,
-        90vw
+        500px,
+        85vw
     );
 
-    margin-top: 35px;
+    padding: 40px;
 
-    padding: 35px;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
 
-    border: 1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.12
-        );
+    background:
+        rgba(5, 5, 5, 0.75);
 
-    background: rgba(
-        255,
-        255,
-        255,
-        0.025
-    );
-
-    backdrop-filter: blur(10px);
-
+    backdrop-filter:
+        blur(10px);
 }
 
 
-/* =========================
+.card p {
+
+    margin: 15px 0 25px;
+
+    color:
+        rgba(255, 255, 255, 0.55);
+}
+
+
+/* =================================
    MEMBERS
-   ========================= */
+================================= */
 
 .cards {
 
     display: flex;
 
+    flex-direction: row;
+
     gap: 20px;
 
     justify-content: center;
 
-    width: 100%;
-
-    margin-top: 35px;
-
+    align-items: stretch;
 }
 
 
 .cards .card {
 
-    margin-top: 0;
-
-    width: 30%;
-
+    width: 250px;
 }
 
 
-/* =========================
+/* =================================
    NAVIGATION
-   ========================= */
+================================= */
 
 .nav {
 
@@ -460,46 +364,98 @@ p {
 
     justify-content: center;
 
-    margin-top: 35px;
-
+    margin-top: 20px;
 }
 
 
-.nav .btn {
+/* =================================
+   INTRO
+================================= */
 
-    margin-top: 0;
+#intro {
 
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #050505;
+
+    z-index: 100000;
+
+    animation:
+        introFade 1.5s
+        ease forwards;
 }
 
 
-/* =========================
+#intro img {
+
+    width: 90px;
+
+    height: auto;
+}
+
+
+@keyframes introFade {
+
+    0% {
+
+        opacity: 1;
+    }
+
+    70% {
+
+        opacity: 1;
+    }
+
+    100% {
+
+        opacity: 0;
+
+        pointer-events: none;
+    }
+}
+
+
+/* =================================
    MOBILE
-   ========================= */
+================================= */
 
 @media (max-width: 768px) {
 
     body {
 
         cursor: auto;
-
     }
 
 
     .cursor {
 
         display: none;
-
     }
 
 
-    .background-word span {
-
-        font-size: 35vw;
+    .background-word {
 
         transform:
-            rotate(90deg)
-            scaleX(1.1);
+            scale(1.15);
+    }
 
+
+    .letter {
+
+        font-size: 34vw;
+    }
+
+
+    button {
+
+        cursor: pointer;
     }
 
 
@@ -507,29 +463,50 @@ p {
 
         flex-direction: column;
 
-        align-items: center;
-
+        gap: 15px;
     }
 
 
     .cards .card {
 
-        width: 90%;
-
+        width:
+            min(400px, 85vw);
     }
 
 
     .center {
 
         padding: 25px;
+    }
+}
 
+
+/* =================================
+   SMALL PHONES
+================================= */
+
+@media (max-width: 480px) {
+
+    .letter {
+
+        font-size: 38vw;
     }
 
 
-    .btn {
+    h1 {
 
-        cursor: pointer;
-
+        font-size: 2rem;
     }
 
+
+    h2 {
+
+        font-size: 2rem;
+    }
+
+
+    .card {
+
+        padding: 30px;
+    }
 }
