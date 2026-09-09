@@ -1,111 +1,347 @@
-const cursor = document.querySelector(".cursor");
-const word = document.querySelector(".background-word span");
+/* =========================
+   ELEMENTS
+   ========================= */
 
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
+const cursor =
+    document.querySelector(".cursor");
 
-let currentX = mouseX;
-let currentY = mouseY;
+const distortedWord =
+    document.querySelector(".word-distorted");
+
+const intro =
+    document.getElementById("intro");
 
 
 /* =========================
    MOUSE
    ========================= */
 
-document.addEventListener("mousemove", (event) => {
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-});
+let mouseX =
+    window.innerWidth / 2;
+
+let mouseY =
+    window.innerHeight / 2;
+
+let currentX = mouseX;
+let currentY = mouseY;
+
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+
+    }
+);
 
 
 /* =========================
-   ANIMATION
+   CURSOR + DISTORTION
    ========================= */
 
 function animate() {
 
-    currentX += (mouseX - currentX) * 0.15;
-    currentY += (mouseY - currentY) * 0.15;
+    /* Smooth cursor */
+
+    currentX +=
+        (mouseX - currentX) * 0.15;
+
+    currentY +=
+        (mouseY - currentY) * 0.15;
 
 
-    /* CURSOR */
+    /* Cursor position */
 
-    cursor.style.left = currentX + "px";
-    cursor.style.top = currentY + "px";
+    cursor.style.left =
+        currentX + "px";
 
-
-    /* WORD POSITION */
-
-    const rect = word.getBoundingClientRect();
-
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+    cursor.style.top =
+        currentY + "px";
 
 
-    const distanceX = currentX - centerX;
-    const distanceY = currentY - centerY;
+    /* Send mouse position to CSS */
 
-    const distance = Math.sqrt(
-        distanceX * distanceX +
-        distanceY * distanceY
-    );
+    document.documentElement
+        .style
+        .setProperty(
+            "--mouse-x",
+            currentX + "px"
+        );
 
-
-    /* HOW CLOSE THE CURSOR IS */
-
-    const influence = Math.max(
-        0,
-        1 - distance / 500
-    );
-
-
-    /* DISTORTION */
-
-    const moveX =
-        distanceX * influence * -0.035;
-
-    const moveY =
-        distanceY * influence * -0.035;
-
-    const skew =
-        distanceX * influence * 0.015;
-
-    const scaleX =
-        0.9 + influence * 0.06;
+    document.documentElement
+        .style
+        .setProperty(
+            "--mouse-y",
+            currentY + "px"
+        );
 
 
-    word.style.transform = `
-        translate(${moveX}px, ${moveY}px)
-        scaleX(${scaleX})
-        skewX(${skew}deg)
-    `;
+    /* =========================
+       WORD DISTORTION
+       ========================= */
+
+    const word =
+        document
+            .querySelector(".word-base");
+
+    const rect =
+        word.getBoundingClientRect();
 
 
-    /* RED CURSOR GLOW */
+    const wordCenterX =
+        rect.left +
+        rect.width / 2;
+
+    const wordCenterY =
+        rect.top +
+        rect.height / 2;
+
+
+    const dx =
+        currentX -
+        wordCenterX;
+
+    const dy =
+        currentY -
+        wordCenterY;
+
+
+    const distance =
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        );
+
+
+    /*
+       Distortion radius.
+       Smaller = more concentrated.
+    */
+
+    const radius = 190;
+
+
+    let influence =
+        Math.max(
+            0,
+            1 - distance / 600
+        );
+
+
+    /*
+       Only show the distorted
+       layer when the cursor is
+       reasonably close.
+    */
 
     if (influence > 0) {
 
-        const size =
-            18 + influence * 22;
+        const clipRadius =
+            70 + influence * radius;
 
-        cursor.style.width = size + "px";
-        cursor.style.height = size + "px";
+
+        distortedWord.style.clipPath =
+            `circle(
+                ${clipRadius}px
+                at
+                ${currentX}px
+                ${currentY}px
+            )`;
+
+
+        /*
+           Make the distortion
+           stronger near the cursor.
+        */
+
+        const displacement =
+            influence * 55;
+
+
+        const filter =
+            document
+                .querySelector(
+                    "#cursorDistortion"
+                );
+
+
+        const displacementMap =
+            filter
+                .querySelector(
+                    "feDisplacementMap"
+                );
+
+
+        displacementMap
+            .setAttribute(
+                "scale",
+                displacement
+            );
+
+
+        /*
+           Stretch the distorted
+           area toward the cursor.
+        */
+
+        const pullX =
+            dx * influence * -0.025;
+
+        const pullY =
+            dy * influence * -0.025;
+
+
+        distortedWord.style.transform =
+            `
+            translate(
+                ${pullX}px,
+                ${pullY}px
+            )
+            scaleX(0.9)
+            `;
+
+
+        /*
+           Cursor gets bigger
+           near the letters.
+        */
+
+        const size =
+            16 +
+            influence * 14;
+
+
+        cursor.style.width =
+            size + "px";
+
+        cursor.style.height =
+            size + "px";
+
 
         cursor.style.boxShadow = `
-            0 0 ${10 + influence * 10}px rgba(255,20,20,1),
-            0 0 ${30 + influence * 30}px rgba(255,20,20,0.8),
-            0 0 ${60 + influence * 50}px rgba(255,20,20,0.4)
+            0 0 10px rgba(255,20,20,1),
+            0 0 25px rgba(255,20,20,0.9),
+            0 0 55px rgba(255,20,20,0.55),
+            0 0 90px rgba(255,20,20,0.25)
         `;
 
     } else {
 
-        cursor.style.width = "18px";
-        cursor.style.height = "18px";
+        distortedWord.style.clipPath =
+            `circle(
+                0px
+                at
+                ${currentX}px
+                ${currentY}px
+            )`;
+
+
+        cursor.style.width =
+            "16px";
+
+        cursor.style.height =
+            "16px";
 
     }
 
 
-    requestAnimationFrame(animate);
+    requestAnimationFrame(
+        animate
+    );
 }
+
+
+/* =========================
+   PAGE NAVIGATION
+   ========================= */
+
+function goTo(pageId) {
+
+    const pages =
+        document.querySelectorAll(
+            ".page"
+        );
+
+
+    pages.forEach(
+        (page) => {
+
+            page.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    const target =
+        document.getElementById(
+            pageId
+        );
+
+
+    if (target) {
+
+        target.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/*
+   Keep old buttons working
+   if anything still uses goBack().
+*/
+
+function goBack(pageId) {
+
+    goTo(pageId);
+
+}
+
+
+/* =========================
+   INTRO
+   ========================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        setTimeout(
+            () => {
+
+                intro.style.opacity =
+                    "0";
+
+                intro.style.pointerEvents =
+                    "none";
+
+                setTimeout(
+                    () => {
+
+                        intro.style.display =
+                            "none";
+
+                    },
+                    500
+                );
+
+            },
+            1000
+        );
+
+    }
+);
+
+
+/* =========================
+   START
+   ========================= */
 
 animate();
