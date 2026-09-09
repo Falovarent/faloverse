@@ -19,7 +19,6 @@ let mouseX =
 let mouseY =
     window.innerHeight / 2;
 
-
 let currentX =
     mouseX;
 
@@ -55,14 +54,8 @@ function setupLetters() {
 
     letters.forEach((letter) => {
 
-        /*
-         * Remove the old distortion
-         * before measuring the letter.
-         */
-
         letter.style.transform =
             "none";
-
 
         const rect =
             letter.getBoundingClientRect();
@@ -79,12 +72,6 @@ function setupLetters() {
             y:
                 rect.top +
                 rect.height / 2,
-
-            width:
-                rect.width,
-
-            height:
-                rect.height,
 
             currentX: 0,
 
@@ -103,12 +90,7 @@ function setupLetters() {
 }
 
 
-/* =================================
-   INITIALIZE
-================================= */
-
 setupLetters();
-
 
 window.addEventListener(
     "resize",
@@ -123,23 +105,18 @@ window.addEventListener(
 function animate() {
 
 
-    /* --------------------------------
+    /* ===============================
        SMOOTH CURSOR
-    -------------------------------- */
+    =============================== */
 
     currentX +=
         (mouseX - currentX) *
         0.18;
 
-
     currentY +=
         (mouseY - currentY) *
         0.18;
 
-
-    /* --------------------------------
-       CURSOR POSITION
-    -------------------------------- */
 
     cursor.style.left =
         currentX + "px";
@@ -148,16 +125,13 @@ function animate() {
         currentY + "px";
 
 
-    /* --------------------------------
-       CLOSEST LETTER
-    -------------------------------- */
-
-    let closestStrength = 0;
+    let strongest =
+        0;
 
 
-    /* =================================
-       EACH LETTER
-    ================================= */
+    /* ===============================
+       LETTER DISTORTION
+    =============================== */
 
     letterData.forEach((data) => {
 
@@ -165,13 +139,8 @@ function animate() {
             data.element;
 
 
-        /* --------------------------------
-           DISTANCE
-        -------------------------------- */
-
         const dx =
             currentX - data.x;
-
 
         const dy =
             currentY - data.y;
@@ -184,11 +153,12 @@ function animate() {
             );
 
 
-        /* --------------------------------
-           DISTORTION AREA
-        -------------------------------- */
+        /*
+         * Smaller radius makes
+         * distortion feel concentrated.
+         */
 
-        const radius = 230;
+        const radius = 180;
 
 
         let strength =
@@ -207,119 +177,118 @@ function animate() {
 
 
         /*
-         * Make the distortion
-         * stronger near the dot.
+         * Sharper falloff.
          */
 
         strength =
-            strength * strength;
+            Math.pow(
+                strength,
+                2.5
+            );
 
 
-        /* --------------------------------
-           KEEP TRACK OF CLOSEST LETTER
-        -------------------------------- */
-
-        closestStrength =
+        strongest =
             Math.max(
-                closestStrength,
+                strongest,
                 strength
             );
 
 
-        /* =================================
-           DISTORTION
-        ================================= */
+        /* ===========================
+           DARK WARP
+        =========================== */
+
 
         /*
-         * Stretch sideways.
+         * Stretch horizontally.
+         *
+         * Creates the feeling that
+         * the letter is being pulled
+         * through a dimensional tear.
          */
 
         const targetScaleX =
             1 +
-            strength * 0.75;
+            strength * 0.85;
 
 
         /*
-         * Slight vertical compression.
+         * Compress vertically.
          */
 
         const targetScaleY =
             1 -
-            strength * 0.22;
+            strength * 0.30;
 
 
         /*
-         * Local movement.
-
-         * The letter bends around
-         * the red point instead of
-         * simply moving away.
+         * Strong local displacement.
          */
 
         const targetX =
             dx *
             strength *
-            -0.10;
+            -0.16;
 
 
         const targetY =
             dy *
             strength *
-            -0.04;
+            -0.08;
 
 
         /*
-         * Rotation.
+         * Twisting.
          */
 
         const targetRotate =
             dx *
             strength *
-            0.055;
+            0.07;
 
 
-        /* =================================
-           SMOOTH MOVEMENT
-        ================================= */
+        /* ===========================
+           SMOOTHING
+        =========================== */
 
         data.currentX +=
             (
                 targetX -
                 data.currentX
-            ) * 0.15;
+            ) * 0.13;
 
 
         data.currentY +=
             (
                 targetY -
                 data.currentY
-            ) * 0.15;
+            ) * 0.13;
 
 
         data.currentRotate +=
             (
                 targetRotate -
                 data.currentRotate
-            ) * 0.15;
+            ) * 0.13;
 
 
         data.currentScaleX +=
             (
                 targetScaleX -
                 data.currentScaleX
-            ) * 0.15;
+            ) * 0.13;
 
 
         data.currentScaleY +=
             (
                 targetScaleY -
                 data.currentScaleY
-            ) * 0.15;
+            ) * 0.13;
 
 
-        /* =================================
-           APPLY DISTORTION
-        ================================= */
+        /* ===========================
+           APPLY
+        =========================== */
 
         letter.style.transform = `
 
@@ -344,68 +313,85 @@ function animate() {
         `;
 
 
-        /* =================================
-           LETTER GLOW
-        ================================= */
+        /* ===========================
+           DARK RED DISTORTION
+        =========================== */
 
-        const glow =
-            strength * 35;
+        if (strength > 0) {
+
+            const red =
+                strength * 0.35;
+
+            const blur =
+                strength * 18;
 
 
-        letter.style.filter = `
+            letter.style.filter = `
 
-            drop-shadow(
-                0 0 ${glow}px
-                rgba(
-                    255,
-                    0,
-                    20,
-                    ${strength * 0.4}
+                drop-shadow(
+                    0 0 ${blur}px
+                    rgba(
+                        120,
+                        0,
+                        5,
+                        ${red}
+                    )
                 )
-            )
 
-        `;
+            `;
+
+        } else {
+
+            letter.style.filter =
+                "none";
+
+        }
 
     });
 
 
-    /* =================================
+    /* ===============================
        RED DOT
-    ================================= */
+    =============================== */
 
-    const cursorSize =
-        18 +
-        closestStrength * 14;
+    const size =
+        15 +
+        strongest * 10;
 
 
     cursor.style.width =
-        cursorSize + "px";
-
+        size + "px";
 
     cursor.style.height =
-        cursorSize + "px";
+        size + "px";
 
+
+    /*
+     * When touching a letter,
+     * the red point becomes more
+     * intense.
+     */
 
     cursor.style.boxShadow = `
 
         0 0
-        ${10 + closestStrength * 15}px
-        rgba(255,20,20,1),
+        ${5 + strongest * 8}px
+        rgba(255,0,0,1),
 
         0 0
-        ${30 + closestStrength * 35}px
-        rgba(255,20,20,0.8),
+        ${15 + strongest * 20}px
+        rgba(180,0,0,0.9),
 
         0 0
-        ${60 + closestStrength * 60}px
-        rgba(255,20,20,0.4)
+        ${35 + strongest * 40}px
+        rgba(100,0,0,0.7),
+
+        0 0
+        ${70 + strongest * 70}px
+        rgba(40,0,0,0.5)
 
     `;
 
-
-    /* =================================
-       NEXT FRAME
-    ================================= */
 
     requestAnimationFrame(
         animate
@@ -413,10 +399,6 @@ function animate() {
 
 }
 
-
-/* =================================
-   START
-================================= */
 
 animate();
 
@@ -427,30 +409,26 @@ animate();
 
 function goTo(pageId) {
 
-    const pages =
-        document.querySelectorAll(
-            ".page"
-        );
+    document
+        .querySelectorAll(".page")
+        .forEach((page) => {
+
+            page.classList.remove(
+                "active"
+            );
+
+        });
 
 
-    pages.forEach((page) => {
-
-        page.classList.remove(
-            "active"
-        );
-
-    });
-
-
-    const target =
+    const page =
         document.getElementById(
             pageId
         );
 
 
-    if (target) {
+    if (page) {
 
-        target.classList.add(
+        page.classList.add(
             "active"
         );
 
