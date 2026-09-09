@@ -2,100 +2,143 @@
    ELEMENTS
 ================================= */
 
-const cursor =
-    document.querySelector(".cursor");
-
-const letters =
-    document.querySelectorAll(".letter");
+const cursor = document.querySelector(".cursor");
+const letters = document.querySelectorAll(".letter");
 
 
 /* =================================
    MOUSE
 ================================= */
 
-let mouseX =
-    window.innerWidth / 2;
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
 
-let mouseY =
-    window.innerHeight / 2;
-
-let currentX =
-    mouseX;
-
-let currentY =
-    mouseY;
-
-
-document.addEventListener(
-    "mousemove",
-    (event) => {
-
-        mouseX =
-            event.clientX;
-
-        mouseY =
-            event.clientY;
-
-    }
-);
+let currentX = mouseX;
+let currentY = mouseY;
 
 
 /* =================================
-   LETTER DATA
+   GLITCH STATE
 ================================= */
 
 const letterData = [];
 
 
+document.addEventListener("mousemove", (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+});
+
+
+/* =================================
+   SETUP LETTERS
+================================= */
+
 function setupLetters() {
 
     letterData.length = 0;
 
-
     letters.forEach((letter) => {
 
-        letter.style.transform =
-            "none";
+        letter.style.transform = "none";
 
-        const rect =
-            letter.getBoundingClientRect();
-
+        const rect = letter.getBoundingClientRect();
 
         letterData.push({
 
             element: letter,
 
-            x:
-                rect.left +
-                rect.width / 2,
-
-            y:
-                rect.top +
-                rect.height / 2,
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
 
             currentX: 0,
-
             currentY: 0,
 
-            currentRotate: 0,
+            rotation: 0,
 
-            currentScaleX: 1,
+            glitchX: 0,
+            glitchY: 0,
 
-            currentScaleY: 1
+            scaleX: 1,
+            scaleY: 1,
+
+            glitchTimer: 0,
+
+            glitchPower: 0
 
         });
 
     });
-
 }
 
 
 setupLetters();
 
-window.addEventListener(
-    "resize",
-    setupLetters
-);
+window.addEventListener("resize", setupLetters);
+
+
+/* =================================
+   RANDOM GLITCH
+================================= */
+
+function createGlitch(data, strength) {
+
+    /*
+     * Random horizontal corruption
+     */
+
+    data.glitchX =
+        (Math.random() - 0.5)
+        * 80
+        * strength;
+
+
+    /*
+     * Tiny vertical jump
+     */
+
+    data.glitchY =
+        (Math.random() - 0.5)
+        * 18
+        * strength;
+
+
+    /*
+     * Sudden rotation
+     */
+
+    data.rotation =
+        (Math.random() - 0.5)
+        * 12
+        * strength;
+
+
+    /*
+     * Uneven stretching
+     */
+
+    data.scaleX =
+        1 +
+        (Math.random() - 0.5)
+        * 0.45
+        * strength;
+
+
+    data.scaleY =
+        1 +
+        (Math.random() - 0.5)
+        * 0.18
+        * strength;
+
+
+    /*
+     * How long the glitch survives
+     */
+
+    data.glitchTimer =
+        Math.random() * 5 + 2;
+
+}
 
 
 /* =================================
@@ -104,18 +147,15 @@ window.addEventListener(
 
 function animate() {
 
-
     /* ===============================
        SMOOTH CURSOR
     =============================== */
 
     currentX +=
-        (mouseX - currentX) *
-        0.18;
+        (mouseX - currentX) * 0.2;
 
     currentY +=
-        (mouseY - currentY) *
-        0.18;
+        (mouseY - currentY) * 0.2;
 
 
     cursor.style.left =
@@ -125,19 +165,21 @@ function animate() {
         currentY + "px";
 
 
-    let strongest =
-        0;
+    let strongest = 0;
 
 
     /* ===============================
-       LETTER DISTORTION
+       LETTERS
     =============================== */
 
     letterData.forEach((data) => {
 
-        const letter =
-            data.element;
+        const letter = data.element;
 
+
+        /* ---------------------------
+           DISTANCE
+        --------------------------- */
 
         const dx =
             currentX - data.x;
@@ -153,12 +195,11 @@ function animate() {
             );
 
 
-        /*
-         * Smaller radius makes
-         * distortion feel concentrated.
-         */
+        /* ---------------------------
+           GLITCH RANGE
+        --------------------------- */
 
-        const radius = 180;
+        const radius = 190;
 
 
         let strength =
@@ -177,13 +218,13 @@ function animate() {
 
 
         /*
-         * Sharper falloff.
+         * Make it sharply localized.
          */
 
         strength =
             Math.pow(
                 strength,
-                2.5
+                2
             );
 
 
@@ -195,95 +236,100 @@ function animate() {
 
 
         /* ===========================
-           DARK WARP
+           GLITCH TRIGGER
         =========================== */
 
+        if (strength > 0.25) {
+
+            data.glitchTimer--;
+
+            /*
+             * Randomly trigger
+             * tiny corruption bursts.
+             */
+
+            if (
+                data.glitchTimer <= 0 &&
+                Math.random() < 0.35
+            ) {
+
+                createGlitch(
+                    data,
+                    strength
+                );
+
+            }
+
+        } else {
+
+            data.glitchTimer = 0;
+
+        }
+
+
+        /* ===========================
+           DECAY GLITCH
+        =========================== */
+
+        data.glitchX *= 0.72;
+
+        data.glitchY *= 0.72;
+
+        data.rotation *= 0.72;
+
+
+        /* ===========================
+           BASE DISTORTION
+        =========================== */
 
         /*
-         * Stretch horizontally.
-         *
-         * Creates the feeling that
-         * the letter is being pulled
-         * through a dimensional tear.
+         * Slight local bending.
          */
 
-        const targetScaleX =
-            1 +
-            strength * 0.85;
-
-
-        /*
-         * Compress vertically.
-         */
-
-        const targetScaleY =
-            1 -
-            strength * 0.30;
-
-
-        /*
-         * Strong local displacement.
-         */
-
-        const targetX =
+        const baseX =
             dx *
-            strength *
-            -0.16;
-
-
-        const targetY =
-            dy *
             strength *
             -0.08;
 
 
-        /*
-         * Twisting.
-         */
-
-        const targetRotate =
-            dx *
+        const baseY =
+            dy *
             strength *
-            0.07;
+            -0.035;
 
 
         /* ===========================
-           SMOOTHING
+           COMBINE
         =========================== */
 
-        data.currentX +=
+        const finalX =
+            baseX +
+            data.glitchX;
+
+
+        const finalY =
+            baseY +
+            data.glitchY;
+
+
+        const finalRotation =
+            data.rotation;
+
+
+        const finalScaleX =
+            1 +
             (
-                targetX -
-                data.currentX
-            ) * 0.13;
+                (data.scaleX - 1)
+                * strength
+            );
 
 
-        data.currentY +=
+        const finalScaleY =
+            1 +
             (
-                targetY -
-                data.currentY
-            ) * 0.13;
-
-
-        data.currentRotate +=
-            (
-                targetRotate -
-                data.currentRotate
-            ) * 0.13;
-
-
-        data.currentScaleX +=
-            (
-                targetScaleX -
-                data.currentScaleX
-            ) * 0.13;
-
-
-        data.currentScaleY +=
-            (
-                targetScaleY -
-                data.currentScaleY
-            ) * 0.13;
+                (data.scaleY - 1)
+                * strength
+            );
 
 
         /* ===========================
@@ -293,48 +339,63 @@ function animate() {
         letter.style.transform = `
 
             translate3d(
-                ${data.currentX}px,
-                ${data.currentY}px,
+                ${finalX}px,
+                ${finalY}px,
                 0
             )
 
             rotate(
-                ${data.currentRotate}deg
+                ${finalRotation}deg
             )
 
             scaleX(
-                ${data.currentScaleX}
+                ${finalScaleX}
             )
 
             scaleY(
-                ${data.currentScaleY}
+                ${finalScaleY}
             )
 
         `;
 
 
         /* ===========================
-           DARK RED DISTORTION
+           DARK GLITCH FILTER
         =========================== */
 
-        if (strength > 0) {
+        if (strength > 0.05) {
 
-            const red =
-                strength * 0.35;
+            /*
+             * Red glow gets stronger
+             * when corrupted.
+             */
+
+            const redGlow =
+                strength * 18;
+
+
+            /*
+             * Tiny blur makes the
+             * corruption feel unstable.
+             */
 
             const blur =
-                strength * 18;
+                strength * 2;
 
 
             letter.style.filter = `
 
+                blur(${blur}px)
+
                 drop-shadow(
-                    0 0 ${blur}px
+                    ${data.glitchX * 0.25}px
+                    0
+                    ${redGlow}px
                     rgba(
-                        120,
+                        130,
                         0,
-                        5,
-                        ${red}
+                        8,
+                        ${strength * 0.45}
                     )
                 )
 
@@ -342,8 +403,7 @@ function animate() {
 
         } else {
 
-            letter.style.filter =
-                "none";
+            letter.style.filter = "none";
 
         }
 
@@ -351,26 +411,20 @@ function animate() {
 
 
     /* ===============================
-       RED DOT
+       CURSOR GLITCH EFFECT
     =============================== */
 
-    const size =
+    const cursorSize =
         15 +
-        strongest * 10;
+        strongest * 8;
 
 
     cursor.style.width =
-        size + "px";
+        cursorSize + "px";
 
     cursor.style.height =
-        size + "px";
+        cursorSize + "px";
 
-
-    /*
-     * When touching a letter,
-     * the red point becomes more
-     * intense.
-     */
 
     cursor.style.boxShadow = `
 
@@ -379,23 +433,21 @@ function animate() {
         rgba(255,0,0,1),
 
         0 0
-        ${15 + strongest * 20}px
+        ${15 + strongest * 15}px
         rgba(180,0,0,0.9),
 
         0 0
-        ${35 + strongest * 40}px
-        rgba(100,0,0,0.7),
-
-        0 0
-        ${70 + strongest * 70}px
-        rgba(40,0,0,0.5)
+        ${40 + strongest * 40}px
+        rgba(80,0,0,0.6)
 
     `;
 
 
-    requestAnimationFrame(
-        animate
-    );
+    /* ===============================
+       NEXT FRAME
+    =============================== */
+
+    requestAnimationFrame(animate);
 
 }
 
@@ -413,24 +465,18 @@ function goTo(pageId) {
         .querySelectorAll(".page")
         .forEach((page) => {
 
-            page.classList.remove(
-                "active"
-            );
+            page.classList.remove("active");
 
         });
 
 
-    const page =
-        document.getElementById(
-            pageId
-        );
+    const target =
+        document.getElementById(pageId);
 
 
-    if (page) {
+    if (target) {
 
-        page.classList.add(
-            "active"
-        );
+        target.classList.add("active");
 
     }
 
