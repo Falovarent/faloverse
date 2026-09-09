@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;400;500;600;700&display=swap');
 
+
 /* =========================
    RESET
    ========================= */
@@ -10,37 +11,60 @@
     padding: 0;
 }
 
-html {
-    scroll-behavior: smooth;
-}
 
+html,
 body {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
+}
+
+
+body {
 
     background: #050505;
-    color: #ffffff;
+
+    color: white;
 
     font-family: "Manrope", sans-serif;
 
+    overflow: hidden;
+
     cursor: none;
-    overflow-x: hidden;
 }
 
 
 /* =========================
-   BACKGROUND FALOVERSE
+   HIDDEN SVG
+   ========================= */
+
+.filters {
+
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   BACKGROUND WORD
    ========================= */
 
 .background-word {
+
     position: fixed;
 
     inset: 0;
 
-    width: 100%;
+    width: 100vw;
     height: 100vh;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -51,176 +75,400 @@ body {
     z-index: 0;
 }
 
+
+/* Both copies */
+
 .background-word span {
+
+    position: absolute;
+
     font-family: "Anton", sans-serif;
 
-    font-size: clamp(9rem, 24vw, 30rem);
+    font-size: clamp(
+        9rem,
+        25vw,
+        30rem
+    );
 
     font-weight: 400;
 
-    letter-spacing: -0.04em;
-
     line-height: 0.75;
+
+    letter-spacing: -0.045em;
 
     white-space: nowrap;
 
     color: #300306;
 
+    user-select: none;
+}
+
+
+/* Normal word */
+
+.word-base {
+
     opacity: 0.95;
 
-    transform:
-        scaleX(0.9)
-        translate(0, 0);
+    transform: scaleX(0.9);
 
-    filter:
-        drop-shadow(
-            0 0 25px rgba(100, 0, 10, 0.15)
-        );
+}
 
-    will-change: transform, filter;
 
-    transition:
-        filter 0.2s ease;
+/* Distorted word */
+
+.word-distorted {
+
+    opacity: 0.95;
+
+    transform: scaleX(0.9);
+
+    filter: url(#cursorDistortion);
+
+    clip-path: circle(
+        0px at var(--mouse-x) var(--mouse-y)
+    );
+
 }
 
 
 /* =========================
-   RED CURSOR
+   CURSOR
    ========================= */
 
 .cursor {
+
     position: fixed;
 
-    top: 0;
-    left: 0;
+    width: 16px;
+    height: 16px;
 
-    width: 18px;
-    height: 18px;
+    left: 0;
+    top: 0;
 
     border-radius: 50%;
 
-    background: #ff1515;
+    background: #ff1111;
 
     box-shadow:
+
         0 0 8px rgba(255, 20, 20, 1),
-        0 0 20px rgba(255, 20, 20, 0.8),
-        0 0 45px rgba(255, 20, 20, 0.45);
+
+        0 0 20px rgba(255, 20, 20, 0.85),
+
+        0 0 45px rgba(255, 20, 20, 0.45),
+
+        0 0 80px rgba(255, 20, 20, 0.2);
 
     pointer-events: none;
 
     z-index: 99999;
 
-    transform: translate(-50%, -50%);
-
-    will-change: left, top, width, height, box-shadow;
+    transform:
+        translate(-50%, -50%);
 
     transition:
+
         width 0.2s ease,
-        height 0.2s ease,
-        box-shadow 0.2s ease;
+
+        height 0.2s ease;
 }
 
 
 /* =========================
-   WEBSITE CONTENT
+   INTRO
    ========================= */
 
-.site-content {
-    position: relative;
+#intro {
 
-    z-index: 2;
+    position: fixed;
 
-    min-height: 100vh;
+    inset: 0;
 
-    width: 100%;
+    background: #050505;
 
     display: flex;
-    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 100000;
+
+}
+
+
+#intro img {
+
+    width: 90px;
+
+    height: auto;
+
+}
+
+
+/* =========================
+   PAGES
+   ========================= */
+
+.page {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: none;
 
     align-items: center;
     justify-content: center;
 
-    text-align: center;
+    z-index: 2;
 
-    padding: 40px;
 }
 
-.site-content h1 {
-    font-family: "Manrope", sans-serif;
 
-    font-size: clamp(2rem, 5vw, 5rem);
+.page.active {
 
-    font-weight: 600;
+    display: flex;
 
-    letter-spacing: -0.04em;
-}
-
-.site-content p {
-    margin-top: 15px;
-
-    font-size: 1rem;
-
-    font-weight: 400;
-
-    color: rgba(255, 255, 255, 0.55);
-
-    letter-spacing: 0.05em;
 }
 
 
 /* =========================
-   BUTTONS
+   CENTER
    ========================= */
 
-button,
-a {
-    font-family: "Manrope", sans-serif;
+.center {
 
-    cursor: none;
+    width: 100%;
+
+    max-width: 1000px;
+
+    padding: 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
 }
 
-button {
-    border: none;
+
+/* =========================
+   HEADINGS
+   ========================= */
+
+h1 {
+
+    font-family: "Manrope", sans-serif;
+
+    font-size: clamp(
+        3rem,
+        8vw,
+        8rem
+    );
+
+    font-weight: 600;
+
+    letter-spacing: -0.06em;
+
+}
+
+
+h2 {
+
+    font-size: clamp(
+        3rem,
+        7vw,
+        7rem
+    );
+
+    font-weight: 600;
+
+    letter-spacing: -0.06em;
+
+}
+
+
+h3 {
+
+    font-size: 1.5rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================
+   PARAGRAPHS
+   ========================= */
+
+p {
+
+    margin-top: 12px;
+
+    color: rgba(
+        255,
+        255,
+        255,
+        0.55
+    );
+
+    font-size: 0.95rem;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================
+   BUTTON
+   ========================= */
+
+.btn {
+
+    margin-top: 30px;
+
+    padding: 13px 25px;
+
+    border: 1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.35
+        );
 
     background: transparent;
 
     color: white;
 
-    font-size: 0.9rem;
+    font-family: "Manrope",
+        sans-serif;
+
+    font-size: 0.8rem;
 
     font-weight: 500;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
 
     text-transform: uppercase;
+
+    cursor: none;
+
+    transition:
+
+        background 0.3s ease,
+
+        color 0.3s ease,
+
+        border 0.3s ease;
+}
+
+
+.btn:hover {
+
+    background: white;
+
+    color: black;
+
+    border-color: white;
+
 }
 
 
 /* =========================
-   OPTIONAL SECTION TITLES
+   CARD
    ========================= */
 
-.section-title {
-    font-family: "Anton", sans-serif;
+.card {
 
-    font-size: clamp(6rem, 15vw, 15rem);
+    width: min(
+        420px,
+        90vw
+    );
 
-    font-weight: 400;
+    margin-top: 35px;
 
-    line-height: 0.8;
+    padding: 35px;
 
-    letter-spacing: -0.03em;
+    border: 1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
 
-    text-transform: uppercase;
+    background: rgba(
+        255,
+        255,
+        255,
+        0.025
+    );
+
+    backdrop-filter: blur(10px);
+
 }
 
 
 /* =========================
-   RED DETAILS
+   MEMBERS
    ========================= */
 
-.red {
-    color: #ff1515;
+.cards {
+
+    display: flex;
+
+    gap: 20px;
+
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: 35px;
+
+}
+
+
+.cards .card {
+
+    margin-top: 0;
+
+    width: 30%;
+
+}
+
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.nav {
+
+    display: flex;
+
+    gap: 15px;
+
+    justify-content: center;
+
+    margin-top: 35px;
+
+}
+
+
+.nav .btn {
+
+    margin-top: 0;
+
 }
 
 
@@ -231,51 +479,57 @@ button {
 @media (max-width: 768px) {
 
     body {
+
         cursor: auto;
+
     }
 
-    button,
-    a {
-        cursor: pointer;
-    }
 
     .cursor {
+
         display: none;
+
     }
 
+
     .background-word span {
-        font-size: 34vw;
+
+        font-size: 35vw;
 
         transform:
             rotate(90deg)
             scaleX(1.1);
+
     }
 
-    .site-content {
+
+    .cards {
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+
+    .cards .card {
+
+        width: 90%;
+
+    }
+
+
+    .center {
+
         padding: 25px;
+
     }
 
-    .section-title {
-        font-size: 25vw;
-    }
-}
 
+    .btn {
 
-/* =========================
-   SMALL PHONES
-   ========================= */
+        cursor: pointer;
 
-@media (max-width: 480px) {
-
-    .background-word span {
-        font-size: 38vw;
     }
 
-    .site-content h1 {
-        font-size: 2rem;
-    }
-
-    .site-content p {
-        font-size: 0.85rem;
-    }
 }
