@@ -1,458 +1,230 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;400;500;600;700&display=swap');
+/* =================================
+   ELEMENTS
+================================= */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+const cursor =
+    document.querySelector(".cursor");
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-}
+const normalWord =
+    document.querySelector(".word-base");
 
-body {
-    background: #020202;
-    color: white;
-    font-family: "Manrope", sans-serif;
-    cursor: none;
-    overflow: hidden;
-}
+const distortedWord =
+    document.querySelector(".word-distorted");
 
 
-/* ================================
-   DARK BACKGROUND
-================================ */
+/* =================================
+   MOUSE
+================================= */
 
-body::before {
-    content: "";
+let mouseX =
+    window.innerWidth / 2;
 
-    position: fixed;
-    inset: 0;
+let mouseY =
+    window.innerHeight / 2;
 
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(70, 0, 5, 0.12),
-            transparent 45%
-        );
+let currentX =
+    mouseX;
 
-    pointer-events: none;
-
-    z-index: 0;
-}
+let currentY =
+    mouseY;
 
 
-/* ================================
-   FALOVERSE
-================================ */
+document.addEventListener(
+    "mousemove",
+    (event) => {
 
-.background-word {
-    position: fixed;
+        mouseX =
+            event.clientX;
 
-    inset: 0;
+        mouseY =
+            event.clientY;
 
-    width: 100vw;
-    height: 100vh;
+    }
+);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    overflow: hidden;
+/* =================================
+   GLITCH SETTINGS
+================================= */
 
-    pointer-events: none;
+/*
+   Size of the invisible circle.
+*/
 
-    z-index: 1;
-}
+const GLITCH_RADIUS = 115;
 
-.letter {
-    display: inline-block;
 
-    font-family: "Anton", sans-serif;
+/*
+   How much the word is distorted
+   INSIDE the circle.
+*/
 
-    font-size: clamp(
-        8rem,
-        22vw,
-        28rem
-    );
+const DISTORTION = 18;
 
-    font-weight: 400;
 
-    line-height: 0.75;
+/* =================================
+   ANIMATION
+================================= */
 
-    letter-spacing: -0.055em;
+function animate() {
 
-    color: #210205;
+    /* ===============================
+       SMOOTH DOT
+    =============================== */
 
-    opacity: 0.95;
+    currentX +=
+        (mouseX - currentX) *
+        0.18;
 
-    transform-origin: center;
+    currentY +=
+        (mouseY - currentY) *
+        0.18;
 
-    will-change:
-        transform,
-        filter;
+
+    /* ===============================
+       MOVE RED DOT
+    =============================== */
+
+    cursor.style.left =
+        currentX + "px";
+
+    cursor.style.top =
+        currentY + "px";
+
+
+    /* ===============================
+       MOVE GLITCH CIRCLE
+    =============================== */
+
+    distortedWord.style.clipPath = `
+
+        circle(
+            ${GLITCH_RADIUS}px
+            at
+            ${currentX}px
+            ${currentY}px
+        )
+
+    `;
+
+
+    /* ===============================
+       STATIC GLITCH DISTORTION
+    =============================== */
 
     /*
-       Very subtle red-black glow.
-       Keeps the word dark.
+       The word itself does NOT move.
+
+       Instead, the distorted copy is
+       shifted slightly underneath the
+       circular mask.
+
+       This makes the circle look like
+       a corrupted section of reality.
     */
 
-    text-shadow:
-        0 0 20px rgba(70, 0, 5, 0.2);
-}
+    const distortionX =
+        Math.sin(
+            currentY * 0.035
+        ) * DISTORTION;
+
+    const distortionY =
+        Math.cos(
+            currentX * 0.025
+        ) * 5;
 
 
-/* ================================
-   RED DISTORTION DOT
-================================ */
+    distortedWord.style.transform = `
 
-.cursor {
+        translate(
+            ${distortionX}px,
+            ${distortionY}px
+        )
 
-    position: fixed;
+    `;
 
-    top: 0;
-    left: 0;
 
-    width: 15px;
-    height: 15px;
-
-    border-radius: 50%;
-
-    background: #ff0808;
-
-    pointer-events: none;
-
-    z-index: 99999;
-
-    transform:
-        translate(-50%, -50%);
+    /* ===============================
+       GLITCH FILTER
+    =============================== */
 
     /*
-       Dark red core with deep glow.
+       Subtle contrast/brightness
+       changes make the circle darker.
     */
 
-    box-shadow:
-
-        0 0 5px
-        rgba(255, 0, 0, 1),
-
-        0 0 15px
-        rgba(180, 0, 0, 0.9),
-
-        0 0 35px
-        rgba(100, 0, 0, 0.65),
-
-        0 0 70px
-        rgba(50, 0, 0, 0.5);
-
-    will-change:
-        left,
-        top,
-        width,
-        height,
-        box-shadow;
-}
-
-
-/* ================================
-   DARK DISTORTION AURA
-================================ */
-
-.cursor::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    width: 70px;
-    height: 70px;
-
-    border-radius: 50%;
-
-    transform:
-        translate(-50%, -50%);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 0, 0, 0.12),
-            rgba(80, 0, 0, 0.05),
-            transparent 70%
+    const pulse =
+        Math.sin(
+            performance.now() * 0.008
         );
 
-    filter: blur(4px);
-}
+
+    distortedWord.style.filter = `
+
+        contrast(${1.35 + pulse * 0.12})
+
+        brightness(${0.65 + pulse * 0.05})
+
+    `;
 
 
-/* ================================
-   PAGE
-================================ */
+    /* ===============================
+       DOT
+    =============================== */
 
-.page {
+    cursor.style.boxShadow = `
 
-    position: absolute;
+        0 0 7px
+        rgba(255,0,0,1),
 
-    inset: 0;
+        0 0 18px
+        rgba(180,0,0,0.85),
 
-    display: none;
+        0 0 45px
+        rgba(80,0,0,0.6)
 
-    align-items: center;
-    justify-content: center;
-
-    z-index: 10;
-
-    text-align: center;
-}
-
-.page.active {
-    display: flex;
-}
-
-.center {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 25px;
-}
+    `;
 
 
-/* ================================
-   TITLES
-================================ */
-
-h1,
-h2,
-h3 {
-    position: relative;
-    z-index: 20;
-}
-
-h1 {
-    font-size: clamp(
-        2rem,
-        5vw,
-        5rem
+    requestAnimationFrame(
+        animate
     );
-}
 
-h2 {
-    font-size: clamp(
-        2rem,
-        5vw,
-        4rem
-    );
 }
 
 
-/* ================================
-   BUTTONS
-================================ */
-
-button {
-
-    position: relative;
-
-    z-index: 20;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.2);
-
-    background:
-        rgba(0, 0, 0, 0.65);
-
-    color: white;
-
-    padding: 14px 25px;
-
-    font-family:
-        "Manrope", sans-serif;
-
-    font-size: 0.8rem;
-
-    font-weight: 500;
-
-    letter-spacing: 0.12em;
-
-    text-transform: uppercase;
-
-    cursor: none;
-
-    transition:
-        0.25s ease;
-}
-
-button:hover {
-
-    background: white;
-
-    color: black;
-
-    border-color: white;
-
-    transform:
-        translateY(-2px);
-}
+animate();
 
 
-/* ================================
-   CARDS
-================================ */
+/* =================================
+   PAGE NAVIGATION
+================================= */
 
-.card {
+function goTo(pageId) {
 
-    position: relative;
+    document
+        .querySelectorAll(".page")
+        .forEach((page) => {
 
-    z-index: 20;
+            page.classList.remove(
+                "active"
+            );
 
-    width:
-        min(500px, 85vw);
-
-    padding: 40px;
-
-    border:
-        1px solid
-        rgba(255,255,255,0.1);
-
-    background:
-        rgba(2,2,2,0.8);
-
-    backdrop-filter:
-        blur(12px);
-}
-
-.card p {
-
-    margin:
-        15px 0 25px;
-
-    color:
-        rgba(255,255,255,0.5);
-}
+        });
 
 
-/* ================================
-   MEMBERS
-================================ */
-
-.cards {
-
-    display: flex;
-
-    flex-direction: row;
-
-    gap: 20px;
-
-    justify-content: center;
-}
-
-.cards .card {
-    width: 250px;
-}
+    const target =
+        document.getElementById(
+            pageId
+        );
 
 
-/* ================================
-   NAV
-================================ */
+    if (target) {
 
-.nav {
+        target.classList.add(
+            "active"
+        );
 
-    display: flex;
-
-    gap: 15px;
-
-    justify-content: center;
-
-    margin-top: 20px;
-}
-
-
-/* ================================
-   INTRO
-================================ */
-
-#intro {
-
-    position: fixed;
-
-    inset: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: #020202;
-
-    z-index: 100000;
-
-    animation:
-        introFade 1.5s
-        ease forwards;
-}
-
-#intro img {
-    width: 90px;
-}
-
-@keyframes introFade {
-
-    0% {
-        opacity: 1;
     }
 
-    70% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-        pointer-events: none;
-    }
-}
-
-
-/* ================================
-   MOBILE
-================================ */
-
-@media (max-width: 768px) {
-
-    body {
-        cursor: auto;
-    }
-
-    .cursor {
-        display: none;
-    }
-
-    .letter {
-        font-size: 34vw;
-    }
-
-    button {
-        cursor: pointer;
-    }
-
-    .cards {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .cards .card {
-        width:
-            min(400px, 85vw);
-    }
 }
