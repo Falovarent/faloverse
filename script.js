@@ -1,20 +1,17 @@
-/* =========================
+/* =================================
    ELEMENTS
-   ========================= */
+================================= */
 
 const cursor =
     document.querySelector(".cursor");
 
-const distortedWord =
-    document.querySelector(".word-distorted");
-
-const intro =
-    document.getElementById("intro");
+const letters =
+    document.querySelectorAll(".letter");
 
 
-/* =========================
+/* =================================
    MOUSE
-   ========================= */
+================================= */
 
 let mouseX =
     window.innerWidth / 2;
@@ -22,37 +19,127 @@ let mouseX =
 let mouseY =
     window.innerHeight / 2;
 
-let currentX = mouseX;
-let currentY = mouseY;
+
+let currentX =
+    mouseX;
+
+let currentY =
+    mouseY;
 
 
 document.addEventListener(
     "mousemove",
     (event) => {
 
-        mouseX = event.clientX;
-        mouseY = event.clientY;
+        mouseX =
+            event.clientX;
+
+        mouseY =
+            event.clientY;
 
     }
 );
 
 
-/* =========================
-   CURSOR + DISTORTION
-   ========================= */
+/* =================================
+   LETTER DATA
+================================= */
+
+const letterData = [];
+
+
+function setupLetters() {
+
+    letterData.length = 0;
+
+
+    letters.forEach((letter) => {
+
+        /*
+         * Remove the old distortion
+         * before measuring the letter.
+         */
+
+        letter.style.transform =
+            "none";
+
+
+        const rect =
+            letter.getBoundingClientRect();
+
+
+        letterData.push({
+
+            element: letter,
+
+            x:
+                rect.left +
+                rect.width / 2,
+
+            y:
+                rect.top +
+                rect.height / 2,
+
+            width:
+                rect.width,
+
+            height:
+                rect.height,
+
+            currentX: 0,
+
+            currentY: 0,
+
+            currentRotate: 0,
+
+            currentScaleX: 1,
+
+            currentScaleY: 1
+
+        });
+
+    });
+
+}
+
+
+/* =================================
+   INITIALIZE
+================================= */
+
+setupLetters();
+
+
+window.addEventListener(
+    "resize",
+    setupLetters
+);
+
+
+/* =================================
+   ANIMATION
+================================= */
 
 function animate() {
 
-    /* Smooth cursor */
+
+    /* --------------------------------
+       SMOOTH CURSOR
+    -------------------------------- */
 
     currentX +=
-        (mouseX - currentX) * 0.15;
+        (mouseX - currentX) *
+        0.18;
+
 
     currentY +=
-        (mouseY - currentY) * 0.15;
+        (mouseY - currentY) *
+        0.18;
 
 
-    /* Cursor position */
+    /* --------------------------------
+       CURSOR POSITION
+    -------------------------------- */
 
     cursor.style.left =
         currentX + "px";
@@ -61,201 +148,282 @@ function animate() {
         currentY + "px";
 
 
-    /* Send mouse position to CSS */
+    /* --------------------------------
+       CLOSEST LETTER
+    -------------------------------- */
 
-    document.documentElement
-        .style
-        .setProperty(
-            "--mouse-x",
-            currentX + "px"
-        );
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--mouse-y",
-            currentY + "px"
-        );
+    let closestStrength = 0;
 
 
-    /* =========================
-       WORD DISTORTION
-       ========================= */
+    /* =================================
+       EACH LETTER
+    ================================= */
 
-    const word =
-        document
-            .querySelector(".word-base");
+    letterData.forEach((data) => {
 
-    const rect =
-        word.getBoundingClientRect();
+        const letter =
+            data.element;
 
 
-    const wordCenterX =
-        rect.left +
-        rect.width / 2;
+        /* --------------------------------
+           DISTANCE
+        -------------------------------- */
 
-    const wordCenterY =
-        rect.top +
-        rect.height / 2;
-
-
-    const dx =
-        currentX -
-        wordCenterX;
-
-    const dy =
-        currentY -
-        wordCenterY;
+        const dx =
+            currentX - data.x;
 
 
-    const distance =
-        Math.sqrt(
-            dx * dx +
-            dy * dy
-        );
+        const dy =
+            currentY - data.y;
 
 
-    /*
-       Distortion radius.
-       Smaller = more concentrated.
-    */
-
-    const radius = 190;
-
-
-    let influence =
-        Math.max(
-            0,
-            1 - distance / 600
-        );
+        const distance =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
 
 
-    /*
-       Only show the distorted
-       layer when the cursor is
-       reasonably close.
-    */
+        /* --------------------------------
+           DISTORTION AREA
+        -------------------------------- */
 
-    if (influence > 0) {
-
-        const clipRadius =
-            70 + influence * radius;
+        const radius = 230;
 
 
-        distortedWord.style.clipPath =
-            `circle(
-                ${clipRadius}px
-                at
-                ${currentX}px
-                ${currentY}px
-            )`;
+        let strength =
+            1 -
+            distance / radius;
 
 
-        /*
-           Make the distortion
-           stronger near the cursor.
-        */
-
-        const displacement =
-            influence * 55;
-
-
-        const filter =
-            document
-                .querySelector(
-                    "#cursorDistortion"
-                );
-
-
-        const displacementMap =
-            filter
-                .querySelector(
-                    "feDisplacementMap"
-                );
-
-
-        displacementMap
-            .setAttribute(
-                "scale",
-                displacement
+        strength =
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    strength
+                )
             );
 
 
         /*
-           Stretch the distorted
-           area toward the cursor.
-        */
+         * Make the distortion
+         * stronger near the dot.
+         */
 
-        const pullX =
-            dx * influence * -0.025;
-
-        const pullY =
-            dy * influence * -0.025;
+        strength =
+            strength * strength;
 
 
-        distortedWord.style.transform =
-            `
-            translate(
-                ${pullX}px,
-                ${pullY}px
-            )
-            scaleX(0.9)
-            `;
+        /* --------------------------------
+           KEEP TRACK OF CLOSEST LETTER
+        -------------------------------- */
+
+        closestStrength =
+            Math.max(
+                closestStrength,
+                strength
+            );
+
+
+        /* =================================
+           DISTORTION
+        ================================= */
+
+        /*
+         * Stretch sideways.
+         */
+
+        const targetScaleX =
+            1 +
+            strength * 0.75;
 
 
         /*
-           Cursor gets bigger
-           near the letters.
-        */
+         * Slight vertical compression.
+         */
 
-        const size =
-            16 +
-            influence * 14;
-
-
-        cursor.style.width =
-            size + "px";
-
-        cursor.style.height =
-            size + "px";
+        const targetScaleY =
+            1 -
+            strength * 0.22;
 
 
-        cursor.style.boxShadow = `
-            0 0 10px rgba(255,20,20,1),
-            0 0 25px rgba(255,20,20,0.9),
-            0 0 55px rgba(255,20,20,0.55),
-            0 0 90px rgba(255,20,20,0.25)
+        /*
+         * Local movement.
+
+         * The letter bends around
+         * the red point instead of
+         * simply moving away.
+         */
+
+        const targetX =
+            dx *
+            strength *
+            -0.10;
+
+
+        const targetY =
+            dy *
+            strength *
+            -0.04;
+
+
+        /*
+         * Rotation.
+         */
+
+        const targetRotate =
+            dx *
+            strength *
+            0.055;
+
+
+        /* =================================
+           SMOOTH MOVEMENT
+        ================================= */
+
+        data.currentX +=
+            (
+                targetX -
+                data.currentX
+            ) * 0.15;
+
+
+        data.currentY +=
+            (
+                targetY -
+                data.currentY
+            ) * 0.15;
+
+
+        data.currentRotate +=
+            (
+                targetRotate -
+                data.currentRotate
+            ) * 0.15;
+
+
+        data.currentScaleX +=
+            (
+                targetScaleX -
+                data.currentScaleX
+            ) * 0.15;
+
+
+        data.currentScaleY +=
+            (
+                targetScaleY -
+                data.currentScaleY
+            ) * 0.15;
+
+
+        /* =================================
+           APPLY DISTORTION
+        ================================= */
+
+        letter.style.transform = `
+
+            translate3d(
+                ${data.currentX}px,
+                ${data.currentY}px,
+                0
+            )
+
+            rotate(
+                ${data.currentRotate}deg
+            )
+
+            scaleX(
+                ${data.currentScaleX}
+            )
+
+            scaleY(
+                ${data.currentScaleY}
+            )
+
         `;
 
-    } else {
 
-        distortedWord.style.clipPath =
-            `circle(
-                0px
-                at
-                ${currentX}px
-                ${currentY}px
-            )`;
+        /* =================================
+           LETTER GLOW
+        ================================= */
+
+        const glow =
+            strength * 35;
 
 
-        cursor.style.width =
-            "16px";
+        letter.style.filter = `
 
-        cursor.style.height =
-            "16px";
+            drop-shadow(
+                0 0 ${glow}px
+                rgba(
+                    255,
+                    0,
+                    20,
+                    ${strength * 0.4}
+                )
+            )
 
-    }
+        `;
 
+    });
+
+
+    /* =================================
+       RED DOT
+    ================================= */
+
+    const cursorSize =
+        18 +
+        closestStrength * 14;
+
+
+    cursor.style.width =
+        cursorSize + "px";
+
+
+    cursor.style.height =
+        cursorSize + "px";
+
+
+    cursor.style.boxShadow = `
+
+        0 0
+        ${10 + closestStrength * 15}px
+        rgba(255,20,20,1),
+
+        0 0
+        ${30 + closestStrength * 35}px
+        rgba(255,20,20,0.8),
+
+        0 0
+        ${60 + closestStrength * 60}px
+        rgba(255,20,20,0.4)
+
+    `;
+
+
+    /* =================================
+       NEXT FRAME
+    ================================= */
 
     requestAnimationFrame(
         animate
     );
+
 }
 
 
-/* =========================
+/* =================================
+   START
+================================= */
+
+animate();
+
+
+/* =================================
    PAGE NAVIGATION
-   ========================= */
+================================= */
 
 function goTo(pageId) {
 
@@ -265,15 +433,13 @@ function goTo(pageId) {
         );
 
 
-    pages.forEach(
-        (page) => {
+    pages.forEach((page) => {
 
-            page.classList.remove(
-                "active"
-            );
+        page.classList.remove(
+            "active"
+        );
 
-        }
-    );
+    });
 
 
     const target =
@@ -291,57 +457,3 @@ function goTo(pageId) {
     }
 
 }
-
-
-/*
-   Keep old buttons working
-   if anything still uses goBack().
-*/
-
-function goBack(pageId) {
-
-    goTo(pageId);
-
-}
-
-
-/* =========================
-   INTRO
-   ========================= */
-
-window.addEventListener(
-    "load",
-    () => {
-
-        setTimeout(
-            () => {
-
-                intro.style.opacity =
-                    "0";
-
-                intro.style.pointerEvents =
-                    "none";
-
-                setTimeout(
-                    () => {
-
-                        intro.style.display =
-                            "none";
-
-                    },
-                    500
-                );
-
-            },
-            1000
-        );
-
-    }
-);
-
-
-/* =========================
-   START
-   ========================= */
-
-animate();
