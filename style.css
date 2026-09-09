@@ -1,17 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;400;500;600;700&display=swap');
 
-
-/* =================================
-   RESET
-================================= */
-
 * {
     box-sizing: border-box;
-
     margin: 0;
     padding: 0;
 }
-
 
 html,
 body {
@@ -19,27 +12,43 @@ body {
     height: 100%;
 }
 
-
 body {
-
-    background: #050505;
-
+    background: #020202;
     color: white;
-
     font-family: "Manrope", sans-serif;
-
     cursor: none;
-
     overflow: hidden;
 }
 
 
-/* =================================
-   BACKGROUND FALOVERSE
-================================= */
+/* ================================
+   DARK BACKGROUND
+================================ */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(70, 0, 5, 0.12),
+            transparent 45%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* ================================
+   FALOVERSE
+================================ */
 
 .background-word {
-
     position: fixed;
 
     inset: 0;
@@ -48,7 +57,6 @@ body {
     height: 100vh;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -56,16 +64,10 @@ body {
 
     pointer-events: none;
 
-    z-index: 0;
+    z-index: 1;
 }
 
-
-/* =================================
-   LETTERS
-================================= */
-
 .letter {
-
     display: inline-block;
 
     font-family: "Anton", sans-serif;
@@ -82,28 +84,29 @@ body {
 
     letter-spacing: -0.055em;
 
-    color: #300306;
+    color: #210205;
 
     opacity: 0.95;
 
-    transform-origin: center center;
+    transform-origin: center;
 
-    will-change: transform, filter;
+    will-change:
+        transform,
+        filter;
 
-    backface-visibility: hidden;
+    /*
+       Very subtle red-black glow.
+       Keeps the word dark.
+    */
 
-    filter:
-
-        drop-shadow(
-            0 0 25px
-            rgba(100, 0, 10, 0.15)
-        );
+    text-shadow:
+        0 0 20px rgba(70, 0, 5, 0.2);
 }
 
 
-/* =================================
-   RED CURSOR
-================================= */
+/* ================================
+   RED DISTORTION DOT
+================================ */
 
 .cursor {
 
@@ -112,12 +115,12 @@ body {
     top: 0;
     left: 0;
 
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
 
     border-radius: 50%;
 
-    background: #ff1515;
+    background: #ff0808;
 
     pointer-events: none;
 
@@ -126,16 +129,23 @@ body {
     transform:
         translate(-50%, -50%);
 
+    /*
+       Dark red core with deep glow.
+    */
+
     box-shadow:
 
-        0 0 8px
-        rgba(255, 20, 20, 1),
+        0 0 5px
+        rgba(255, 0, 0, 1),
 
-        0 0 20px
-        rgba(255, 20, 20, 0.8),
+        0 0 15px
+        rgba(180, 0, 0, 0.9),
 
-        0 0 45px
-        rgba(255, 20, 20, 0.45);
+        0 0 35px
+        rgba(100, 0, 0, 0.65),
+
+        0 0 70px
+        rgba(50, 0, 0, 0.5);
 
     will-change:
         left,
@@ -146,9 +156,42 @@ body {
 }
 
 
-/* =================================
+/* ================================
+   DARK DISTORTION AURA
+================================ */
+
+.cursor::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 0, 0, 0.12),
+            rgba(80, 0, 0, 0.05),
+            transparent 70%
+        );
+
+    filter: blur(4px);
+}
+
+
+/* ================================
    PAGE
-================================= */
+================================ */
 
 .page {
 
@@ -166,16 +209,9 @@ body {
     text-align: center;
 }
 
-
 .page.active {
-
     display: flex;
 }
-
-
-/* =================================
-   CENTER
-================================= */
 
 .center {
 
@@ -184,40 +220,33 @@ body {
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 25px;
 }
 
 
-/* =================================
+/* ================================
    TITLES
-================================= */
+================================ */
 
 h1,
 h2,
 h3 {
-
     position: relative;
-
     z-index: 20;
 }
 
-
 h1 {
-
     font-size: clamp(
         2rem,
         5vw,
         5rem
     );
-
-    font-weight: 600;
 }
 
-
 h2 {
-
     font-size: clamp(
         2rem,
         5vw,
@@ -226,15 +255,9 @@ h2 {
 }
 
 
-h3 {
-
-    font-size: 1.5rem;
-}
-
-
-/* =================================
+/* ================================
    BUTTONS
-================================= */
+================================ */
 
 button {
 
@@ -242,11 +265,12 @@ button {
 
     z-index: 20;
 
-    border: 1px solid
-        rgba(255, 255, 255, 0.3);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.2);
 
     background:
-        rgba(0, 0, 0, 0.4);
+        rgba(0, 0, 0, 0.65);
 
     color: white;
 
@@ -266,16 +290,8 @@ button {
     cursor: none;
 
     transition:
-
-        background 0.25s ease,
-
-        color 0.25s ease,
-
-        border 0.25s ease,
-
-        transform 0.25s ease;
+        0.25s ease;
 }
-
 
 button:hover {
 
@@ -290,9 +306,9 @@ button:hover {
 }
 
 
-/* =================================
+/* ================================
    CARDS
-================================= */
+================================ */
 
 .card {
 
@@ -300,37 +316,35 @@ button:hover {
 
     z-index: 20;
 
-    width: min(
-        500px,
-        85vw
-    );
+    width:
+        min(500px, 85vw);
 
     padding: 40px;
 
     border:
         1px solid
-        rgba(255, 255, 255, 0.12);
+        rgba(255,255,255,0.1);
 
     background:
-        rgba(5, 5, 5, 0.75);
+        rgba(2,2,2,0.8);
 
     backdrop-filter:
-        blur(10px);
+        blur(12px);
 }
-
 
 .card p {
 
-    margin: 15px 0 25px;
+    margin:
+        15px 0 25px;
 
     color:
-        rgba(255, 255, 255, 0.55);
+        rgba(255,255,255,0.5);
 }
 
 
-/* =================================
+/* ================================
    MEMBERS
-================================= */
+================================ */
 
 .cards {
 
@@ -341,20 +355,16 @@ button:hover {
     gap: 20px;
 
     justify-content: center;
-
-    align-items: stretch;
 }
 
-
 .cards .card {
-
     width: 250px;
 }
 
 
-/* =================================
-   NAVIGATION
-================================= */
+/* ================================
+   NAV
+================================ */
 
 .nav {
 
@@ -368,9 +378,9 @@ button:hover {
 }
 
 
-/* =================================
+/* ================================
    INTRO
-================================= */
+================================ */
 
 #intro {
 
@@ -381,9 +391,10 @@ button:hover {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    background: #050505;
+    background: #020202;
 
     z-index: 100000;
 
@@ -392,121 +403,56 @@ button:hover {
         ease forwards;
 }
 
-
 #intro img {
-
     width: 90px;
-
-    height: auto;
 }
-
 
 @keyframes introFade {
 
     0% {
-
         opacity: 1;
     }
 
     70% {
-
         opacity: 1;
     }
 
     100% {
-
         opacity: 0;
-
         pointer-events: none;
     }
 }
 
 
-/* =================================
+/* ================================
    MOBILE
-================================= */
+================================ */
 
 @media (max-width: 768px) {
 
     body {
-
         cursor: auto;
     }
 
-
     .cursor {
-
         display: none;
     }
 
-
-    .background-word {
-
-        transform:
-            scale(1.15);
-    }
-
-
     .letter {
-
         font-size: 34vw;
     }
 
-
     button {
-
         cursor: pointer;
     }
 
-
     .cards {
-
         flex-direction: column;
-
         gap: 15px;
     }
 
-
     .cards .card {
-
         width:
             min(400px, 85vw);
-    }
-
-
-    .center {
-
-        padding: 25px;
-    }
-}
-
-
-/* =================================
-   SMALL PHONES
-================================= */
-
-@media (max-width: 480px) {
-
-    .letter {
-
-        font-size: 38vw;
-    }
-
-
-    h1 {
-
-        font-size: 2rem;
-    }
-
-
-    h2 {
-
-        font-size: 2rem;
-    }
-
-
-    .card {
-
-        padding: 30px;
     }
 }
