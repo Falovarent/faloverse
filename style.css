@@ -1,6 +1,6 @@
-/* =========================
+/* =================================
    RESET
-========================= */
+================================= */
 
 * {
     margin: 0;
@@ -17,27 +17,32 @@ body {
 body {
     background: #000;
     color: #fff;
+
     font-family: Arial, sans-serif;
+
     overflow: hidden;
 }
 
 
-/* =========================
+/* =================================
    BACKGROUND FALOVERSE
-========================= */
+================================= */
 
 .background-word {
     position: fixed;
+
     inset: 0;
 
     width: 100vw;
     height: 100vh;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     overflow: hidden;
+
     pointer-events: none;
 
     z-index: 1;
@@ -45,21 +50,26 @@ body {
 
 .letter {
     font-family: Impact, "Arial Narrow", sans-serif;
-    font-size: clamp(7rem, 20vw, 24rem);
+
+    font-size: clamp(6rem, 17vw, 23rem);
+
     font-weight: 900;
 
     line-height: 0.75;
+
     letter-spacing: -0.07em;
 
     color: #250205;
 
     pointer-events: none;
+
+    user-select: none;
 }
 
 
-/* =========================
-   RED MOUSE CURSOR
-========================= */
+/* =================================
+   RED MOUSE DOT
+================================= */
 
 .cursor {
     position: fixed;
@@ -67,8 +77,8 @@ body {
     width: 16px;
     height: 16px;
 
-    top: 0;
-    left: 0;
+    left: 50%;
+    top: 50%;
 
     border-radius: 50%;
 
@@ -87,9 +97,9 @@ body {
 }
 
 
-/* =========================
+/* =================================
    INTRO
-========================= */
+================================= */
 
 #intro {
     position: fixed;
@@ -97,12 +107,15 @@ body {
     inset: 0;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     background: #000;
 
     z-index: 100000;
+
+    pointer-events: none;
 
     animation: introFade 1.5s ease forwards;
 }
@@ -116,22 +129,27 @@ body {
     animation: logoFade 1.5s ease forwards;
 }
 
+
 @keyframes introFade {
+
     0% {
         opacity: 1;
     }
 
-    75% {
+    70% {
         opacity: 1;
     }
 
     100% {
         opacity: 0;
-        pointer-events: none;
+        visibility: hidden;
     }
+
 }
 
+
 @keyframes logoFade {
+
     0% {
         opacity: 0;
         transform: scale(0.8);
@@ -145,12 +163,13 @@ body {
     100% {
         opacity: 0;
     }
+
 }
 
 
-/* =========================
+/* =================================
    PAGES
-========================= */
+================================= */
 
 .page {
     position: relative;
@@ -171,36 +190,41 @@ body {
 }
 
 
-/* =========================
-   CENTER CONTENT
-========================= */
+/* =================================
+   CENTER
+================================= */
 
 .center {
     width: min(900px, 90%);
+
     text-align: center;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
 
     gap: 25px;
 }
 
 
-/* =========================
+/* =================================
    HEADINGS
-========================= */
+================================= */
 
 h1 {
     font-size: clamp(3rem, 8vw, 7rem);
 
-    letter-spacing: 0.08em;
-
     font-weight: 900;
+
+    letter-spacing: 0.08em;
 }
 
 h2 {
     font-size: clamp(2.5rem, 6vw, 5rem);
+
+    font-weight: 900;
 
     letter-spacing: 0.06em;
 
@@ -214,9 +238,9 @@ h3 {
 }
 
 
-/* =========================
+/* =================================
    TEXT
-========================= */
+================================= */
 
 p {
     max-width: 650px;
@@ -229,9 +253,9 @@ p {
 }
 
 
-/* =========================
+/* =================================
    BUTTONS
-========================= */
+================================= */
 
 .btn {
     padding: 14px 30px;
@@ -268,9 +292,9 @@ p {
 }
 
 
-/* =========================
+/* =================================
    CARDS
-========================= */
+================================= */
 
 .card {
     width: min(600px, 90%);
@@ -297,9 +321,9 @@ p {
 }
 
 
-/* =========================
+/* =================================
    MEMBERS
-========================= */
+================================= */
 
 .cards {
     width: 100%;
@@ -316,9 +340,9 @@ p {
 }
 
 
-/* =========================
+/* =================================
    NAVIGATION
-========================= */
+================================= */
 
 .nav {
     display: flex;
@@ -331,18 +355,14 @@ p {
 }
 
 
-/* =========================
+/* =================================
    MOBILE
-========================= */
+================================= */
 
 @media (max-width: 700px) {
 
-    body {
-        overflow: hidden;
-    }
-
     .letter {
-        font-size: clamp(4rem, 18vw, 9rem);
+        font-size: clamp(3.5rem, 17vw, 8rem);
 
         letter-spacing: -0.06em;
     }
