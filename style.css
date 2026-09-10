@@ -793,21 +793,23 @@ p {
     overflow: hidden;
     pointer-events: none;
     z-index: 1;
+
+    /* Makes the whole word narrower without making the letters shorter */
+    transform: scaleX(0.48);
 }
 
 .letter {
     font-family: Impact, "Arial Narrow", sans-serif;
 
-    font-size: clamp(18rem, 38vh, 38rem);
-    font-weight: 900;
+    /* THIS is what makes the letters extremely tall */
+    font-size: 95vh;
 
+    font-weight: 900;
     line-height: 0.7;
-    letter-spacing: -0.12em;
+
+    letter-spacing: -0.13em;
 
     color: #250205;
-
-    transform: scaleX(0.62);
-    transform-origin: center;
 
     pointer-events: none;
     user-select: none;
