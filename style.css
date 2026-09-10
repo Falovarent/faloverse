@@ -48,14 +48,15 @@ body {
 }
 
 .letter {
-    font-family: Impact, "Arial Narrow", sans-serif;
-    font-size: clamp(12rem, 24vw, 32rem);
+    font-family: "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+    font-size: clamp(12rem, 28vw, 34rem);
     font-weight: 900;
-    line-height: 0.7;
-    letter-spacing: -0.09em;
+    line-height: 0.65;
+    letter-spacing: -0.12em;
     color: #250205;
+    transform: scaleX(0.55);
+    transform-origin: center;
 }
-
 
 /* =========================
    RED MOUSE DOT
