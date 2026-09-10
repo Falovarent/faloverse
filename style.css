@@ -49,20 +49,11 @@ body {
 
 .letter {
     font-family: Impact, "Arial Narrow", sans-serif;
-
-    font-size: clamp(6rem, 17vw, 23rem);
-
+    font-size: clamp(12rem, 24vw, 32rem);
     font-weight: 900;
-
-    line-height: 0.75;
-
-    letter-spacing: -0.07em;
-
+    line-height: 0.7;
+    letter-spacing: -0.09em;
     color: #250205;
-
-    pointer-events: none;
-
-    user-select: none;
 }
 
 
