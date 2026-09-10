@@ -779,3 +779,44 @@ p {
         height: 14px;
     }
 }
+.background-word {
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.letter {
+    font-family: Impact, "Arial Narrow", sans-serif;
+
+    font-size: clamp(18rem, 38vh, 38rem);
+    font-weight: 900;
+
+    line-height: 0.7;
+    letter-spacing: -0.12em;
+
+    color: #250205;
+
+    transform: scaleX(0.62);
+    transform-origin: center;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+@media (max-width: 700px) {
+
+    .background-word {
+        display: none;
+    }
+
+}
