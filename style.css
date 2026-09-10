@@ -22,7 +22,12 @@ body {
 
     overflow: hidden;
 }
-
+html,
+body,
+button,
+a {
+    cursor: none;
+}
 
 /* =================================
    BACKGROUND FALOVERSE
