@@ -48,22 +48,23 @@ body {
     transform: scaleX(0.42);
 }
 
+@font-face {
+    font-family: "Pillar";
+    src: url("Pillar.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 .letter {
-    font-family: Impact, "Arial Narrow", sans-serif;
-
-    font-size: 125vh;
-    font-weight: 900;
-
-    line-height: 0.55;
-
-    letter-spacing: -0.16em;
-
+    font-family: "Pillar", sans-serif;
+    font-size: 95vh;
+    font-weight: normal;
+    line-height: 0.75;
+    letter-spacing: -0.08em;
     color: #250205;
-
     pointer-events: none;
     user-select: none;
 }
-
 
 /* =========================
    RED MOUSE DOT
