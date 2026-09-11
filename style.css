@@ -54,6 +54,7 @@ body {
 
     display: flex;
     align-items: center;
+    justify-content: center;
 
     overflow: hidden;
 
@@ -63,14 +64,9 @@ body {
     z-index: 1;
 }
 
-
 /* EACH LETTER GETS ITS OWN SPACE */
 
 .letter {
-    flex: 1;
-
-    width: 11.111vw;
-
     font-family: "Pillar", sans-serif;
 
     font-size: 88vh;
@@ -78,17 +74,21 @@ body {
 
     line-height: 0.8;
 
-    text-align: center;
+    /* SPACE BETWEEN LETTERS */
+    margin: 0 0.8vw;
+
+    /* NARROW LETTERS */
+    transform: scaleX(0.55);
+
+    transform-origin: center;
 
     color: #250205;
 
-    transform: scaleX(1.35);
-    transform-origin: center;
+    flex: 0 0 auto;
 
     pointer-events: none;
     user-select: none;
 }
-
 
 /* =========================
    RED MOUSE DOT
