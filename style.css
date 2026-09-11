@@ -29,25 +29,6 @@ body {
    GIANT FALOVERSE BACKGROUND
 ========================= */
 
-.background-word {
-    position: fixed;
-    inset: 0;
-
-    width: 100vw;
-    height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-    pointer-events: none;
-
-    z-index: 1;
-
-    transform: scaleX(0.42);
-}
-
 @font-face {
     font-family: "Pillar";
     src: url("Pillar.ttf") format("truetype");
@@ -55,17 +36,50 @@ body {
     font-style: normal;
 }
 
+
+/* =========================
+   BACKGROUND FALOVERSE
+========================= */
+
+.background-word {
+    position: fixed;
+
+    top: 7vh;
+    bottom: 7vh;
+    left: 0;
+    right: 0;
+
+    width: 100vw;
+    height: 86vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    pointer-events: none;
+    user-select: none;
+
+    z-index: 1;
+}
+
+
 .letter {
     font-family: "Pillar", sans-serif;
-    font-size: 95vh;
+
+    font-size: 88vh;
     font-weight: normal;
-    line-height: 0.75;
-    letter-spacing: -0.08em;
+
+    line-height: 0.8;
+
+    letter-spacing: -0.04em;
+
     color: #250205;
+
     pointer-events: none;
     user-select: none;
 }
-
 /* =========================
    RED MOUSE DOT
 ========================= */
