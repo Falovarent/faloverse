@@ -26,7 +26,7 @@ body {
 
 
 /* =========================
-   GIANT FALOVERSE BACKGROUND
+   PILLAR FONT
 ========================= */
 
 @font-face {
@@ -38,7 +38,7 @@ body {
 
 
 /* =========================
-   BACKGROUND FALOVERSE
+   GIANT FALOVERSE BACKGROUND
 ========================= */
 
 .background-word {
@@ -54,7 +54,6 @@ body {
 
     display: flex;
     align-items: center;
-    justify-content: center;
 
     overflow: hidden;
 
@@ -65,7 +64,13 @@ body {
 }
 
 
+/* EACH LETTER GETS ITS OWN SPACE */
+
 .letter {
+    flex: 1;
+
+    width: 11.111vw;
+
     font-family: "Pillar", sans-serif;
 
     font-size: 88vh;
@@ -73,13 +78,18 @@ body {
 
     line-height: 0.8;
 
-    letter-spacing: -0.04em;
+    text-align: center;
 
     color: #250205;
+
+    transform: scaleX(1.35);
+    transform-origin: center;
 
     pointer-events: none;
     user-select: none;
 }
+
+
 /* =========================
    RED MOUSE DOT
 ========================= */
@@ -121,12 +131,14 @@ body {
     inset: 0;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     background: #000;
 
     z-index: 100000;
+
     pointer-events: none;
 
     animation: introFade 1.5s ease forwards;
@@ -141,7 +153,9 @@ body {
     animation: logoFade 1.5s ease forwards;
 }
 
+
 @keyframes introFade {
+
     0% {
         opacity: 1;
     }
@@ -156,7 +170,9 @@ body {
     }
 }
 
+
 @keyframes logoFade {
+
     0% {
         opacity: 0;
         transform: scale(0.8);
@@ -206,7 +222,9 @@ body {
     text-align: center;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
 
     gap: 25px;
@@ -219,19 +237,25 @@ body {
 
 h1 {
     font-size: clamp(3rem, 8vw, 7rem);
+
     font-weight: 900;
+
     letter-spacing: 0.08em;
 }
 
 h2 {
     font-size: clamp(2.5rem, 6vw, 5rem);
+
     font-weight: 900;
+
     letter-spacing: 0.06em;
+
     text-transform: uppercase;
 }
 
 h3 {
     font-size: 1.8rem;
+
     letter-spacing: 0.04em;
 }
 
@@ -244,6 +268,7 @@ p {
     max-width: 650px;
 
     font-size: 1rem;
+
     line-height: 1.7;
 
     color: #aaa;
@@ -258,11 +283,13 @@ p {
     padding: 14px 30px;
 
     background: transparent;
+
     color: #fff;
 
     border: 1px solid #555;
 
     font-size: 0.9rem;
+
     letter-spacing: 0.12em;
 
     text-transform: uppercase;
@@ -278,6 +305,7 @@ p {
 
 .btn:hover {
     background: #fff;
+
     color: #000;
 
     border-color: #fff;
@@ -355,33 +383,41 @@ p {
 
 @media (max-width: 700px) {
 
-    /* Completely remove giant background on mobile */
+    /* REMOVE BACKGROUND COMPLETELY */
 
     .background-word {
         display: none;
     }
 
+
     .cards {
         grid-template-columns: 1fr;
+
         width: 90%;
     }
+
 
     .card {
         padding: 25px;
     }
 
+
     .nav {
         flex-direction: column;
+
         width: 100%;
     }
+
 
     .nav .btn {
         width: 100%;
     }
 
+
     .btn {
         padding: 13px 24px;
     }
+
 
     .cursor {
         width: 14px;
