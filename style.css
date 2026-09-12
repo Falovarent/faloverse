@@ -40,14 +40,17 @@ body {
    GIANT FALOVERSE BACKGROUND
 ========================= */
 
+@font-face {
+    font-family: "Further";
+    src: url("Further.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 .background-word {
     position: fixed;
-
     top: 7vh;
-    bottom: 7vh;
     left: 0;
-    right: 0;
-
     width: 100vw;
     height: 86vh;
 
@@ -55,35 +58,132 @@ body {
     align-items: center;
     justify-content: center;
 
-    overflow: hidden;
+    gap: 0.2vw;
 
+    overflow: hidden;
     pointer-events: none;
     user-select: none;
-
     z-index: 1;
 }
 
-/* EACH LETTER GETS ITS OWN SPACE */
-
 .letter {
     font-family: "Further", sans-serif;
-
-    font-size: 88vh;
-    font-weight: normal;
-
+    font-size: 86vh;
     line-height: 0.8;
-
-    margin: 0 0.8vw;
-
-    transform: scaleX(0.55);
-    transform-origin: center;
-
     color: #250205;
 
     flex: 0 0 auto;
 
+    transform: scaleX(0.65);
+    transform-origin: center;
+
+    position: relative;
+}
+
+/* LIVE GLITCH LAYER */
+.background-word::before,
+.background-word::after {
+    content: "FALOVERSE";
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    font-family: "Further", sans-serif;
+    font-size: 86vh;
+    line-height: 0.8;
+    white-space: nowrap;
+
+    color: #450309;
+
     pointer-events: none;
-    user-select: none;
+    z-index: -1;
+}
+
+/* first moving distortion */
+.background-word::before {
+    transform: translate(-50%, -50%);
+
+    animation: glitchOne 2.8s infinite steps(1);
+}
+
+/* second moving distortion */
+.background-word::after {
+    transform: translate(-50%, -50%);
+
+    animation: glitchTwo 3.7s infinite steps(1);
+}
+
+
+/* =========================
+   LIVE GLITCH ANIMATION
+========================= */
+
+@keyframes glitchOne {
+
+    0%, 72% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    }
+
+    73% {
+        clip-path: inset(20% 0 65% 0);
+        transform: translate(calc(-50% - 12px), -50%);
+        opacity: 0.45;
+    }
+
+    74% {
+        clip-path: inset(55% 0 30% 0);
+        transform: translate(calc(-50% + 18px), -50%);
+        opacity: 0.6;
+    }
+
+    75% {
+        clip-path: inset(35% 0 50% 0);
+        transform: translate(calc(-50% - 7px), -50%);
+        opacity: 0.3;
+    }
+
+    76%, 100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    }
+}
+
+
+@keyframes glitchTwo {
+
+    0%, 48% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    }
+
+    49% {
+        clip-path: inset(65% 0 20% 0);
+        transform: translate(calc(-50% + 15px), -50%);
+        opacity: 0.4;
+    }
+
+    50% {
+        clip-path: inset(30% 0 55% 0);
+        transform: translate(calc(-50% - 20px), -50%);
+        opacity: 0.55;
+    }
+
+    51% {
+        clip-path: inset(75% 0 10% 0);
+        transform: translate(calc(-50% + 5px), -50%);
+        opacity: 0.3;
+    }
+
+    52%, 100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    }
 }
 
 /* =========================
