@@ -30,12 +30,11 @@ body {
 ========================= */
 
 @font-face {
-    font-family: "Pillar";
-    src: url("Pillar.ttf") format("truetype");
+    font-family: "Further";
+    src: url("Further.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
 }
-
 
 /* =========================
    GIANT FALOVERSE BACKGROUND
@@ -67,19 +66,16 @@ body {
 /* EACH LETTER GETS ITS OWN SPACE */
 
 .letter {
-    font-family: "Pillar", sans-serif;
+    font-family: "Further", sans-serif;
 
     font-size: 88vh;
     font-weight: normal;
 
     line-height: 0.8;
 
-    /* SPACE BETWEEN LETTERS */
     margin: 0 0.8vw;
 
-    /* NARROW LETTERS */
     transform: scaleX(0.55);
-
     transform-origin: center;
 
     color: #250205;
