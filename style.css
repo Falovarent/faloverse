@@ -520,3 +520,50 @@ p {
         height: 14px;
     }
 }
+
+.background-word {
+    position: fixed;
+    top: 7vh;
+    left: 0;
+    width: 100vw;
+    height: 86vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0;
+    overflow: hidden;
+
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+}
+
+.letter {
+    font-family: "Further", sans-serif;
+    font-size: 86vh;
+    font-weight: normal;
+    line-height: 0.8;
+
+    color: #250205;
+
+    flex: 0 0 auto;
+
+    /* Makes the letters narrow and close together */
+    transform: scaleX(0.65);
+    transform-origin: center;
+}
+
+/* The separator */
+.separator {
+    font-family: "Further", sans-serif;
+    font-size: 55vh;
+    line-height: 1;
+
+    color: #250205;
+
+    margin: 0 2vw;
+
+    transform: scaleX(0.7);
+}
