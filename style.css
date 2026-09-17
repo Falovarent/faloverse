@@ -330,6 +330,11 @@ body {
 /* =========================
    HEADINGS
 ========================= */
+h1 {
+    font-family: "SoraThin", sans-serif;
+    font-weight: 100;
+    letter-spacing: 0.08em;
+}
 
 h1 {
     font-size: clamp(3rem, 8vw, 7rem);
