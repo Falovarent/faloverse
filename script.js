@@ -64,3 +64,19 @@ function goTo(pageId) {
     }
 
 }
+
+window.onload = () => {
+    const intro = document.getElementById("intro");
+
+    intro.style.display = "flex";
+
+    setTimeout(() => {
+        intro.style.opacity = "0";
+
+        setTimeout(() => {
+            intro.style.display = "none";
+            intro.style.opacity = "1";
+        }, 500);
+
+    }, 3000);
+};
