@@ -250,37 +250,18 @@ body {
 
 /* Line underneath logo */
 .loading-line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 180px;
+    height: 5px;
 
     margin-top: 18px;
+
+    background: #fff;
+    border-radius: 999px;
 
     transform: scaleX(0);
     transform-origin: center;
 
     animation: extendLine 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.loading-line .line {
-    width: 180px;
-    height: 1px;
-    background: #fff;
-}
-
-.loading-line .arrow {
-    color: #fff;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    line-height: 1;
-}
-
-.loading-line .left {
-    margin-right: 7px;
-}
-
-.loading-line .right {
-    margin-left: 7px;
 }
 
 @keyframes extendLine {
@@ -292,7 +273,6 @@ body {
         transform: scaleX(1);
     }
 }
-
 /* =========================
    PAGES
 ========================= */
