@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title> The District </title>
+    <title>The District</title>
 
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="style.css">
@@ -17,19 +17,27 @@
          BACKGROUND
     ================================= -->
 
-   <div class="background-word" aria-hidden="true">
-    <span class="letter">U</span>
-    <span class="letter">N</span>
-    <span class="letter">D</span>
-    <span class="letter">E</span>
-    <span class="letter">R</span>
-    <span class="letter">G</span>
-    <span class="letter">R</span>
-    <span class="letter">O</span>
-    <span class="letter">U</span>
-    <span class="letter">N</span>
-    <span class="letter">D</span>
-</div>
+    <div class="background-word" aria-hidden="true">
+
+        <div class="underground">
+
+            <span class="letter">U</span>
+            <span class="letter">N</span>
+            <span class="letter">D</span>
+            <span class="letter">E</span>
+            <span class="letter">R</span>
+            <span class="letter">G</span>
+            <span class="letter">R</span>
+            <span class="letter">O</span>
+            <span class="letter">U</span>
+            <span class="letter">N</span>
+            <span class="letter">D</span>
+
+        </div>
+
+        <span class="district">DISTRICT</span>
+
+    </div>
 
 
     <!-- ================================
@@ -40,26 +48,37 @@
 
 
     <!-- ================================
-         INTRO
+         INTRO / LOADING
     ================================= -->
 
-  <div id="intro">
-    <div class="intro-content">
-        <img src="logo.png" alt="logo">
-        <div class="loading-line"></div>
+    <div id="intro">
+
+        <div class="intro-content">
+
+            <img src="logo.png" alt="Underground District logo">
+
+            <div class="loading-line"></div>
+
+        </div>
+
     </div>
-</div>
+
+
     <!-- ================================
          HOME
     ================================= -->
 
-    <section class="page active" id="home">
+    <section class="page" id="home">
 
         <div class="center">
 
-          <h1>District</h1>
+            <h1>District</h1>
 
-            <button class="btn" onclick="goTo('comics')">
+            <p class="tagline">
+                NOTHING STAYS BURIED.
+            </p>
+
+            <button class="btn" onclick="scrollToSection('comics')">
                 Enter The World
             </button>
 
@@ -82,20 +101,16 @@
 
                 <h3>Silent Kill</h3>
 
-                <button class="btn" onclick="goTo('book')">
+                <p>
+                    A dark story of power, death, and chaos.
+                </p>
+
+                <p class="release">
+                    CHAPTER 01 · COMING SOON
+                </p>
+
+                <button class="btn" onclick="scrollToSection('book')">
                     Read More
-                </button>
-
-            </div>
-
-            <div class="nav">
-
-                <button class="btn" onclick="goTo('home')">
-                    Before
-                </button>
-
-                <button class="btn" onclick="goTo('members')">
-                    Next
                 </button>
 
             </div>
@@ -115,21 +130,13 @@
 
             <h2>Silent Kill</h2>
 
-            <p>
+            <p class="description">
                 ADD YOUR FULL DESCRIPTION HERE
             </p>
 
-            <div class="nav">
-
-                <button class="btn" onclick="goTo('comics')">
-                    Before
-                </button>
-
-                <button class="btn" onclick="goTo('members')">
-                    Next
-                </button>
-
-            </div>
+            <button class="btn" onclick="scrollToSection('contact')">
+                Contact
+            </button>
 
         </div>
 
@@ -137,57 +144,28 @@
 
 
     <!-- ================================
-         MEMBERS
+         CONTACT
     ================================= -->
 
-    <section class="page" id="members">
+    <section class="page" id="contact">
 
         <div class="center">
 
-            <h2>Members</h2>
+            <h2>Contact</h2>
 
-            <div class="cards">
+            <div class="contact-links">
 
-                <div class="card">
+                <a href="mailto:faloverse@gmail.com">
+                    faloverse@gmail.com
+                </a>
 
-                    <h3>Member 1</h3>
-
-                    <p>
-                        Role / description
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>Member 2</h3>
-
-                    <p>
-                        Role / description
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>Member 3</h3>
-
-                    <p>
-                        Role / description
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="nav">
-
-                <button class="btn" onclick="goTo('comics')">
-                    Before
-                </button>
+                <a
+                    href="https://instagram.com/faloverse.studio"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Instagram
+                </a>
 
             </div>
 
