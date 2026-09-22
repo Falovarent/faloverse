@@ -570,3 +570,27 @@ h6 {
     font-weight: 100;
     letter-spacing: 0.08em;
 }
+
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
+
+body {
+    margin: 0;
+    background: #000;
+    overflow-x: hidden;
+}
+
+.page {
+    min-height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
