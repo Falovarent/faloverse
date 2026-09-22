@@ -1,14 +1,54 @@
+/* =================================
+   FONT
+================================= */
+
+@font-face {
+    font-family: "Further";
+    src: url("Further.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "SoraThin";
+    src: url("Sora-Thin.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+}
+
+
+/* =================================
+   RESET
+================================= */
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-html,
-body {
-    width: 100%;
-    height: 100%;
+html {
+    margin: 0;
+    padding: 0;
+
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background: #000;
+    color: #fff;
+
+    overflow-x: hidden;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* =================================
+   HIDE NORMAL CURSOR
+================================= */
 
 html,
 body,
@@ -17,178 +57,10 @@ a {
     cursor: none;
 }
 
-body {
-    background: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-}
 
-
-/* =========================
-   PILLAR FONT
-========================= */
-
-@font-face {
-    font-family: "Further";
-    src: url("Further.otf") format("opentype");
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* =========================
-   GIANT FALOVERSE BACKGROUND
-========================= */
-
-@font-face {
-    font-family: "Further";
-    src: url("Further.otf") format("opentype");
-    font-weight: normal;
-    font-style: normal;
-}
-
-.background-word {
-    position: fixed;
-    top: 7vh;
-    left: 0;
-    width: 100vw;
-    height: 86vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 0.2vw;
-
-    overflow: hidden;
-    pointer-events: none;
-    user-select: none;
-    z-index: 1;
-}
-
-.letter {
-    font-family: "Further", sans-serif;
-    font-size: 86vh;
-    line-height: 0.8;
-    color: #250205;
-
-    flex: 0 0 auto;
-
-    transform: scaleX(0.65);
-    transform-origin: center;
-
-    position: relative;
-}
-
-/* LIVE GLITCH LAYER */
-.background-word::before,
-.background-word::after {
-    content: "FALOVERSE";
-
-    position: absolute;
-    left: 50%;
-    top: 50%;
-
-    font-family: "Further", sans-serif;
-    font-size: 86vh;
-    line-height: 0.8;
-    white-space: nowrap;
-
-    color: #450309;
-
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* first moving distortion */
-.background-word::before {
-    transform: translate(-50%, -50%);
-
-    animation: glitchOne 2.8s infinite steps(1);
-}
-
-/* second moving distortion */
-.background-word::after {
-    transform: translate(-50%, -50%);
-
-    animation: glitchTwo 3.7s infinite steps(1);
-}
-
-
-/* =========================
-   LIVE GLITCH ANIMATION
-========================= */
-
-@keyframes glitchOne {
-
-    0%, 72% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(-50%, -50%);
-        opacity: 0;
-    }
-
-    73% {
-        clip-path: inset(20% 0 65% 0);
-        transform: translate(calc(-50% - 12px), -50%);
-        opacity: 0.45;
-    }
-
-    74% {
-        clip-path: inset(55% 0 30% 0);
-        transform: translate(calc(-50% + 18px), -50%);
-        opacity: 0.6;
-    }
-
-    75% {
-        clip-path: inset(35% 0 50% 0);
-        transform: translate(calc(-50% - 7px), -50%);
-        opacity: 0.3;
-    }
-
-    76%, 100% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(-50%, -50%);
-        opacity: 0;
-    }
-}
-
-
-@keyframes glitchTwo {
-
-    0%, 48% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(-50%, -50%);
-        opacity: 0;
-    }
-
-    49% {
-        clip-path: inset(65% 0 20% 0);
-        transform: translate(calc(-50% + 15px), -50%);
-        opacity: 0.4;
-    }
-
-    50% {
-        clip-path: inset(30% 0 55% 0);
-        transform: translate(calc(-50% - 20px), -50%);
-        opacity: 0.55;
-    }
-
-    51% {
-        clip-path: inset(75% 0 10% 0);
-        transform: translate(calc(-50% + 5px), -50%);
-        opacity: 0.3;
-    }
-
-    52%, 100% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(-50%, -50%);
-        opacity: 0;
-    }
-}
-
-/* =========================
-   RED MOUSE DOT
-========================= */
+/* =================================
+   RED MOUSE
+================================= */
 
 .cursor {
     position: fixed;
@@ -218,164 +90,194 @@ body {
 }
 
 
-/* =========================
-   INTRO
-========================= */
-#intro {
+/* =================================
+   BACKGROUND WORD
+================================= */
+
+.background-word {
     position: fixed;
+
     inset: 0;
-    background: #000;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    z-index: 999999;
+    pointer-events: none;
+    user-select: none;
 
-    transition: opacity 0.5s ease;
+    overflow: hidden;
+
+    z-index: 1;
 }
 
-.intro-content {
+.underground {
+    position: absolute;
+
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    gap: 0;
 }
 
-.intro-content img {
-    width: 180px;
-    height: auto;
-    display: block;
-}
+.letter {
+    font-family: "Further", sans-serif;
 
-/* Line underneath logo */
-.loading-line {
-    width: 180px;
-    height: 5px;
+    font-size: 86vh;
 
-    margin-top: 18px;
+    line-height: 0.8;
 
-    background: #fff;
-    border-radius: 999px;
+    font-weight: normal;
 
-    transform: scaleX(0);
+    color: #250205;
+
+    transform: scaleX(0.65);
+
     transform-origin: center;
 
-    animation: extendLine 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    margin: 0 -1.2vw;
 }
 
-@keyframes extendLine {
-    0% {
-        transform: scaleX(0);
-    }
+.district {
+    position: absolute;
 
-    100% {
-        transform: scaleX(1);
-    }
+    font-family: "Further", sans-serif;
+
+    font-size: 10vw;
+
+    font-weight: normal;
+
+    letter-spacing: 0.12em;
+
+    color: #450309;
+
+    z-index: 2;
+
+    transform: translateY(1vh);
 }
-/* =========================
-   PAGES
-========================= */
+
+
+/* =================================
+   FULL SCREEN SECTIONS
+================================= */
 
 .page {
-    position: relative;
+    width: 100%;
+    min-height: 100vh;
 
-    width: 100vw;
-    height: 100vh;
-
-    display: none;
-
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    z-index: 10;
+    position: relative;
+
+    z-index: 2;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
-.page.active {
-    display: flex;
-}
 
-
-/* =========================
+/* =================================
    CENTER CONTENT
-========================= */
+================================= */
 
 .center {
-    width: min(900px, 90%);
+    width: min(900px, 90vw);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
 
     text-align: center;
 
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 25px;
+    position: relative;
+    z-index: 3;
 }
 
 
-/* =========================
+/* =================================
    HEADINGS
-========================= */
-h1 {
+================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: "SoraThin", sans-serif;
+
     font-weight: 100;
+
     letter-spacing: 0.08em;
+
+    margin: 0;
+}
+
+h1 {
+    font-size: clamp(60px, 9vw, 150px);
+
+    line-height: 1;
 }
 
 h2 {
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(45px, 7vw, 100px);
 
-    font-weight: 900;
-
-    letter-spacing: 0.06em;
-
-    text-transform: uppercase;
+    line-height: 1;
 }
 
 h3 {
-    font-size: 1.8rem;
+    font-size: clamp(30px, 4vw, 55px);
 
-    letter-spacing: 0.04em;
+    line-height: 1.1;
 }
 
 
-/* =========================
-   TEXT
-========================= */
+/* =================================
+   TAGLINE
+================================= */
 
-p {
-    max-width: 650px;
+.tagline {
+    margin-top: 25px;
 
-    font-size: 1rem;
+    font-family: "SoraThin", sans-serif;
 
-    line-height: 1.7;
+    font-size: clamp(12px, 1.4vw, 18px);
+
+    letter-spacing: 0.35em;
 
     color: #aaa;
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/* =================================
+   BUTTON
+================================= */
 
 .btn {
-    padding: 14px 30px;
+    margin-top: 35px;
+
+    padding: 14px 32px;
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
 
     background: transparent;
 
     color: #fff;
 
-    border: 1px solid #555;
+    font-family: "SoraThin", sans-serif;
 
-    font-size: 0.9rem;
+    font-size: 14px;
 
-    letter-spacing: 0.12em;
+    font-weight: 100;
+
+    letter-spacing: 0.15em;
 
     text-transform: uppercase;
-
-    cursor: none;
 
     transition:
         background 0.25s ease,
@@ -391,206 +293,230 @@ p {
 
     border-color: #fff;
 
-    transform: translateY(-2px);
+    transform: scale(1.04);
 }
 
 
-/* =========================
-   CARDS
-========================= */
+/* =================================
+   COMIC CARD
+================================= */
 
 .card {
-    width: min(600px, 90%);
+    margin-top: 40px;
 
-    padding: 35px;
+    width: min(500px, 85vw);
 
-    background: rgba(10, 10, 10, 0.8);
+    padding: 45px 35px;
 
-    border: 1px solid #252525;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background: rgba(0, 0, 0, 0.35);
+
+    text-align: center;
 
     transition:
         border-color 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.3s ease;
+        box-shadow 0.3s ease;
 }
 
 .card:hover {
-    border-color: #700000;
+    border-color: rgba(255, 0, 0, 0.5);
 
     box-shadow:
-        0 0 30px rgba(100, 0, 0, 0.2);
+        0 0 30px rgba(120, 0, 0, 0.18);
+}
 
-    transform: translateY(-4px);
+.card p {
+    margin-top: 20px;
+
+    color: #aaa;
+
+    font-size: 14px;
+
+    line-height: 1.6;
 }
 
 
-/* =========================
-   MEMBERS
-========================= */
+/* =================================
+   RELEASE TEXT
+================================= */
 
-.cards {
-    width: 100%;
+.release {
+    font-family: "SoraThin", sans-serif;
 
-    display: grid;
+    font-size: 12px !important;
 
-    grid-template-columns: repeat(3, 1fr);
+    letter-spacing: 0.18em;
 
-    gap: 20px;
-}
-
-.cards .card {
-    width: 100%;
+    color: #777 !important;
 }
 
 
-/* =========================
-   NAVIGATION
-========================= */
+/* =================================
+   SILENT KILL DESCRIPTION
+================================= */
 
-.nav {
+.description {
+    width: min(650px, 85vw);
+
+    margin-top: 30px;
+
+    color: #aaa;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+    text-align: center;
+}
+
+
+/* =================================
+   CONTACT
+================================= */
+
+.contact-links {
     display: flex;
 
-    justify-content: center;
+    flex-direction: column;
 
-    gap: 15px;
+    align-items: center;
 
-    margin-top: 10px;
+    gap: 22px;
+
+    margin-top: 40px;
+}
+
+.contact-links a {
+    color: #fff;
+
+    text-decoration: none;
+
+    font-family: "SoraThin", sans-serif;
+
+    font-size: 16px;
+
+    font-weight: 100;
+
+    letter-spacing: 0.08em;
+
+    transition:
+        color 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.contact-links a:hover {
+    color: #ff1010;
 }
 
 
-/* =========================
+/* =================================
+   INTRO
+================================= */
+
+#intro {
+    position: fixed;
+
+    inset: 0;
+
+    background: #000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 999999;
+
+    opacity: 1;
+
+    transition: opacity 0.5s ease;
+}
+
+.intro-content {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.intro-content img {
+    width: 180px;
+
+    height: auto;
+
+    display: block;
+}
+
+.loading-line {
+    width: 180px;
+
+    height: 6px;
+
+    margin-top: 18px;
+
+    background: #fff;
+
+    border-radius: 999px;
+
+    transform: scaleX(0);
+
+    transform-origin: center;
+
+    animation:
+        extendLine 3s cubic-bezier(0.22, 1, 0.36, 1)
+        forwards;
+}
+
+@keyframes extendLine {
+
+    0% {
+        transform: scaleX(0);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+
+}
+
+
+/* =================================
    MOBILE
-========================= */
+================================= */
 
-@media (max-width: 700px) {
-
-    /* REMOVE BACKGROUND COMPLETELY */
+@media (max-width: 600px) {
 
     .background-word {
         display: none;
     }
 
-
-    .cards {
-        grid-template-columns: 1fr;
-
-        width: 90%;
+    h1 {
+        font-size: 15vw;
     }
 
+    h2 {
+        font-size: 12vw;
+    }
+
+    .tagline {
+        font-size: 11px;
+
+        letter-spacing: 0.22em;
+    }
 
     .card {
-        padding: 25px;
+        padding: 35px 25px;
     }
 
-
-    .nav {
-        flex-direction: column;
-
-        width: 100%;
+    .intro-content img {
+        width: 150px;
     }
 
-
-    .nav .btn {
-        width: 100%;
+    .loading-line {
+        width: 150px;
     }
 
-
-    .btn {
-        padding: 13px 24px;
-    }
-
-
-    .cursor {
-        width: 14px;
-        height: 14px;
-    }
-}
-
-.background-word {
-    position: fixed;
-    top: 7vh;
-    left: 0;
-    width: 100vw;
-    height: 86vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 0;
-    overflow: hidden;
-
-    pointer-events: none;
-    user-select: none;
-    z-index: 1;
-}
-
-.letter {
-    font-family: "Further", sans-serif;
-    font-size: 86vh;
-    font-weight: normal;
-    line-height: 0.8;
-
-    color: #250205;
-
-    flex: 0 0 auto;
-
-    /* Makes the letters narrow and close together */
-    transform: scaleX(0.65);
-    transform-origin: center;
-}
-
-/* The separator */
-.separator {
-    font-family: "Further", sans-serif;
-    font-size: 55vh;
-    line-height: 1;
-
-    color: #250205;
-
-    margin: 0 2vw;
-
-    transform: scaleX(0.7);
-}
-
-@font-face {
-    font-family: "SoraThin";
-    src: url("Sora-Thin.ttf") format("truetype");
-    font-weight: 100;
-    font-style: normal;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "SoraThin", sans-serif;
-    font-weight: 100;
-    letter-spacing: 0.08em;
-}
-
-
-html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-}
-
-body {
-    margin: 0;
-    background: #000;
-    overflow-x: hidden;
-}
-
-.page {
-    min-height: 100vh;
-    width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
 }
