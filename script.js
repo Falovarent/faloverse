@@ -1,43 +1,57 @@
+/* =================================
+   RED MOUSE CURSOR
+================================= */
+
 const cursor = document.querySelector(".cursor");
 
 document.addEventListener("mousemove", function (event) {
+
     cursor.style.left = event.clientX + "px";
     cursor.style.top = event.clientY + "px";
+
     cursor.style.opacity = "1";
+
 });
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
 
-function goTo(pageId) {
+/* =================================
+   SECTION SCROLLING
+================================= */
 
-    const pages = document.querySelectorAll(".page");
+function scrollToSection(id) {
 
-    pages.forEach(function (page) {
-        page.classList.remove("active");
-    });
+    const section = document.getElementById(id);
 
-    const target = document.getElementById(pageId);
-
-    if (target) {
-        target.classList.add("active");
+    if (!section) {
+        return;
     }
+
+    section.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
 }
 
-window.onload = () => {
+
+/* =================================
+   INTRO / LOADING SCREEN
+================================= */
+
+window.addEventListener("load", function () {
+
     const intro = document.getElementById("intro");
 
-    intro.style.display = "flex";
+    setTimeout(function () {
 
-    setTimeout(() => {
         intro.style.opacity = "0";
 
-        setTimeout(() => {
+        setTimeout(function () {
+
             intro.style.display = "none";
-            intro.style.opacity = "1";
+
         }, 500);
 
     }, 3000);
-};
+
+});
