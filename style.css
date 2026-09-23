@@ -818,4 +818,209 @@ h3 {
         padding: 35px 25px;
     }
 
+   /* =========================================================
+   PERMANENT BACKGROUND GLITCH
+   INFINITE LOOP
+========================================================= */
+
+.letter.always-glitch::before {
+    animation:
+        undergroundRed 1.35s steps(1, end) infinite;
+}
+
+.letter.always-glitch::after {
+    animation:
+        undergroundDark 1.05s steps(1, end) infinite;
+}
+
+
+/* =========================================================
+   RED GLITCH
+========================================================= */
+
+@keyframes undergroundRed {
+
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+        clip-path: inset(0 0 100% 0);
+    }
+
+    8% {
+        opacity: 0.8;
+        transform: translateX(-8px);
+        clip-path: inset(14% 0 76% 0);
+    }
+
+    11% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    28% {
+        opacity: 0.7;
+        transform: translateX(6px);
+        clip-path: inset(45% 0 47% 0);
+    }
+
+    31% {
+        opacity: 0;
+    }
+
+    43% {
+        opacity: 0;
+    }
+
+    46% {
+        opacity: 0.8;
+        transform: translateX(-11px);
+        clip-path: inset(68% 0 22% 0);
+    }
+
+    49% {
+        opacity: 0;
+    }
+
+    63% {
+        opacity: 0;
+    }
+
+    66% {
+        opacity: 0.65;
+        transform: translateX(7px);
+        clip-path: inset(30% 0 60% 0);
+    }
+
+    69% {
+        opacity: 0;
+    }
+
+    82% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 0.8;
+        transform: translateX(-5px);
+        clip-path: inset(80% 0 10% 0);
+    }
+
+    88% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================================================
+   DARK GLITCH
+========================================================= */
+
+@keyframes undergroundDark {
+
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+        clip-path: inset(100% 0 0 0);
+    }
+
+    13% {
+        opacity: 0;
+    }
+
+    16% {
+        opacity: 0.75;
+        transform: translateX(10px);
+        clip-path: inset(24% 0 63% 0);
+    }
+
+    19% {
+        opacity: 0;
+    }
+
+    32% {
+        opacity: 0;
+    }
+
+    35% {
+        opacity: 0.7;
+        transform: translateX(-7px);
+        clip-path: inset(54% 0 35% 0);
+    }
+
+    38% {
+        opacity: 0;
+    }
+
+    51% {
+        opacity: 0;
+    }
+
+    54% {
+        opacity: 0.8;
+        transform: translateX(9px);
+        clip-path: inset(74% 0 16% 0);
+    }
+
+    57% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    73% {
+        opacity: 0.65;
+        transform: translateX(-12px);
+        clip-path: inset(7% 0 84% 0);
+    }
+
+    76% {
+        opacity: 0;
+    }
+
+    91% {
+        opacity: 0;
+    }
+
+    94% {
+        opacity: 0.75;
+        transform: translateX(6px);
+        clip-path: inset(41% 0 48% 0);
+    }
+
+    97% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================================================
+   LOADING SCREEN FIX
+========================================================= */
+
+#intro {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#intro.intro-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 }
