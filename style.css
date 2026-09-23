@@ -147,7 +147,50 @@ a {
 
 
 /* =========================================================
-   GLITCH COPY
+   UNDERGROUND
+   STATIC POSITION
+========================================================= */
+
+.word {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+}
+
+
+.letter {
+    position: relative;
+
+    display: block;
+
+    font-family: "Further", Impact, sans-serif;
+
+    font-size: clamp(250px, 30vw, 560px);
+
+    line-height: 0.75;
+
+    color: #250205;
+
+    letter-spacing: -0.065em;
+
+    margin-left: -0.015em;
+    margin-right: -0.015em;
+
+    /*
+       THE WORD NEVER MOVES.
+    */
+
+    transform: none;
+}
+
+
+/* =========================================================
+   CONSTANT GLITCH COPIES
 ========================================================= */
 
 .letter::before,
@@ -165,49 +208,225 @@ a {
 
     font-family: inherit;
 
-    color: inherit;
+    pointer-events: none;
 
     opacity: 0;
-
-    pointer-events: none;
 }
 
 
-/* RED DIGITAL OFFSET */
+/* =========================================================
+   RED GLITCH CHANNEL
+========================================================= */
 
 .letter::before {
+
     color: #65070d;
 
     clip-path: inset(
-        var(--red-top, 0%)
-        0
-        var(--red-bottom, 100%)
-        0
+        0 0 0 0
     );
 
-    transform: translate(
-        var(--red-x, 0px),
-        0
-    );
+    animation:
+        glitchRed
+        1.7s
+        steps(1, end)
+        infinite;
 }
 
 
-/* DARK OFFSET */
+/* =========================================================
+   DARK GLITCH CHANNEL
+========================================================= */
 
 .letter::after {
+
     color: #090000;
 
     clip-path: inset(
-        var(--dark-top, 0%)
-        0
-        var(--dark-bottom, 100%)
-        0
+        0 0 0 0
     );
 
-    transform: translate(
-        var(--dark-x, 0px),
-        0
-    );
+    animation:
+        glitchDark
+        1.25s
+        steps(1, end)
+        infinite;
+}
+
+
+/* =========================================================
+   RED GLITCH ANIMATION
+========================================================= */
+
+@keyframes glitchRed {
+
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+        clip-path: inset(0 0 100% 0);
+    }
+
+    7% {
+        opacity: 0.8;
+        transform: translateX(-7px);
+        clip-path: inset(12% 0 76% 0);
+    }
+
+    9% {
+        opacity: 0;
+    }
+
+    19% {
+        opacity: 0;
+    }
+
+    22% {
+        opacity: 0.7;
+        transform: translateX(5px);
+        clip-path: inset(48% 0 44% 0);
+    }
+
+    24% {
+        opacity: 0;
+    }
+
+    37% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0.8;
+        transform: translateX(-10px);
+        clip-path: inset(70% 0 18% 0);
+    }
+
+    43% {
+        opacity: 0;
+    }
+
+    58% {
+        opacity: 0;
+    }
+
+    61% {
+        opacity: 0.65;
+        transform: translateX(8px);
+        clip-path: inset(30% 0 58% 0);
+    }
+
+    63% {
+        opacity: 0;
+    }
+
+    78% {
+        opacity: 0;
+    }
+
+    81% {
+        opacity: 0.8;
+        transform: translateX(-5px);
+        clip-path: inset(82% 0 8% 0);
+    }
+
+    84% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+}
+
+
+/* =========================================================
+   DARK GLITCH ANIMATION
+========================================================= */
+
+@keyframes glitchDark {
+
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+        clip-path: inset(100% 0 0 0);
+    }
+
+    12% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.75;
+        transform: translateX(11px);
+        clip-path: inset(25% 0 62% 0);
+    }
+
+    17% {
+        opacity: 0;
+    }
+
+    31% {
+        opacity: 0;
+    }
+
+    34% {
+        opacity: 0.7;
+        transform: translateX(-8px);
+        clip-path: inset(55% 0 32% 0);
+    }
+
+    36% {
+        opacity: 0;
+    }
+
+    49% {
+        opacity: 0;
+    }
+
+    52% {
+        opacity: 0.8;
+        transform: translateX(6px);
+        clip-path: inset(76% 0 14% 0);
+    }
+
+    54% {
+        opacity: 0;
+    }
+
+    69% {
+        opacity: 0;
+    }
+
+    72% {
+        opacity: 0.65;
+        transform: translateX(-12px);
+        clip-path: inset(8% 0 83% 0);
+    }
+
+    74% {
+        opacity: 0;
+    }
+
+    89% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0.7;
+        transform: translateX(9px);
+        clip-path: inset(42% 0 47% 0);
+    }
+
+    94% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
 }
 
 
