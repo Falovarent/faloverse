@@ -1,6 +1,6 @@
-/* =================================
-   FONT
-================================= */
+/* =========================================================
+   FONTS
+========================================================= */
 
 @font-face {
     font-family: "Further";
@@ -17,38 +17,35 @@
 }
 
 
-/* =================================
+/* =========================================================
    RESET
-================================= */
+========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
-html {
+html,
+body {
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
-
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-
     background: #000;
     color: #fff;
 
-    overflow-x: hidden;
+    overflow: hidden;
 
     font-family: Arial, sans-serif;
 }
 
 
-/* =================================
-   HIDE NORMAL CURSOR
-================================= */
+/* =========================================================
+   HIDE REAL CURSOR
+========================================================= */
 
 html,
 body,
@@ -58,224 +55,323 @@ a {
 }
 
 
-/* =================================
-   RED MOUSE
-================================= */
+/* =========================================================
+   RED CURSOR
+========================================================= */
 
 .cursor {
     position: fixed;
 
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
 
     left: 0;
     top: 0;
 
+    transform: translate(-50%, -50%);
+
     border-radius: 50%;
 
-    background: #ff1010;
+    background: #ff1111;
+
+    box-shadow:
+        0 0 8px rgba(255, 20, 20, 1),
+        0 0 20px rgba(255, 0, 0, 0.75),
+        0 0 45px rgba(120, 0, 0, 0.45);
 
     pointer-events: none;
 
-    z-index: 99999;
-
-    transform: translate(-50%, -50%);
+    z-index: 10000;
 
     opacity: 0;
 
-    box-shadow:
-        0 0 7px rgba(255, 0, 0, 1),
-        0 0 20px rgba(180, 0, 0, 0.8),
-        0 0 45px rgba(90, 0, 0, 0.55);
+    transition: opacity 0.15s ease;
 }
 
 
-/* =================================
+/* =========================================================
    BACKGROUND WORD
-================================= */
+========================================================= */
 
 .background-word {
     position: fixed;
 
     inset: 0;
 
+    width: 100vw;
+    height: 100vh;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    overflow: hidden;
 
     pointer-events: none;
     user-select: none;
 
-    overflow: hidden;
-
-    z-index: 1;
-}
-
-.underground {
-    position: absolute;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 0;
-}
-
-.letter {
-    font-family: "Further", sans-serif;
-
-    font-size: 86vh;
-
-    line-height: 0.8;
-
-    font-weight: normal;
-
-    color: #250205;
-
-    transform: scaleX(0.65);
-
-    transform-origin: center;
-
-    margin: 0 -1.2vw;
-}
-
-.district {
-    position: absolute;
-
-    font-family: "Further", sans-serif;
-
-    font-size: 10vw;
-
-    font-weight: normal;
-
-    letter-spacing: 0.12em;
-
-    color: #450309;
-
-    z-index: 2;
-
-    transform: translateY(1vh);
+    z-index: 0;
 }
 
 
-/* =================================
-   FULL SCREEN SECTIONS
-================================= */
+/* =========================================================
+   UNDERGROUND WORD
+========================================================= */
 
-.page {
-    width: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+.word {
     position: relative;
 
-    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    white-space: nowrap;
+
+    width: max-content;
+
+    transform: translateZ(0);
 }
 
 
-/* =================================
-   CENTER CONTENT
-================================= */
+/* =========================================================
+   INDIVIDUAL LETTERS
 
-.center {
+   IMPORTANT:
+   Each letter moves independently.
+   The whole word does NOT move.
+========================================================= */
+
+.letter {
+    position: relative;
+
+    display: block;
+
+    font-family: "Further", Impact, sans-serif;
+
+    font-size: clamp(190px, 27vw, 520px);
+
+    line-height: 0.75;
+
+    font-weight: normal;
+
+    color: #260205;
+
+    letter-spacing: -0.055em;
+
+    margin-left: -0.018em;
+    margin-right: -0.018em;
+
+    transform:
+        translate3d(
+            var(--glitch-x, 0px),
+            var(--glitch-y, 0px),
+            0
+        )
+        skewX(var(--glitch-skew, 0deg));
+
+    opacity: var(--glitch-opacity, 1);
+
+    transition:
+        transform 0.08s linear,
+        opacity 0.08s linear;
+}
+
+
+/* =========================================================
+   GLITCH COLOR LAYERS
+
+   These create the little red/black interference around
+   letters without moving the entire word.
+========================================================= */
+
+.letter::before,
+.letter::after {
+    content: attr(data-letter);
+
+    position: absolute;
+
+    inset: 0;
+
+    font-family: inherit;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition: opacity 0.05s linear;
+}
+
+.letter::before {
+    color: #65070c;
+
+    transform:
+        translate(
+            var(--glitch-red-x, 0px),
+            var(--glitch-red-y, 0px)
+        );
+}
+
+.letter::after {
+    color: #090000;
+
+    transform:
+        translate(
+            var(--glitch-dark-x, 0px),
+            var(--glitch-dark-y, 0px)
+        );
+}
+
+.letter.glitch::before,
+.letter.glitch::after {
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   FULL SCREEN PAGES
+========================================================= */
+
+.page {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+}
+
+
+/* =========================================================
+   ACTIVE PAGE
+
+   ONLY ONE PAGE EXISTS VISUALLY AT A TIME.
+========================================================= */
+
+.page.active {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
     width: min(900px, 90vw);
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     text-align: center;
 
     position: relative;
-    z-index: 3;
+
+    z-index: 10;
 }
 
 
-/* =================================
+/* =========================================================
    HEADINGS
-================================= */
+========================================================= */
 
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
+h3 {
     font-family: "SoraThin", sans-serif;
 
     font-weight: 100;
 
-    letter-spacing: 0.08em;
-
     margin: 0;
+
+    color: #fff;
 }
 
 h1 {
-    font-size: clamp(60px, 9vw, 150px);
+    font-size: clamp(70px, 10vw, 150px);
 
     line-height: 1;
 }
 
 h2 {
-    font-size: clamp(45px, 7vw, 100px);
+    font-size: clamp(55px, 7vw, 105px);
 
     line-height: 1;
 }
 
 h3 {
-    font-size: clamp(30px, 4vw, 55px);
+    font-size: clamp(30px, 4vw, 52px);
 
     line-height: 1.1;
 }
 
 
-/* =================================
+/* =========================================================
    TAGLINE
-================================= */
+========================================================= */
 
 .tagline {
-    margin-top: 25px;
+    margin: 24px 0 0;
 
     font-family: "SoraThin", sans-serif;
 
-    font-size: clamp(12px, 1.4vw, 18px);
+    font-size: clamp(11px, 1.2vw, 17px);
 
     letter-spacing: 0.35em;
 
-    color: #aaa;
+    color: #999;
 }
 
 
-/* =================================
+/* =========================================================
    BUTTON
-================================= */
+========================================================= */
 
 .btn {
     margin-top: 35px;
 
-    padding: 14px 32px;
-
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    padding: 15px 34px;
 
     background: transparent;
+
+    border: 1px solid rgba(255, 255, 255, 0.65);
 
     color: #fff;
 
     font-family: "SoraThin", sans-serif;
 
-    font-size: 14px;
+    font-size: 13px;
 
     font-weight: 100;
 
-    letter-spacing: 0.15em;
+    letter-spacing: 0.16em;
 
     text-transform: uppercase;
 
@@ -297,20 +393,20 @@ h3 {
 }
 
 
-/* =================================
+/* =========================================================
    COMIC CARD
-================================= */
+========================================================= */
 
-.card {
-    margin-top: 40px;
+.comic-card {
+    width: min(520px, 86vw);
 
-    width: min(500px, 85vw);
+    margin-top: 45px;
 
-    padding: 45px 35px;
+    padding: 45px 40px;
 
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.16);
 
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.3);
 
     text-align: center;
 
@@ -319,15 +415,20 @@ h3 {
         box-shadow 0.3s ease;
 }
 
-.card:hover {
-    border-color: rgba(255, 0, 0, 0.5);
+.comic-card:hover {
+    border-color: rgba(255, 30, 30, 0.5);
 
     box-shadow:
-        0 0 30px rgba(120, 0, 0, 0.18);
+        0 0 35px rgba(100, 0, 0, 0.2);
 }
 
-.card p {
-    margin-top: 20px;
+
+/* =========================================================
+   COMIC DESCRIPTION
+========================================================= */
+
+.comic-description {
+    margin: 20px 0 0;
 
     color: #aaa;
 
@@ -337,43 +438,78 @@ h3 {
 }
 
 
-/* =================================
-   RELEASE TEXT
-================================= */
+/* =========================================================
+   RELEASE
+========================================================= */
 
 .release {
+    margin: 22px 0 0;
+
     font-family: "SoraThin", sans-serif;
 
-    font-size: 12px !important;
+    font-size: 11px;
 
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
 
-    color: #777 !important;
+    color: #666;
 }
 
 
-/* =================================
+/* =========================================================
    SILENT KILL DESCRIPTION
-================================= */
+========================================================= */
 
 .description {
     width: min(650px, 85vw);
 
-    margin-top: 30px;
+    margin: 35px 0 0;
 
-    color: #aaa;
+    color: #999;
 
     font-size: 15px;
 
     line-height: 1.8;
-
-    text-align: center;
 }
 
 
-/* =================================
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navigation {
+    margin-top: 35px;
+}
+
+.text-button {
+    padding: 5px 10px;
+
+    background: transparent;
+
+    border: 0;
+
+    color: #777;
+
+    font-family: "SoraThin", sans-serif;
+
+    font-size: 12px;
+
+    letter-spacing: 0.15em;
+
+    text-transform: uppercase;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.text-button:hover {
+    color: #fff;
+}
+
+
+/* =========================================================
    CONTACT
-================================= */
+========================================================= */
 
 .contact-links {
     display: flex;
@@ -396,37 +532,34 @@ h3 {
 
     font-size: 16px;
 
-    font-weight: 100;
-
     letter-spacing: 0.08em;
 
     transition:
-        color 0.25s ease,
-        opacity 0.25s ease;
+        color 0.2s ease;
 }
 
 .contact-links a:hover {
-    color: #ff1010;
+    color: #ff1111;
 }
 
 
-/* =================================
+/* =========================================================
    INTRO
-================================= */
+========================================================= */
 
 #intro {
     position: fixed;
 
     inset: 0;
 
-    background: #000;
-
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    z-index: 999999;
+    background: #000;
+
+    z-index: 99999;
 
     opacity: 1;
 
@@ -439,6 +572,7 @@ h3 {
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 }
 
@@ -466,48 +600,55 @@ h3 {
     transform-origin: center;
 
     animation:
-        extendLine 3s cubic-bezier(0.22, 1, 0.36, 1)
+        loadingLine 3s
+        cubic-bezier(0.22, 1, 0.36, 1)
         forwards;
 }
 
-@keyframes extendLine {
+@keyframes loadingLine {
 
-    0% {
+    from {
         transform: scaleX(0);
     }
 
-    100% {
+    to {
         transform: scaleX(1);
     }
 
 }
 
 
-/* =================================
-   MOBILE
-================================= */
+/* =========================================================
+   SMALL SCREENS
+========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
     .background-word {
-        display: none;
+        opacity: 0.6;
+    }
+
+    .letter {
+        font-size: 42vw;
+
+        letter-spacing: -0.07em;
     }
 
     h1 {
-        font-size: 15vw;
+        font-size: 18vw;
     }
 
     h2 {
-        font-size: 12vw;
+        font-size: 14vw;
     }
 
     .tagline {
-        font-size: 11px;
+        font-size: 10px;
 
-        letter-spacing: 0.22em;
+        letter-spacing: 0.2em;
     }
 
-    .card {
+    .comic-card {
         padding: 35px 25px;
     }
 
