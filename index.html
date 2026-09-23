@@ -13,12 +13,9 @@
 
 <body>
 
-    <!-- =====================================================
-         BACKGROUND WORD
-    ====================================================== -->
+    <!-- BACKGROUND -->
 
-    <div class="background-word" aria-hidden="true">
-
+    <div class="background-word">
         <div class="word">
 
             <span class="letter">U</span>
@@ -34,20 +31,15 @@
             <span class="letter">D</span>
 
         </div>
-
     </div>
 
 
-    <!-- =====================================================
-         RED CURSOR
-    ====================================================== -->
+    <!-- RED CURSOR -->
 
     <div class="cursor"></div>
 
 
-    <!-- =====================================================
-         INTRO
-    ====================================================== -->
+    <!-- INTRO -->
 
     <div id="intro">
 
@@ -62,9 +54,7 @@
     </div>
 
 
-    <!-- =====================================================
-         HOME
-    ====================================================== -->
+    <!-- HOME -->
 
     <section class="page active" id="home">
 
@@ -76,7 +66,7 @@
                 NOTHING STAYS BURIED.
             </p>
 
-            <button class="btn" onclick="showPage('comics')">
+            <button class="btn" data-page="comics">
                 Enter The World
             </button>
 
@@ -85,9 +75,7 @@
     </section>
 
 
-    <!-- =====================================================
-         COMICS
-    ====================================================== -->
+    <!-- COMICS -->
 
     <section class="page" id="comics">
 
@@ -107,28 +95,22 @@
                     CHAPTER 01 · COMING SOON
                 </p>
 
-                <button class="btn" onclick="showPage('book')">
+                <button class="btn" data-page="book">
                     Read More
                 </button>
 
             </div>
 
-            <div class="navigation">
-
-                <button class="text-button" onclick="showPage('home')">
-                    Before
-                </button>
-
-            </div>
+            <button class="text-button" data-page="home">
+                Before
+            </button>
 
         </div>
 
     </section>
 
 
-    <!-- =====================================================
-         SILENT KILL
-    ====================================================== -->
+    <!-- SILENT KILL -->
 
     <section class="page" id="book">
 
@@ -140,26 +122,20 @@
                 ADD YOUR FULL DESCRIPTION HERE
             </p>
 
-            <button class="btn" onclick="showPage('contact')">
+            <button class="btn" data-page="contact">
                 Contact
             </button>
 
-            <div class="navigation">
-
-                <button class="text-button" onclick="showPage('comics')">
-                    Before
-                </button>
-
-            </div>
+            <button class="text-button" data-page="comics">
+                Before
+            </button>
 
         </div>
 
     </section>
 
 
-    <!-- =====================================================
-         CONTACT
-    ====================================================== -->
+    <!-- CONTACT -->
 
     <section class="page" id="contact">
 
@@ -183,22 +159,14 @@
 
             </div>
 
-            <div class="navigation">
-
-                <button class="text-button" onclick="showPage('book')">
-                    Before
-                </button>
-
-            </div>
+            <button class="text-button" data-page="book">
+                Before
+            </button>
 
         </div>
 
     </section>
 
-
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
 
     <script src="script.js"></script>
 
