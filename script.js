@@ -1,144 +1,141 @@
-/* =========================================================
-   WAIT UNTIL THE HTML IS READY
-========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+
+    const mainSite =
+        document.getElementById("main-site");
+
+    const book =
+        document.getElementById("book");
+
+    const readMore =
+        document.getElementById("read-more");
+
+    const closeBook =
+        document.getElementById("close-book");
+
+    const cursor =
+        document.querySelector(".cursor");
 
 
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
+    /* =====================================
+       SCROLL NAVIGATION
+    ===================================== */
 
-    const intro = document.getElementById("intro");
-    const cursor = document.querySelector(".cursor");
+    document.querySelectorAll("[data-page]")
+        .forEach(button => {
 
-    const pages = document.querySelectorAll(".page");
-    const buttons = document.querySelectorAll("[data-page]");
-    const letters = document.querySelectorAll(".letter");
+            button.addEventListener("click", () => {
+
+                const pageId =
+                    button.getAttribute("data-page");
+
+                const target =
+                    document.getElementById(pageId);
+
+                if (!target || !mainSite) {
+                    return;
+                }
+
+                mainSite.scrollTo({
+                    top: target.offsetTop,
+                    behavior: "smooth"
+                });
+
+            });
+
+        });
 
 
-    /* =====================================================
-       CURSOR
-       ONLY FOLLOWS THE MOUSE
-       NOTHING ELSE
-    ===================================================== */
+    /* =====================================
+       OPEN SILENT KILL
+    ===================================== */
 
-    if (cursor) {
+    if (readMore && book && mainSite) {
 
-        document.addEventListener("mousemove", function (event) {
+        readMore.addEventListener("click", () => {
 
-            cursor.style.left = event.clientX + "px";
-            cursor.style.top = event.clientY + "px";
-            cursor.style.opacity = "1";
+            book.classList.add("open");
+
+            book.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            mainSite.style.overflowY = "hidden";
+
+            closeBook?.focus();
 
         });
 
     }
 
 
-    /* =====================================================
-       PAGE NAVIGATION
-    ===================================================== */
+    /* =====================================
+       CLOSE SILENT KILL
+    ===================================== */
 
-    function showPage(pageID) {
+    function closeComicView() {
 
-        const target = document.getElementById(pageID);
-
-        if (!target) {
+        if (!book || !mainSite) {
             return;
         }
 
-        pages.forEach(function (page) {
+        book.classList.remove("open");
 
-            page.classList.remove("active");
-
-        });
-
-        target.classList.add("active");
-
-    }
-
-
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
-
-    buttons.forEach(function (button) {
-
-        button.addEventListener("click", function (event) {
-
-            event.preventDefault();
-
-            const pageID =
-                button.getAttribute("data-page");
-
-            showPage(pageID);
-
-        });
-
-    });
-
-
-    /* =====================================================
-       INFINITE BACKGROUND GLITCH
-       
-       THIS HAS NOTHING TO DO WITH THE CURSOR.
-       
-       It runs continuously by itself.
-    ===================================================== */
-
-    letters.forEach(function (letter) {
-
-        const character = letter.textContent;
-
-        letter.setAttribute(
-            "data-char",
-            character
+        book.setAttribute(
+            "aria-hidden",
+            "true"
         );
 
-    });
+        mainSite.style.overflowY = "auto";
 
-
-    /*
-       Force the glitch animation to be alive forever.
-       CSS handles the actual animation.
-    */
-
-    letters.forEach(function (letter) {
-
-        letter.classList.add("always-glitch");
-
-    });
-
-
-    /* =====================================================
-       LOADING SCREEN
-       
-       IMPORTANT:
-       This is completely independent from the glitch.
-    ===================================================== */
-
-    if (intro) {
-
-        setTimeout(function () {
-
-            intro.classList.add("intro-hidden");
-
-        }, 3000);
-
-
-        /*
-           Completely remove the loading screen after
-           the fade finishes.
-        */
-
-        setTimeout(function () {
-
-            intro.style.display = "none";
-
-        }, 3600);
+        readMore?.focus();
 
     }
 
+    if (closeBook) {
+
+        closeBook.addEventListener(
+            "click",
+            closeComicView
+        );
+
+    }
+
+
+    /* ESC KEY CLOSES COMIC */
+
+    document.addEventListener("keydown", event => {
+
+        if (
+            event.key === "Escape" &&
+            book?.classList.contains("open")
+        ) {
+            closeComicView();
+        }
+
+    });
+
+
+    /* =====================================
+       CUSTOM CURSOR
+    ===================================== */
+
+    if (cursor) {
+
+        document.addEventListener(
+            "mousemove",
+            event => {
+
+                cursor.style.left =
+                    event.clientX + "px";
+
+                cursor.style.top =
+                    event.clientY + "px";
+
+            }
+        );
+
+    }
 
 });
