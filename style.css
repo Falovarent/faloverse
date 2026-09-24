@@ -103,37 +103,36 @@ a {
 }
 
 
-/* UNDERGROUND WORD */
 
 .word {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    gap: 2vw;
+    /* MUCH MORE SPACE */
+    gap: clamp(25px, 4vw, 85px);
 
     white-space: nowrap;
     position: relative;
     width: max-content;
 }
 
-/* UNDERGROUND LETTERS */
-
 .letter {
     position: relative;
     display: block;
+    flex-shrink: 0;
 
     font-family: "Further", Impact, sans-serif;
 
-    font-size: clamp(80px, 12vw, 230px);
+    /* Slightly smaller to make room */
+    font-size: clamp(100px, 15vw, 280px);
     line-height: 0.85;
 
     color: #250205;
 
+    /* REMOVE NEGATIVE SPACING */
     letter-spacing: 0;
     margin: 0;
-
-    flex-shrink: 0;
 
     transform: translate3d(0, 0, 0);
     transition: none;
