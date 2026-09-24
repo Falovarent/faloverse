@@ -102,49 +102,42 @@ a {
     z-index: 0;
 }
 
+
+/* UNDERGROUND WORD */
+
 .word {
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    white-space: nowrap;
+    gap: 2vw;
 
+    white-space: nowrap;
     position: relative;
+    width: max-content;
 }
 
-
-/* =========================================================
-   UNDERGROUND LETTERS
-========================================================= */
+/* UNDERGROUND LETTERS */
 
 .letter {
     position: relative;
-
     display: block;
 
     font-family: "Further", Impact, sans-serif;
 
-    font-size: clamp(250px, 30vw, 560px);
-
-    line-height: 0.75;
+    font-size: clamp(80px, 12vw, 230px);
+    line-height: 0.85;
 
     color: #250205;
 
-    letter-spacing: -0.065em;
+    letter-spacing: 0;
+    margin: 0;
 
-    margin-left: -0.015em;
-    margin-right: -0.015em;
-
-    /* IMPORTANT:
-       The letters themselves stay completely still.
-    */
+    flex-shrink: 0;
 
     transform: translate3d(0, 0, 0);
-
     transition: none;
 }
-
 
 /* =========================================================
    UNDERGROUND
