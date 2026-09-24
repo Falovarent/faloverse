@@ -1,55 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>The District</title>
+    <title>Underground District</title>
 
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon"
+          type="image/png"
+          href="favicon.png">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- BACKGROUND -->
+    <!-- FIXED BACKGROUND -->
+    <div class="background-word" aria-hidden="true">
 
-    <div class="background-word">
-     <div class="background-word">
-
-    <div class="word">
-
-        <span class="letter">U</span>
-        <span class="letter">N</span>
-        <span class="letter">D</span>
-        <span class="letter">E</span>
-        <span class="letter">R</span>
-        <span class="letter">G</span>
-        <span class="letter">R</span>
-        <span class="letter">O</span>
-        <span class="letter">U</span>
-        <span class="letter">N</span>
-        <span class="letter">D</span>
+        <div class="word">
+            <span class="letter" data-char="U">U</span>
+            <span class="letter" data-char="N">N</span>
+            <span class="letter" data-char="D">D</span>
+            <span class="letter" data-char="E">E</span>
+            <span class="letter" data-char="R">R</span>
+            <span class="letter" data-char="G">G</span>
+            <span class="letter" data-char="R">R</span>
+            <span class="letter" data-char="O">O</span>
+            <span class="letter" data-char="U">U</span>
+            <span class="letter" data-char="N">N</span>
+            <span class="letter" data-char="D">D</span>
+        </div>
 
     </div>
 
-</div>
-    </div>
 
-
-    <!-- RED CURSOR -->
-
+    <!-- CUSTOM CURSOR -->
     <div class="cursor"></div>
 
 
-    <!-- INTRO -->
-
+    <!-- LOADING SCREEN -->
     <div id="intro">
 
         <div class="intro-content">
 
-            <img src="logo.png" alt="The District">
+            <img src="logo.png"
+                 alt="Underground District logo">
 
             <div class="loading-line"></div>
 
@@ -58,65 +57,104 @@
     </div>
 
 
-    <!-- HOME -->
+    <!-- MAIN SCROLLING WEBSITE -->
+    <main id="main-site">
 
-    <section class="page active" id="home">
+        <!-- SCREEN 1: HOME -->
+        <section class="page" id="home">
 
-        <div class="content">
+            <div class="content">
 
-            <h1>District</h1>
+                <h1>District</h1>
 
-            <p class="tagline">
-                NOTHING STAYS BURIED.
-            </p>
-
-            <button class="btn" data-page="comics">
-                Enter The World
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- COMICS -->
-
-    <section class="page" id="comics">
-
-        <div class="content">
-
-            <h2>Comics</h2>
-
-            <div class="comic-card">
-
-                <h3>Silent Kill</h3>
-
-                <p class="comic-description">
-                    A dark story of power, death, and chaos.
+                <p class="tagline">
+                    NOTHING STAYS BURIED.
                 </p>
 
-                <p class="release">
-                    CHAPTER 01 · COMING SOON
-                </p>
-
-                <button class="btn" data-page="book">
-                    Read More
+                <button class="btn"
+                        data-page="comics">
+                    Enter The World
                 </button>
 
             </div>
 
-            <button class="text-button" data-page="home">
-                Before
-            </button>
-
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- SILENT KILL -->
+        <!-- SCREEN 2: COMICS -->
+        <section class="page" id="comics">
 
-    <section class="page" id="book">
+            <div class="content">
+
+                <h2>Comics</h2>
+
+                <div class="comic-card">
+
+                    <h3>Silent Kill</h3>
+
+                    <p class="comic-description">
+                        A dark story of power,
+                        death, and chaos.
+                    </p>
+
+                    <p class="release">
+                        CHAPTER 01 · COMING SOON
+                    </p>
+
+                    <button class="btn"
+                            id="read-more">
+                        Read More
+                    </button>
+
+                </div>
+
+                <button class="text-button"
+                        data-page="home">
+                    Before
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCREEN 3: CONTACT -->
+        <section class="page" id="contact">
+
+            <div class="content">
+
+                <h2>Contact</h2>
+
+                <div class="contact-links">
+
+                    <a href="mailto:faloverse@gmail.com">
+                        Email
+                    </a>
+
+                    <a href="https://instagram.com/faloverse.studio"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Instagram
+                    </a>
+
+                </div>
+
+                <button class="text-button"
+                        data-page="comics">
+                    Before
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- SEPARATE NON-SCROLLING COMIC VIEW -->
+    <section class="comic-view"
+             id="book"
+             aria-hidden="true">
 
         <div class="content">
 
@@ -126,45 +164,9 @@
                 ADD YOUR FULL DESCRIPTION HERE
             </p>
 
-            <button class="btn" data-page="contact">
-                Contact
-            </button>
-
-            <button class="text-button" data-page="comics">
-                Before
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- CONTACT -->
-
-    <section class="page" id="contact">
-
-        <div class="content">
-
-            <h2>Contact</h2>
-
-            <div class="contact-links">
-
-                <a href="mailto:faloverse@gmail.com">
-                    faloverse@gmail.com
-                </a>
-
-                <a
-                    href="https://instagram.com/faloverse.studio"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Instagram
-                </a>
-
-            </div>
-
-            <button class="text-button" data-page="book">
-                Before
+            <button class="btn"
+                    id="close-book">
+                Back to Comics
             </button>
 
         </div>
@@ -175,5 +177,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
