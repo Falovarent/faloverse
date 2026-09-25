@@ -1,7 +1,7 @@
 
-/* =========================================
+/* ========================================
    FONTS
-========================================= */
+======================================== */
 
 @font-face {
     font-family: "Further";
@@ -12,38 +12,45 @@
 @font-face {
     font-family: "SoraThin";
     src: url("Sora-Thin.ttf") format("truetype");
+    font-weight: 100;
     font-display: swap;
 }
 
 
-/* =========================================
+/* ========================================
    RESET
-========================================= */
+======================================== */
 
 * {
     box-sizing: border-box;
 }
 
-html {
-    margin: 0;
-    padding: 0;
-}
-
+html,
 body {
     margin: 0;
     padding: 0;
 
+    width: 100%;
+    height: 100%;
+
     background: #000;
     color: #fff;
-
-    font-family: Arial, sans-serif;
 
     overflow: hidden;
 }
 
-button,
-a {
-    -webkit-tap-highlight-color: transparent;
+body {
+    font-family: "SoraThin", Arial, sans-serif;
+}
+
+/* NO NORMAL MOUSE POINTER */
+
+@media (pointer: fine) {
+    *,
+    *::before,
+    *::after {
+        cursor: none !important;
+    }
 }
 
 button {
@@ -51,9 +58,9 @@ button {
 }
 
 
-/* =========================================
-   FIXED UNDERGROUND BACKGROUND
-========================================= */
+/* ========================================
+   GIANT FIXED BACKGROUND
+======================================== */
 
 .background-word {
     position: fixed;
@@ -67,8 +74,16 @@ button {
 
     pointer-events: none;
 
-    z-index: 0;
+    z-index: 1;
 }
+
+/*
+   The word is intentionally wider than
+   the screen.
+
+   It stays centered and gets cropped
+   at the left and right edges.
+*/
 
 .word {
     position: relative;
@@ -77,11 +92,12 @@ button {
     align-items: center;
     justify-content: center;
 
-    /* NOTICEABLE LETTER SPACING */
-    gap: clamp(20px, 4vw, 75px);
+    gap: clamp(35px, 5vw, 110px);
 
     width: max-content;
     white-space: nowrap;
+
+    flex-shrink: 0;
 }
 
 .letter {
@@ -92,10 +108,17 @@ button {
 
     font-family: "Further", Impact, sans-serif;
 
-    font-size: clamp(90px, 14vw, 270px);
-    line-height: 0.85;
+    /*
+       Almost the full screen height.
+       A little space above and below.
+    */
 
-    color: #250205;
+    font-size: 76vh;
+    font-size: 76dvh;
+
+    line-height: 0.9;
+
+    color: #290407;
 
     letter-spacing: 0;
     margin: 0;
@@ -105,9 +128,9 @@ button {
 }
 
 
-/* =========================================
+/* ========================================
    CONTINUOUS GLITCH
-========================================= */
+======================================== */
 
 .letter::before,
 .letter::after {
@@ -116,6 +139,8 @@ button {
     position: absolute;
     inset: 0;
 
+    display: block;
+
     font: inherit;
     line-height: inherit;
 
@@ -123,93 +148,93 @@ button {
 }
 
 .letter::before {
-    color: #7d0917;
+    color: #a20b20;
 
-    opacity: 0.6;
-
-    animation: glitchRed 2.4s
-               steps(1, end) infinite;
+    animation:
+        glitchRed 2.3s steps(1, end) infinite;
 }
 
 .letter::after {
     color: #050000;
 
-    opacity: 0.85;
-
-    animation: glitchDark 1.7s
-               steps(1, end) infinite;
+    animation:
+        glitchBlack 1.6s steps(1, end) infinite;
 }
 
-/* Different timing for each letter */
+/* Different timing between letters */
 
-.letter:nth-child(3n)::before {
-    animation-delay: -0.7s;
+.letter:nth-child(2n)::before {
+    animation-delay: -0.8s;
 }
 
-.letter:nth-child(2n)::after {
-    animation-delay: -0.4s;
+.letter:nth-child(3n)::after {
+    animation-delay: -0.5s;
 }
 
 .letter:nth-child(4n)::before {
-    animation-delay: -1.3s;
+    animation-delay: -1.4s;
 }
 
 @keyframes glitchRed {
-    0%, 14%, 19%, 43%, 49%, 74%, 100% {
+
+    0%, 13%, 19%, 38%, 44%,
+    68%, 74%, 100% {
+        opacity: 0;
         clip-path: inset(0 0 0 0);
         transform: translateX(0);
-        opacity: 0;
     }
 
-    15%, 18% {
-        clip-path: inset(20% 0 60% 0);
-        transform: translateX(-12px);
-        opacity: 0.8;
-    }
-
-    44%, 48% {
-        clip-path: inset(55% 0 25% 0);
-        transform: translateX(15px);
-        opacity: 0.7;
-    }
-
-    75%, 79% {
-        clip-path: inset(75% 0 10% 0);
-        transform: translateX(-8px);
+    14%, 18% {
         opacity: 0.9;
+        clip-path: inset(15% 0 65% 0);
+        transform: translateX(-22px);
+    }
+
+    39%, 43% {
+        opacity: 0.8;
+        clip-path: inset(48% 0 34% 0);
+        transform: translateX(26px);
+    }
+
+    69%, 73% {
+        opacity: 0.95;
+        clip-path: inset(72% 0 10% 0);
+        transform: translateX(-16px);
     }
 }
 
-@keyframes glitchDark {
-    0%, 29%, 34%, 61%, 66%, 89%, 100% {
+@keyframes glitchBlack {
+
+    0%, 24%, 30%, 55%, 61%,
+    85%, 91%, 100% {
+        opacity: 0;
         clip-path: inset(0 0 0 0);
         transform: translateX(0);
-        opacity: 0;
     }
 
-    30%, 33% {
-        clip-path: inset(40% 0 40% 0);
-        transform: translateX(11px);
+    25%, 29% {
         opacity: 1;
+        clip-path: inset(32% 0 48% 0);
+        transform: translateX(18px);
     }
 
-    62%, 65% {
-        clip-path: inset(10% 0 70% 0);
-        transform: translateX(-16px);
+    56%, 60% {
         opacity: 1;
+        clip-path: inset(58% 0 24% 0);
+        transform: translateX(-25px);
     }
 
-    90%, 93% {
-        clip-path: inset(65% 0 15% 0);
-        transform: translateX(9px);
+    86%, 90% {
         opacity: 1;
+        clip-path: inset(8% 0 74% 0);
+        transform: translateX(12px);
     }
 }
 
 
-/* =========================================
-   MAIN SCROLLING CONTAINER
-========================================= */
+/* ========================================
+   MAIN SCROLLING WEBSITE
+======================================== */
 
 #main-site {
     position: relative;
@@ -229,10 +254,15 @@ button {
     z-index: 2;
 }
 
+#main-site.hidden {
+    visibility: hidden;
+    pointer-events: none;
+}
 
-/* =========================================
+
+/* ========================================
    FULL-SCREEN SECTIONS
-========================================= */
+======================================== */
 
 .page {
     position: relative;
@@ -241,18 +271,14 @@ button {
     height: 100vh;
     height: 100dvh;
 
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-
     display: flex;
     align-items: center;
     justify-content: center;
 
     padding: 30px 20px;
 
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .content {
@@ -266,89 +292,127 @@ button {
 }
 
 
-/* =========================================
-   TYPOGRAPHY
-========================================= */
+/* ========================================
+   HEADINGS
+======================================== */
 
 h1,
 h2,
 h3 {
     font-family: "SoraThin", Arial, sans-serif;
-    font-weight: 300;
+    font-weight: 100;
+
+    text-transform: uppercase;
 }
 
 h1 {
-    font-size: clamp(65px, 11vw, 150px);
+    font-size: clamp(70px, 11vw, 170px);
 
-    margin: 0 0 20px;
+    line-height: 1.1;
+
+    margin: 0 0 25px;
 }
 
 h2 {
-    font-size: clamp(55px, 9vw, 110px);
+    font-size: clamp(55px, 9vw, 115px);
 
-    margin: 0 0 35px;
+    line-height: 1.1;
+
+    margin: 0 0 45px;
 }
 
 h3 {
     font-size: clamp(35px, 5vw, 65px);
 
-    margin: 0 0 20px;
+    margin: 0 0 25px;
 }
 
 .tagline {
+    margin: 0 0 55px;
+
     font-size: 12px;
+    letter-spacing: 0.45em;
 
-    letter-spacing: 0.4em;
-
-    margin-bottom: 45px;
-
-    color: #b7a4a6;
+    color: #bcb2b3;
 }
 
 
-/* =========================================
-   BUTTONS
-========================================= */
+/* ========================================
+   SHARP RECTANGULAR BUTTONS
+======================================== */
 
 .btn {
-    padding: 15px 35px;
+    position: relative;
 
-    background: #8b1424;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    color: white;
+    min-width: 200px;
+    min-height: 58px;
 
-    border: 1px solid #a82b3a;
-    border-radius: 3px;
+    padding: 17px 35px;
 
-    cursor: pointer;
+    background: transparent;
+    color: #fff;
 
-    letter-spacing: 0.12em;
+    border: 1px solid #fff;
+    border-radius: 0;
+
+    font-family: "SoraThin", Arial, sans-serif;
+    font-weight: 100;
+
+    font-size: 13px;
+    letter-spacing: 0.2em;
+
+    box-shadow: none;
 
     transition:
-        background 0.25s ease,
-        box-shadow 0.25s ease;
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.btn:hover {
-    background: #b31e32;
+/* TURNS COMPLETELY WHITE ON HOVER */
 
-    box-shadow:
-        0 0 25px rgba(190, 25, 45, 0.4);
+.btn:hover,
+.btn:focus-visible {
+    background: #fff;
+    color: #000;
+
+    border-color: #fff;
+
+    box-shadow: none;
+}
+
+/* NO ROUNDING OR CLICK GLOW */
+
+.btn:active {
+    background: #fff;
+    color: #000;
+
+    box-shadow: none;
 }
 
 .text-button {
     display: block;
 
-    margin: 30px auto 0;
+    margin: 35px auto 0;
+
+    padding: 12px 20px;
 
     background: transparent;
-    border: none;
+
+    border: 0;
+    border-radius: 0;
 
     color: #aaa;
 
-    cursor: pointer;
+    font-family: "SoraThin", Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
 
-    letter-spacing: 0.15em;
+    transition: color 0.2s ease;
 }
 
 .text-button:hover {
@@ -356,9 +420,9 @@ h3 {
 }
 
 
-/* =========================================
-   COMICS CARD
-========================================= */
+/* ========================================
+   COMICS SECTION
+======================================== */
 
 .comic-card {
     width: min(650px, 100%);
@@ -367,31 +431,37 @@ h3 {
 
     padding: 45px 35px;
 
-    background: rgba(5, 0, 1, 0.9);
+    background: rgba(0, 0, 0, 0.88);
 
-    border: 1px solid rgba(160, 25, 40, 0.5);
-    border-radius: 8px;
+    border: 1px solid rgba(125, 35, 45, 0.55);
+
+    border-radius: 0;
 }
 
 .comic-description {
-    color: #b5a5a7;
+    max-width: 460px;
 
-    line-height: 1.8;
+    margin: 0 auto;
+
+    font-size: 15px;
+    line-height: 1.9;
+
+    color: #c0b5b6;
 }
 
 .release {
     margin: 30px 0;
 
-    color: #b84450;
-
     font-size: 12px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.25em;
+
+    color: #b34b55;
 }
 
 
-/* =========================================
+/* ========================================
    CONTACT
-========================================= */
+======================================== */
 
 .contact-links {
     display: flex;
@@ -399,33 +469,40 @@ h3 {
 
     align-items: center;
 
-    gap: 20px;
+    gap: 25px;
 }
 
 .contact-links a {
-    color: #ddd;
+    color: #fff;
+
+    font-size: 15px;
+    letter-spacing: 0.2em;
 
     text-decoration: none;
-
-    letter-spacing: 0.1em;
-
-    transition: color 0.25s ease;
 }
 
 .contact-links a:hover {
-    color: #e64b5b;
+    color: #d75c69;
 }
 
 
-/* =========================================
-   SEPARATE SILENT KILL VIEW
-========================================= */
+/* ========================================
+   SEPARATE SILENT KILL PAGE
+======================================== */
+
+/*
+   Transparent background so the fixed
+   UNDERGROUND glitch remains visible.
+
+   The main scrolling website is hidden
+   by JavaScript while this is open.
+*/
 
 .comic-view {
     position: fixed;
     inset: 0;
 
-    z-index: 10;
+    z-index: 5;
 
     display: flex;
     align-items: center;
@@ -433,15 +510,15 @@ h3 {
 
     padding: 30px;
 
-    background: rgba(0, 0, 0, 0.94);
+    background: transparent;
 
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
     transition:
-        opacity 0.4s ease,
-        visibility 0.4s ease;
+        opacity 0.35s ease,
+        visibility 0.35s ease;
 }
 
 .comic-view.open {
@@ -450,53 +527,49 @@ h3 {
     pointer-events: auto;
 }
 
-.comic-view .content {
-    width: min(800px, 100%);
+.book-content {
+    width: min(900px, 100%);
 }
 
-.description {
-    max-width: 650px;
+.book-content h2 {
+    margin-bottom: 65px;
 
-    margin: 0 auto 40px;
-
-    color: #c5b8ba;
-
-    line-height: 1.9;
+    font-size: clamp(65px, 10vw, 145px);
 }
 
 
-/* =========================================
-   CUSTOM CURSOR
-========================================= */
+/* ========================================
+   PLAIN RED DOT CURSOR
+======================================== */
 
 .cursor {
     position: fixed;
 
-    top: -100px;
     left: -100px;
+    top: -100px;
 
     width: 12px;
     height: 12px;
 
     border-radius: 50%;
 
-    background: #c5152c;
+    background: #ed102b;
 
-    box-shadow:
-        0 0 12px #c5152c,
-        0 0 35px rgba(197, 21, 44, 0.5);
+    /* ABSOLUTELY NO GLOW */
+    box-shadow: none;
+    filter: none;
 
     transform: translate(-50%, -50%);
 
     pointer-events: none;
 
-    z-index: 1000;
+    z-index: 10000;
 }
 
 
-/* =========================================
+/* ========================================
    LOADING SCREEN
-========================================= */
+======================================== */
 
 #intro {
     position: fixed;
@@ -529,38 +602,37 @@ h3 {
 }
 
 .loading-line {
+    position: relative;
+
     width: 220px;
     max-width: 65vw;
-
     height: 7px;
 
     overflow: hidden;
 
     border-radius: 100px;
 
-    background: #222;
+    background: #252525;
 }
 
 .loading-line::after {
     content: "";
 
-    display: block;
+    position: absolute;
+    inset: 0;
 
-    width: 100%;
-    height: 100%;
+    background: #fff;
 
     border-radius: inherit;
-
-    background: #ddd;
 
     transform: scaleX(0);
     transform-origin: center;
 
     animation:
-        loadLine 3s ease-in-out forwards;
+        fillLine 3s ease-in-out forwards;
 }
 
-@keyframes loadLine {
+@keyframes fillLine {
     to {
         transform: scaleX(1);
     }
@@ -575,56 +647,48 @@ h3 {
 }
 
 
-/* =========================================
-   MOBILE
-========================================= */
+/* ========================================
+   SMALLER SCREENS
+======================================== */
 
 @media (max-width: 600px) {
 
     h1 {
-        font-size: 60px;
+        font-size: 65px;
     }
 
     h2 {
-        font-size: 52px;
+        font-size: 55px;
+    }
+
+    .tagline {
+        letter-spacing: 0.2em;
     }
 
     .comic-card {
-        padding: 28px 20px;
+        padding: 30px 20px;
     }
 
     .word {
-        gap: 25px;
+        gap: 35px;
     }
 
     .letter {
-        font-size: 100px;
+        font-size: 75dvh;
     }
+}
 
+/* Use normal cursor on touch devices */
+
+@media (pointer: coarse) {
     .cursor {
         display: none;
     }
 }
 
-/* Keep the website usable on shorter screens. */
-
-@media (max-height: 650px) {
-
-    .page {
-        padding: 20px;
-    }
-
-    h2 {
-        margin-bottom: 15px;
-    }
-
-    .comic-card {
-        padding: 20px;
-    }
-}
+/* Accessibility */
 
 @media (prefers-reduced-motion: reduce) {
-
     .letter::before,
     .letter::after {
         animation: none;
@@ -632,5 +696,9 @@ h3 {
 
     #main-site {
         scroll-behavior: auto;
+    }
+
+    .comic-view {
+        transition: none;
     }
 }
