@@ -17,17 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".cursor");
 
 
-    /* =====================================
-       SCROLL NAVIGATION
-    ===================================== */
+    /* ====================================
+       SCROLLING NAVIGATION
+    ==================================== */
 
     document.querySelectorAll("[data-page]")
         .forEach(button => {
 
             button.addEventListener("click", () => {
 
-                const pageId =
-                    button.getAttribute("data-page");
+                const pageId = button.dataset.page;
 
                 const target =
                     document.getElementById(pageId);
@@ -36,9 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                mainSite.scrollTo({
-                    top: target.offsetTop,
-                    behavior: "smooth"
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
                 });
 
             });
@@ -46,35 +45,46 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
-    /* =====================================
-       OPEN SILENT KILL
-    ===================================== */
+    /* ====================================
+       OPEN SEPARATE SILENT KILL VIEW
+    ==================================== */
 
     if (readMore && book && mainSite) {
 
         readMore.addEventListener("click", () => {
 
+            /*
+               Hide the entire scrolling
+               website.
+
+               Keep its scroll position.
+            */
+
+            mainSite.classList.add("hidden");
+
             book.classList.add("open");
+
+            book.removeAttribute("inert");
 
             book.setAttribute(
                 "aria-hidden",
                 "false"
             );
 
-            mainSite.style.overflowY = "hidden";
-
-            closeBook?.focus();
+            closeBook?.focus({
+                preventScroll: true
+            });
 
         });
 
     }
 
 
-    /* =====================================
+    /* ====================================
        CLOSE SILENT KILL
-    ===================================== */
+    ==================================== */
 
-    function closeComicView() {
+    function closeComic() {
 
         if (!book || !mainSite) {
             return;
@@ -87,23 +97,28 @@ document.addEventListener("DOMContentLoaded", () => {
             "true"
         );
 
-        mainSite.style.overflowY = "auto";
+        book.setAttribute("inert", "");
 
-        readMore?.focus();
+        mainSite.classList.remove("hidden");
+
+        readMore?.focus({
+            preventScroll: true
+        });
 
     }
+
 
     if (closeBook) {
 
         closeBook.addEventListener(
             "click",
-            closeComicView
+            closeComic
         );
 
     }
 
 
-    /* ESC KEY CLOSES COMIC */
+    /* ESCAPE KEY */
 
     document.addEventListener("keydown", event => {
 
@@ -111,30 +126,27 @@ document.addEventListener("DOMContentLoaded", () => {
             event.key === "Escape" &&
             book?.classList.contains("open")
         ) {
-            closeComicView();
+            closeComic();
         }
 
     });
 
 
-    /* =====================================
-       CUSTOM CURSOR
-    ===================================== */
+    /* ====================================
+       PLAIN RED CURSOR
+    ==================================== */
 
     if (cursor) {
 
-        document.addEventListener(
-            "mousemove",
-            event => {
+        document.addEventListener("mousemove", event => {
 
-                cursor.style.left =
-                    event.clientX + "px";
+            cursor.style.left =
+                event.clientX + "px";
 
-                cursor.style.top =
-                    event.clientY + "px";
+            cursor.style.top =
+                event.clientY + "px";
 
-            }
-        );
+        });
 
     }
 
