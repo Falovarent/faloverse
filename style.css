@@ -1,511 +1,64 @@
 
-@font-face {
-  font-family: "Further";
-  src: url("Further.otf") format("opentype");
-  font-display: swap;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const mainSite = document.getElementById("main-site");
+  const book = document.getElementById("book");
+  const readMore = document.getElementById("read-more");
+  const closeBook = document.getElementById("close-book");
+  const cursor = document.querySelector(".cursor");
 
-@font-face {
-  font-family: "SoraThin";
-  src: url("Sora-Thin.ttf") format("truetype");
-  font-weight: 100;
-  font-display: swap;
-}
+  // Scroll between full-screen sections
+  document.querySelectorAll("[data-page]").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = document.getElementById(button.dataset.page);
 
-:root {
-  --black: #000;
-  --white: #fff;
-  --red: #e70b30;
-  --dark-red: #300308;
-}
+      if (!target) return;
 
-* {
-  box-sizing: border-box;
-}
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  });
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  background: var(--black);
-  color: var(--white);
-  overflow: hidden;
-}
+  // Open Silent Kill as a separate view
+  function openComic() {
+    mainSite.classList.add("hidden");
+    mainSite.setAttribute("inert", "");
 
-body,
-button,
-a {
-  font-family: "SoraThin", Arial, sans-serif;
-}
+    book.removeAttribute("inert");
+    book.classList.add("open");
+    book.setAttribute("aria-hidden", "false");
 
-button {
-  cursor: pointer;
-}
-
-@media (pointer: fine) {
-  *,
-  *::before,
-  *::after {
-    cursor: none !important;
-  }
-}
-
-/* CUSTOM CURSOR */
-
-.cursor {
-  position: fixed;
-  top: -100px;
-  left: -100px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--red);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 10000;
-}
-
-/* LOADING INTRO */
-
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-  animation: introExit 0.45s ease 3s forwards;
-}
-
-.intro-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 35px;
-}
-
-.intro-content img {
-  width: min(190px, 45vw);
-  height: auto;
-}
-
-.loading-track {
-  width: min(220px, 60vw);
-  height: 7px;
-  overflow: hidden;
-  border-radius: 100px;
-  background: #222;
-}
-
-.loading-line {
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  background: #fff;
-  transform: scaleX(0);
-  transform-origin: center;
-  animation: loading 3s ease-in-out forwards;
-}
-
-@keyframes loading {
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes introExit {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-/* MAIN SCROLL */
-
-#main-site {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  overscroll-behavior-y: contain;
-  scrollbar-width: none;
-}
-
-#main-site::-webkit-scrollbar {
-  display: none;
-}
-
-#main-site.hidden {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.page {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
-  overflow: hidden;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  background: #000;
-}
-
-.content {
-  position: relative;
-  z-index: 2;
-  width: min(900px, 100%);
-  text-align: center;
-}
-
-h1,
-h2,
-h3 {
-  margin-top: 0;
-  font-weight: 100;
-  text-transform: uppercase;
-}
-
-h1 {
-  margin-bottom: 22px;
-  font-size: clamp(65px, 10vw, 155px);
-  line-height: 1;
-  letter-spacing: 0.04em;
-}
-
-h2 {
-  margin-bottom: 20px;
-  font-size: clamp(50px, 8vw, 105px);
-  line-height: 1.1;
-  letter-spacing: 0.09em;
-}
-
-h3 {
-  margin-bottom: 15px;
-  font-size: clamp(34px, 5vw, 60px);
-  letter-spacing: 0.12em;
-}
-
-/* HOMEPAGE */
-
-.home {
-  isolation: isolate;
-}
-
-.background-word {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(22px, 4vw, 80px);
-  overflow: hidden;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.letter {
-  position: relative;
-  display: block;
-  flex: 0 0 auto;
-  font-family: "Further", Impact, sans-serif;
-  font-size: 76vh;
-  font-size: 76dvh;
-  line-height: 0.9;
-  color: var(--dark-red);
-  transform: translateZ(0);
-}
-
-.letter::before,
-.letter::after {
-  content: attr(data-char);
-  position: absolute;
-  inset: 0;
-  display: block;
-  font: inherit;
-  line-height: inherit;
-  pointer-events: none;
-}
-
-.letter::before {
-  color: #a30b24;
-  opacity: 0;
-  animation: glitchRed 2.4s steps(1, end) infinite;
-}
-
-.letter::after {
-  color: #020000;
-  opacity: 0;
-  animation: glitchBlack 1.7s steps(1, end) infinite;
-}
-
-.letter:nth-child(2n)::before {
-  animation-delay: -0.7s;
-}
-
-.letter:nth-child(3n)::after {
-  animation-delay: -0.5s;
-}
-
-.letter:nth-child(4n)::before {
-  animation-delay: -1.3s;
-}
-
-@keyframes glitchRed {
-  0%, 13%, 19%, 38%, 44%, 68%, 74%, 100% {
-    opacity: 0;
-    transform: translateX(0);
+    closeBook.focus({ preventScroll: true });
   }
 
-  14%, 18% {
-    opacity: 0.9;
-    clip-path: inset(15% 0 65% 0);
-    transform: translateX(-20px);
+  // Return to Comics
+  function closeComic() {
+    book.classList.remove("open");
+    book.setAttribute("aria-hidden", "true");
+    book.setAttribute("inert", "");
+
+    mainSite.classList.remove("hidden");
+    mainSite.removeAttribute("inert");
+
+    readMore.focus({ preventScroll: true });
   }
 
-  39%, 43% {
-    opacity: 0.85;
-    clip-path: inset(48% 0 34% 0);
-    transform: translateX(25px);
+  readMore.addEventListener("click", openComic);
+  closeBook.addEventListener("click", closeComic);
+
+  // Escape also closes the comic view
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && book.classList.contains("open")) {
+      closeComic();
+    }
+  });
+
+  // Red dot follows the mouse directly
+  if (cursor) {
+    document.addEventListener("mousemove", event => {
+      cursor.style.left = `${event.clientX}px`;
+      cursor.style.top = `${event.clientY}px`;
+    });
   }
-
-  69%, 73% {
-    opacity: 0.95;
-    clip-path: inset(72% 0 10% 0);
-    transform: translateX(-16px);
-  }
-}
-
-@keyframes glitchBlack {
-  0%, 24%, 30%, 55%, 61%, 85%, 91%, 100% {
-    opacity: 0;
-    transform: translateX(0);
-  }
-
-  25%, 29% {
-    opacity: 1;
-    clip-path: inset(32% 0 48% 0);
-    transform: translateX(18px);
-  }
-
-  56%, 60% {
-    opacity: 1;
-    clip-path: inset(58% 0 24% 0);
-    transform: translateX(-25px);
-  }
-
-  86%, 90% {
-    opacity: 1;
-    clip-path: inset(8% 0 74% 0);
-    transform: translateX(12px);
-  }
-}
-
-.home-content {
-  z-index: 2;
-}
-
-.tagline {
-  margin: 0 0 48px;
-  font-size: 12px;
-  letter-spacing: 0.45em;
-  color: #d0c6c7;
-}
-
-/* BUTTONS */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 200px;
-  min-height: 55px;
-  padding: 15px 30px;
-  border: 1px solid #fff;
-  border-radius: 0;
-  background: transparent;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 100;
-  letter-spacing: 0.2em;
-  box-shadow: none;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.btn:hover,
-.btn:focus-visible,
-.btn:active {
-  background: #fff;
-  color: #000;
-}
-
-.text-button {
-  display: block;
-  margin: 50px auto 0;
-  padding: 12px 20px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #aaa;
-  font-size: 12px;
-  letter-spacing: 0.3em;
-  transition: color 0.2s ease;
-}
-
-.text-button:hover,
-.text-button:focus-visible {
-  color: #fff;
-}
-
-/* COMICS AND CONTACT */
-
-.void-page {
-  background:
-    radial-gradient(
-      ellipse at center,
-      #0b0203 0%,
-      #030001 38%,
-      #000 75%
-    );
-}
-
-.red-rule {
-  width: 23px;
-  height: 1px;
-  margin: 0 auto 48px;
-  background: var(--red);
-}
-
-.comic-entry {
-  margin-top: 0;
-}
-
-.release {
-  margin: 0 0 30px;
-  color: #bdb3b5;
-  font-size: 11px;
-  letter-spacing: 0.3em;
-}
-
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-
-.contact-links a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 15px;
-  letter-spacing: 0.3em;
-  transition: color 0.2s ease;
-}
-
-.contact-links a:hover,
-.contact-links a:focus-visible {
-  color: var(--red);
-}
-
-/* SEPARATE SILENT KILL PAGE */
-
-.comic-view {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
-  background:
-    radial-gradient(
-      ellipse at center,
-      #100203 0%,
-      #030001 40%,
-      #000 80%
-    );
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    opacity 0.35s ease,
-    visibility 0.35s ease;
-}
-
-.comic-view.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.book-content h2 {
-  font-size: clamp(60px, 10vw, 140px);
-}
-
-.book-content .red-rule {
-  margin-bottom: 55px;
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-  h1 {
-    font-size: clamp(48px, 13vw, 75px);
-  }
-
-  h2 {
-    font-size: clamp(45px, 12vw, 70px);
-  }
-
-  .tagline {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-  }
-
-  .background-word {
-    gap: 28px;
-  }
-
-  .letter {
-    font-size: 75dvh;
-  }
-
-  .release {
-    letter-spacing: 0.12em;
-  }
-}
-
-@media (pointer: coarse) {
-  .cursor {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .letter::before,
-  .letter::after {
-    animation: none;
-  }
-
-  #main-site {
-    scroll-behavior: auto;
-  }
-
-  .comic-view {
-    transition: none;
-  }
-}
+});
