@@ -1,704 +1,511 @@
 
-/* ========================================
-   FONTS
-======================================== */
-
 @font-face {
-    font-family: "Further";
-    src: url("Further.otf") format("opentype");
-    font-display: swap;
+  font-family: "Further";
+  src: url("Further.otf") format("opentype");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "SoraThin";
-    src: url("Sora-Thin.ttf") format("truetype");
-    font-weight: 100;
-    font-display: swap;
+  font-family: "SoraThin";
+  src: url("Sora-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-display: swap;
 }
 
-
-/* ========================================
-   RESET
-======================================== */
+:root {
+  --black: #000;
+  --white: #fff;
+  --red: #e70b30;
+  --dark-red: #300308;
+}
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: #000;
-    color: #fff;
-
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  overflow: hidden;
 }
 
-body {
-    font-family: "SoraThin", Arial, sans-serif;
-}
-
-/* NO NORMAL MOUSE POINTER */
-
-@media (pointer: fine) {
-    *,
-    *::before,
-    *::after {
-        cursor: none !important;
-    }
+body,
+button,
+a {
+  font-family: "SoraThin", Arial, sans-serif;
 }
 
 button {
-    font: inherit;
+  cursor: pointer;
 }
 
-
-/* ========================================
-   GIANT FIXED BACKGROUND
-======================================== */
-
-.background-word {
-    position: fixed;
-    inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-    z-index: 1;
+@media (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
 }
 
-/*
-   The word is intentionally wider than
-   the screen.
+/* CUSTOM CURSOR */
 
-   It stays centered and gets cropped
-   at the left and right edges.
-*/
-
-.word {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: clamp(35px, 5vw, 110px);
-
-    width: max-content;
-    white-space: nowrap;
-
-    flex-shrink: 0;
+.cursor {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--red);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10000;
 }
 
-.letter {
-    position: relative;
+/* LOADING INTRO */
 
-    display: block;
-    flex-shrink: 0;
-
-    font-family: "Further", Impact, sans-serif;
-
-    /*
-       Almost the full screen height.
-       A little space above and below.
-    */
-
-    font-size: 76vh;
-    font-size: 76dvh;
-
-    line-height: 0.9;
-
-    color: #290407;
-
-    letter-spacing: 0;
-    margin: 0;
-
-    transform: translate3d(0, 0, 0);
-    transition: none;
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  animation: introExit 0.45s ease 3s forwards;
 }
 
-
-/* ========================================
-   CONTINUOUS GLITCH
-======================================== */
-
-.letter::before,
-.letter::after {
-    content: attr(data-char);
-
-    position: absolute;
-    inset: 0;
-
-    display: block;
-
-    font: inherit;
-    line-height: inherit;
-
-    pointer-events: none;
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
 }
 
-.letter::before {
-    color: #a20b20;
-
-    animation:
-        glitchRed 2.3s steps(1, end) infinite;
+.intro-content img {
+  width: min(190px, 45vw);
+  height: auto;
 }
 
-.letter::after {
-    color: #050000;
-
-    animation:
-        glitchBlack 1.6s steps(1, end) infinite;
+.loading-track {
+  width: min(220px, 60vw);
+  height: 7px;
+  overflow: hidden;
+  border-radius: 100px;
+  background: #222;
 }
 
-/* Different timing between letters */
-
-.letter:nth-child(2n)::before {
-    animation-delay: -0.8s;
+.loading-line {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: loading 3s ease-in-out forwards;
 }
 
-.letter:nth-child(3n)::after {
-    animation-delay: -0.5s;
+@keyframes loading {
+  to {
+    transform: scaleX(1);
+  }
 }
 
-.letter:nth-child(4n)::before {
-    animation-delay: -1.4s;
+@keyframes introExit {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
-@keyframes glitchRed {
-
-    0%, 13%, 19%, 38%, 44%,
-    68%, 74%, 100% {
-        opacity: 0;
-        clip-path: inset(0 0 0 0);
-        transform: translateX(0);
-    }
-
-    14%, 18% {
-        opacity: 0.9;
-        clip-path: inset(15% 0 65% 0);
-        transform: translateX(-22px);
-    }
-
-    39%, 43% {
-        opacity: 0.8;
-        clip-path: inset(48% 0 34% 0);
-        transform: translateX(26px);
-    }
-
-    69%, 73% {
-        opacity: 0.95;
-        clip-path: inset(72% 0 10% 0);
-        transform: translateX(-16px);
-    }
-}
-
-@keyframes glitchBlack {
-
-    0%, 24%, 30%, 55%, 61%,
-    85%, 91%, 100% {
-        opacity: 0;
-        clip-path: inset(0 0 0 0);
-        transform: translateX(0);
-    }
-
-    25%, 29% {
-        opacity: 1;
-        clip-path: inset(32% 0 48% 0);
-        transform: translateX(18px);
-    }
-
-    56%, 60% {
-        opacity: 1;
-        clip-path: inset(58% 0 24% 0);
-        transform: translateX(-25px);
-    }
-
-    86%, 90% {
-        opacity: 1;
-        clip-path: inset(8% 0 74% 0);
-        transform: translateX(12px);
-    }
-}
-
-
-/* ========================================
-   MAIN SCROLLING WEBSITE
-======================================== */
+/* MAIN SCROLL */
 
 #main-site {
-    position: relative;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+}
 
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-
-    overscroll-behavior-y: contain;
-
-    z-index: 2;
+#main-site::-webkit-scrollbar {
+  display: none;
 }
 
 #main-site.hidden {
-    visibility: hidden;
-    pointer-events: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-
-/* ========================================
-   FULL-SCREEN SECTIONS
-======================================== */
-
 .page {
-    position: relative;
-
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 30px 20px;
-
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: #000;
 }
 
 .content {
-    position: relative;
-
-    width: min(900px, 100%);
-
-    text-align: center;
-
-    z-index: 3;
+  position: relative;
+  z-index: 2;
+  width: min(900px, 100%);
+  text-align: center;
 }
-
-
-/* ========================================
-   HEADINGS
-======================================== */
 
 h1,
 h2,
 h3 {
-    font-family: "SoraThin", Arial, sans-serif;
-    font-weight: 100;
-
-    text-transform: uppercase;
+  margin-top: 0;
+  font-weight: 100;
+  text-transform: uppercase;
 }
 
 h1 {
-    font-size: clamp(70px, 11vw, 170px);
-
-    line-height: 1.1;
-
-    margin: 0 0 25px;
+  margin-bottom: 22px;
+  font-size: clamp(65px, 10vw, 155px);
+  line-height: 1;
+  letter-spacing: 0.04em;
 }
 
 h2 {
-    font-size: clamp(55px, 9vw, 115px);
-
-    line-height: 1.1;
-
-    margin: 0 0 45px;
+  margin-bottom: 20px;
+  font-size: clamp(50px, 8vw, 105px);
+  line-height: 1.1;
+  letter-spacing: 0.09em;
 }
 
 h3 {
-    font-size: clamp(35px, 5vw, 65px);
+  margin-bottom: 15px;
+  font-size: clamp(34px, 5vw, 60px);
+  letter-spacing: 0.12em;
+}
 
-    margin: 0 0 25px;
+/* HOMEPAGE */
+
+.home {
+  isolation: isolate;
+}
+
+.background-word {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(22px, 4vw, 80px);
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.letter {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  font-family: "Further", Impact, sans-serif;
+  font-size: 76vh;
+  font-size: 76dvh;
+  line-height: 0.9;
+  color: var(--dark-red);
+  transform: translateZ(0);
+}
+
+.letter::before,
+.letter::after {
+  content: attr(data-char);
+  position: absolute;
+  inset: 0;
+  display: block;
+  font: inherit;
+  line-height: inherit;
+  pointer-events: none;
+}
+
+.letter::before {
+  color: #a30b24;
+  opacity: 0;
+  animation: glitchRed 2.4s steps(1, end) infinite;
+}
+
+.letter::after {
+  color: #020000;
+  opacity: 0;
+  animation: glitchBlack 1.7s steps(1, end) infinite;
+}
+
+.letter:nth-child(2n)::before {
+  animation-delay: -0.7s;
+}
+
+.letter:nth-child(3n)::after {
+  animation-delay: -0.5s;
+}
+
+.letter:nth-child(4n)::before {
+  animation-delay: -1.3s;
+}
+
+@keyframes glitchRed {
+  0%, 13%, 19%, 38%, 44%, 68%, 74%, 100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  14%, 18% {
+    opacity: 0.9;
+    clip-path: inset(15% 0 65% 0);
+    transform: translateX(-20px);
+  }
+
+  39%, 43% {
+    opacity: 0.85;
+    clip-path: inset(48% 0 34% 0);
+    transform: translateX(25px);
+  }
+
+  69%, 73% {
+    opacity: 0.95;
+    clip-path: inset(72% 0 10% 0);
+    transform: translateX(-16px);
+  }
+}
+
+@keyframes glitchBlack {
+  0%, 24%, 30%, 55%, 61%, 85%, 91%, 100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  25%, 29% {
+    opacity: 1;
+    clip-path: inset(32% 0 48% 0);
+    transform: translateX(18px);
+  }
+
+  56%, 60% {
+    opacity: 1;
+    clip-path: inset(58% 0 24% 0);
+    transform: translateX(-25px);
+  }
+
+  86%, 90% {
+    opacity: 1;
+    clip-path: inset(8% 0 74% 0);
+    transform: translateX(12px);
+  }
+}
+
+.home-content {
+  z-index: 2;
 }
 
 .tagline {
-    margin: 0 0 55px;
-
-    font-size: 12px;
-    letter-spacing: 0.45em;
-
-    color: #bcb2b3;
+  margin: 0 0 48px;
+  font-size: 12px;
+  letter-spacing: 0.45em;
+  color: #d0c6c7;
 }
 
-
-/* ========================================
-   SHARP RECTANGULAR BUTTONS
-======================================== */
+/* BUTTONS */
 
 .btn {
-    position: relative;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 200px;
-    min-height: 58px;
-
-    padding: 17px 35px;
-
-    background: transparent;
-    color: #fff;
-
-    border: 1px solid #fff;
-    border-radius: 0;
-
-    font-family: "SoraThin", Arial, sans-serif;
-    font-weight: 100;
-
-    font-size: 13px;
-    letter-spacing: 0.2em;
-
-    box-shadow: none;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  min-height: 55px;
+  padding: 15px 30px;
+  border: 1px solid #fff;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 100;
+  letter-spacing: 0.2em;
+  box-shadow: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
-
-/* TURNS COMPLETELY WHITE ON HOVER */
 
 .btn:hover,
-.btn:focus-visible {
-    background: #fff;
-    color: #000;
-
-    border-color: #fff;
-
-    box-shadow: none;
-}
-
-/* NO ROUNDING OR CLICK GLOW */
-
+.btn:focus-visible,
 .btn:active {
-    background: #fff;
-    color: #000;
-
-    box-shadow: none;
+  background: #fff;
+  color: #000;
 }
 
 .text-button {
-    display: block;
-
-    margin: 35px auto 0;
-
-    padding: 12px 20px;
-
-    background: transparent;
-
-    border: 0;
-    border-radius: 0;
-
-    color: #aaa;
-
-    font-family: "SoraThin", Arial, sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.25em;
-
-    transition: color 0.2s ease;
+  display: block;
+  margin: 50px auto 0;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  transition: color 0.2s ease;
 }
 
-.text-button:hover {
-    color: #fff;
+.text-button:hover,
+.text-button:focus-visible {
+  color: #fff;
 }
 
+/* COMICS AND CONTACT */
 
-/* ========================================
-   COMICS SECTION
-======================================== */
-
-.comic-card {
-    width: min(650px, 100%);
-
-    margin: 0 auto;
-
-    padding: 45px 35px;
-
-    background: rgba(0, 0, 0, 0.88);
-
-    border: 1px solid rgba(125, 35, 45, 0.55);
-
-    border-radius: 0;
+.void-page {
+  background:
+    radial-gradient(
+      ellipse at center,
+      #0b0203 0%,
+      #030001 38%,
+      #000 75%
+    );
 }
 
-.comic-description {
-    max-width: 460px;
+.red-rule {
+  width: 23px;
+  height: 1px;
+  margin: 0 auto 48px;
+  background: var(--red);
+}
 
-    margin: 0 auto;
-
-    font-size: 15px;
-    line-height: 1.9;
-
-    color: #c0b5b6;
+.comic-entry {
+  margin-top: 0;
 }
 
 .release {
-    margin: 30px 0;
-
-    font-size: 12px;
-    letter-spacing: 0.25em;
-
-    color: #b34b55;
+  margin: 0 0 30px;
+  color: #bdb3b5;
+  font-size: 11px;
+  letter-spacing: 0.3em;
 }
 
-
-/* ========================================
-   CONTACT
-======================================== */
-
 .contact-links {
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
 }
 
 .contact-links a {
-    color: #fff;
-
-    font-size: 15px;
-    letter-spacing: 0.2em;
-
-    text-decoration: none;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 0.3em;
+  transition: color 0.2s ease;
 }
 
-.contact-links a:hover {
-    color: #d75c69;
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  color: var(--red);
 }
 
-
-/* ========================================
-   SEPARATE SILENT KILL PAGE
-======================================== */
-
-/*
-   Transparent background so the fixed
-   UNDERGROUND glitch remains visible.
-
-   The main scrolling website is hidden
-   by JavaScript while this is open.
-*/
+/* SEPARATE SILENT KILL PAGE */
 
 .comic-view {
-    position: fixed;
-    inset: 0;
-
-    z-index: 5;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 30px;
-
-    background: transparent;
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    transition:
-        opacity 0.35s ease,
-        visibility 0.35s ease;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  background:
+    radial-gradient(
+      ellipse at center,
+      #100203 0%,
+      #030001 40%,
+      #000 80%
+    );
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
 }
 
 .comic-view.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.book-content {
-    width: min(900px, 100%);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .book-content h2 {
-    margin-bottom: 65px;
-
-    font-size: clamp(65px, 10vw, 145px);
+  font-size: clamp(60px, 10vw, 140px);
 }
 
-
-/* ========================================
-   PLAIN RED DOT CURSOR
-======================================== */
-
-.cursor {
-    position: fixed;
-
-    left: -100px;
-    top: -100px;
-
-    width: 12px;
-    height: 12px;
-
-    border-radius: 50%;
-
-    background: #ed102b;
-
-    /* ABSOLUTELY NO GLOW */
-    box-shadow: none;
-    filter: none;
-
-    transform: translate(-50%, -50%);
-
-    pointer-events: none;
-
-    z-index: 10000;
+.book-content .red-rule {
+  margin-bottom: 55px;
 }
 
-
-/* ========================================
-   LOADING SCREEN
-======================================== */
-
-#intro {
-    position: fixed;
-    inset: 0;
-
-    z-index: 9999;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #000;
-
-    animation:
-        hideIntro 0.5s ease 3s forwards;
-}
-
-.intro-content {
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 35px;
-}
-
-.intro-content img {
-    width: min(200px, 45vw);
-    height: auto;
-}
-
-.loading-line {
-    position: relative;
-
-    width: 220px;
-    max-width: 65vw;
-    height: 7px;
-
-    overflow: hidden;
-
-    border-radius: 100px;
-
-    background: #252525;
-}
-
-.loading-line::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background: #fff;
-
-    border-radius: inherit;
-
-    transform: scaleX(0);
-    transform-origin: center;
-
-    animation:
-        fillLine 3s ease-in-out forwards;
-}
-
-@keyframes fillLine {
-    to {
-        transform: scaleX(1);
-    }
-}
-
-@keyframes hideIntro {
-    to {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
-}
-
-
-/* ========================================
-   SMALLER SCREENS
-======================================== */
+/* MOBILE */
 
 @media (max-width: 600px) {
+  h1 {
+    font-size: clamp(48px, 13vw, 75px);
+  }
 
-    h1 {
-        font-size: 65px;
-    }
+  h2 {
+    font-size: clamp(45px, 12vw, 70px);
+  }
 
-    h2 {
-        font-size: 55px;
-    }
+  .tagline {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
 
-    .tagline {
-        letter-spacing: 0.2em;
-    }
+  .background-word {
+    gap: 28px;
+  }
 
-    .comic-card {
-        padding: 30px 20px;
-    }
+  .letter {
+    font-size: 75dvh;
+  }
 
-    .word {
-        gap: 35px;
-    }
-
-    .letter {
-        font-size: 75dvh;
-    }
+  .release {
+    letter-spacing: 0.12em;
+  }
 }
-
-/* Use normal cursor on touch devices */
 
 @media (pointer: coarse) {
-    .cursor {
-        display: none;
-    }
+  .cursor {
+    display: none;
+  }
 }
 
-/* Accessibility */
-
 @media (prefers-reduced-motion: reduce) {
-    .letter::before,
-    .letter::after {
-        animation: none;
-    }
+  .letter::before,
+  .letter::after {
+    animation: none;
+  }
 
-    #main-site {
-        scroll-behavior: auto;
-    }
+  #main-site {
+    scroll-behavior: auto;
+  }
 
-    .comic-view {
-        transition: none;
-    }
+  .comic-view {
+    transition: none;
+  }
 }
