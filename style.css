@@ -1,2 +1,27 @@
 @font-face{font-family:Further;src:url('./Further.otf') format('opentype');font-display:swap}@font-face{font-family:SoraThin;src:url('./Sora-Thin.ttf') format('truetype');font-display:swap}
 *{box-sizing:border-box}html,body{height:100%;overflow:hidden;background:#000;color:#fff}body{font-family:SoraThin,Arial,sans-serif}button{font:inherit;cursor:pointer}#main-site{position:relative;height:100dvh;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none}#main-site::-webkit-scrollbar{display:none}#main-site[hidden],#book[hidden]{display:none!important}.page{position:relative;width:100%;height:100dvh;min-height:0;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always}.content{position:relative;z-index:2;width:min(900px,100%);text-align:center}h1,h2,h3{font-weight:100;line-height:1.1;margin:0;text-transform:uppercase}h1{font-size:clamp(60px,11vw,150px);letter-spacing:.04em}h2{font-size:clamp(55px,9vw,110px);letter-spacing:.1em}h3{font-size:clamp(35px,5vw,60px);letter-spacing:.12em}.tagline{margin:23px 0 45px;font-size:12px;letter-spacing:.42em;color:#c7bfc0}.btn{min-width:195px;min-height:55px;padding:15px 30px;border:1px solid #fff;border-radius:0;background:transparent;color:#fff;font-size:12px;letter-spacing:.2em;transition:background .2s,color .2s}.btn:hover,.btn:focus-visible{background:#fff;color:#000}.text-button{display:block;margin:50px auto 0;padding:12px 20px;background:none;border:0;color:#aaa;font-size:12px;letter-spacing:.3em}.text-button:hover{color:white}.home{isolation:isolate}.background-word{position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none}.word-base{position:relative;display:block;flex:none;font-family:Further,Impact,sans-serif;font-size:clamp(180px,46vw,75dvh);letter-spacing:.055em;line-height:1;white-space:nowrap;color:#310308}.word-base:before,.word-base:after{content:attr(data-text);position:absolute;inset:0;pointer-events:none;opacity:0}.word-base:before{color:#b10c27;animation:glitch-red 2.3s steps(1,end) infinite}.word-base:after{color:#020000;animation:glitch-black 1.7s steps(1,end) infinite}@keyframes glitch-red{0%,13%,19%,38%,44%,68%,74%,100%{opacity:0;transform:translateX(0)}14%,18%{opacity:.9;clip-path:inset(15% 0 65% 0);transform:translateX(-20px)}39%,43%{opacity:.85;clip-path:inset(48% 0 34% 0);transform:translateX(25px)}69%,73%{opacity:.9;clip-path:inset(72% 0 10% 0);transform:translateX(-16px)}}@keyframes glitch-black{0%,24%,30%,55%,61%,85%,91%,100%{opacity:0;transform:translateX(0)}25%,29%{opacity:1;clip-path:inset(32% 0 48% 0);transform:translateX(18px)}56%,60%{opacity:1;clip-path:inset(58% 0 24% 0);transform:translateX(-25px)}86%,90%{opacity:1;clip-path:inset(8% 0 74% 0);transform:translateX(12px)}}.void-page,.comic-view{background:radial-gradient(ellipse at center,#100204 0%,#030001 40%,#000 80%)}.red-rule{width:23px;height:1px;background:#e70b30;margin:22px auto 45px}.release{font-size:11px;letter-spacing:.28em;color:#bdb3b5;margin:18px 0 30px}.contact-links{display:flex;flex-direction:column;gap:25px;align-items:center}.contact-links a{color:#fff;text-decoration:none;letter-spacing:.3em}.contact-links a:hover{color:#e70b30}.comic-view{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:25px}.comic-view h2{font-size:clamp(60px,10vw,140px)}.comic-view .red-rule{margin-bottom:55px}.cursor{position:fixed;left:-100px;top:-100px;width:11px;height:11px;border-radius:50%;background:#e70b30;transform:translate(-50%,-50%);pointer-events:none;z-index:1000}#intro{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center}.intro-content{display:flex;flex-direction:column;align-items:center;gap:35px}.intro-content img{width:min(190px,45vw);height:auto}.loading-track{width:min(220px,60vw);height:7px;border-radius:100px;overflow:hidden;background:#222}.loading-line{height:100%;width:100%;border-radius:inherit;background:white;transform:scaleX(0);transform-origin:center;animation:loading 3s ease-in-out forwards}@keyframes loading{to{transform:scaleX(1)}}@media(pointer:fine){*,*:before,*:after{cursor:none!important}}@media(pointer:coarse){.cursor{display:none}}@media(max-width:600px){h1{font-size:clamp(48px,13vw,75px)}h2{font-size:clamp(45px,12vw,70px)}.tagline{font-size:10px;letter-spacing:.2em}.word-base{font-size:75dvh}}@media(prefers-reduced-motion:reduce){.word-base:before,.word-base:after{animation:none}#main-site{scroll-behavior:auto}}
+
+/* Sora Thin for the entire website */
+body,
+button,
+a,
+h1,
+h2,
+h3,
+p,
+.tagline,
+.release,
+.btn,
+.text-button,
+.contact-links a {
+    font-family: "SoraThin", Arial, sans-serif;
+    font-weight: 100;
+}
+
+/* Further ONLY for the giant background */
+.background-word,
+.background-word .letter,
+.background-word .letter::before,
+.background-word .letter::after {
+    font-family: "Further", Impact, sans-serif;
+}
