@@ -43,16 +43,15 @@ p,
   align-items: center;
   justify-content: center;
 
+  gap: clamp(10px, 2.5vw, 70px);
+
   overflow: hidden;
 
+  white-space: nowrap;
   pointer-events: none;
 
   z-index: 0;
-
-  /* Prevent weird sizing when browser UI changes */
-  contain: layout paint;
 }
-
 .background-inner {
   display: flex;
   align-items: center;
@@ -75,24 +74,27 @@ p,
 }
 
 .letter {
+  position: relative;
+
+  display: block;
   flex: 0 0 auto;
 
+  font-family: "Further", Impact, sans-serif;
+
   /*
-    Uses the smaller of viewport width/height.
+    The smaller value wins.
 
-    This prevents the letters from becoming ridiculously
-    stretched when the browser gets very wide or very tall.
+    vw controls the word on wide screens.
+    dvh controls it on tall/short screens.
   */
-  font-size: min(
-    76dvh,
-    10vw
-  );
+  font-size: min(76dvh, 10vw);
 
-  line-height: 0.82;
+  line-height: 0.9;
+
+  color: var(--dark-red);
 
   transform: translateZ(0);
 }
-
 
 /* =========================================================
    WIDE DESKTOP
@@ -155,33 +157,21 @@ p,
    PHONES - PORTRAIT
 ========================================================= */
 
-@media (max-width: 600px) and (orientation: portrait) {
+@@media (max-width: 600px) {
 
   .background-word {
-    width: 100%;
-    height: 100%;
-  }
-
-  .background-inner {
-    gap: clamp(6px, 2vw, 15px);
-
-    /*
-      Keeps the word centered without stretching it.
-    */
-    transform: scale(0.9);
+    gap: clamp(5px, 2vw, 15px);
   }
 
   .letter {
     /*
-      Use viewport height so the letters remain tall
-      and cinematic on narrow phones.
+      Mobile uses the screen height as the main
+      measurement so the word doesn't become tiny
+      just because the phone is narrow.
     */
-    font-size: min(
-      68dvh,
-      24vw
-    );
+    font-size: min(70dvh, 24vw);
 
-    line-height: 0.82;
+    line-height: 0.9;
   }
 }
 
@@ -384,4 +374,105 @@ body {
   .brand-lockup h1 {
     text-align: left;
   }
+}
+
+/* =========================================================
+   RESPONSIVE BACKGROUND PROTECTION
+========================================================= */
+
+@media (min-width: 1400px) {
+
+  .letter {
+    font-size: min(78dvh, 10vw);
+  }
+
+  .background-word {
+    gap: clamp(20px, 3vw, 75px);
+  }
+}
+
+
+/* TABLET */
+
+@media (min-width: 601px) and (max-width: 900px) {
+
+  .letter {
+    font-size: min(72dvh, 15vw);
+  }
+
+  .background-word {
+    gap: clamp(8px, 2vw, 25px);
+  }
+}
+
+
+/* SMALL PHONES */
+
+@media (max-width: 400px) {
+
+  .letter {
+    font-size: min(68dvh, 25vw);
+  }
+
+  .background-word {
+    gap: 5px;
+  }
+}
+
+
+/* LANDSCAPE */
+
+@media (max-height: 600px) and (orientation: landscape) {
+
+  .letter {
+    font-size: min(70dvh, 11vw);
+  }
+
+  .background-word {
+    gap: clamp(6px, 1.8vw, 20px);
+  }
+}
+
+
+/* VERY SHORT WINDOW */
+
+@media (max-height: 450px) {
+
+  .letter {
+    font-size: min(65dvh, 12vw);
+  }
+}
+
+
+/* VERY WIDE MONITOR */
+
+@media (min-aspect-ratio: 2/1) {
+
+  .letter {
+    font-size: min(76dvh, 8.5vw);
+  }
+}
+
+
+/* VERY TALL PHONE */
+
+@media (max-aspect-ratio: 2/3) {
+
+  .letter {
+    font-size: min(68dvh, 24vw);
+  }
+}
+
+
+/* NEVER LET THE BACKGROUND CREATE A HORIZONTAL SCROLLBAR */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#main-site {
+  max-width: 100%;
+  overflow-x: hidden;
 }
