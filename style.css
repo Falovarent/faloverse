@@ -25,3 +25,363 @@ p,
 .background-word .letter::after {
     font-family: "Further", Impact, sans-serif;
 }
+/* =========================================================
+   RESPONSIVE BACKGROUND UNDERGROUND
+   Add this at the VERY BOTTOM of style.css
+========================================================= */
+
+/* ---------- DESKTOP + LARGE SCREENS ---------- */
+
+.background-word {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  /* Prevent weird sizing when browser UI changes */
+  contain: layout paint;
+}
+
+.background-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: max-content;
+  height: auto;
+
+  flex-shrink: 0;
+
+  gap: clamp(12px, 2.8vw, 70px);
+
+  white-space: nowrap;
+
+  /*
+    The background scales from the viewport rather than
+    using one fixed pixel size.
+  */
+  transform-origin: center center;
+}
+
+.letter {
+  flex: 0 0 auto;
+
+  /*
+    Uses the smaller of viewport width/height.
+
+    This prevents the letters from becoming ridiculously
+    stretched when the browser gets very wide or very tall.
+  */
+  font-size: min(
+    76dvh,
+    10vw
+  );
+
+  line-height: 0.82;
+
+  transform: translateZ(0);
+}
+
+
+/* =========================================================
+   WIDE DESKTOP
+========================================================= */
+
+@media (min-width: 1400px) {
+
+  .letter {
+    font-size: min(
+      78dvh,
+      10vw
+    );
+  }
+
+  .background-inner {
+    gap: clamp(25px, 3vw, 75px);
+  }
+}
+
+
+/* =========================================================
+   NORMAL LAPTOP / DESKTOP
+========================================================= */
+
+@media (min-width: 901px) and (max-width: 1399px) {
+
+  .letter {
+    font-size: min(
+      75dvh,
+      10.5vw
+    );
+  }
+
+  .background-inner {
+    gap: clamp(16px, 2.5vw, 45px);
+  }
+}
+
+
+/* =========================================================
+   TABLETS
+========================================================= */
+
+@media (min-width: 601px) and (max-width: 900px) {
+
+  .background-inner {
+    gap: clamp(10px, 2vw, 25px);
+  }
+
+  .letter {
+    font-size: min(
+      70dvh,
+      15vw
+    );
+  }
+}
+
+
+/* =========================================================
+   PHONES - PORTRAIT
+========================================================= */
+
+@media (max-width: 600px) and (orientation: portrait) {
+
+  .background-word {
+    width: 100%;
+    height: 100%;
+  }
+
+  .background-inner {
+    gap: clamp(6px, 2vw, 15px);
+
+    /*
+      Keeps the word centered without stretching it.
+    */
+    transform: scale(0.9);
+  }
+
+  .letter {
+    /*
+      Use viewport height so the letters remain tall
+      and cinematic on narrow phones.
+    */
+    font-size: min(
+      68dvh,
+      24vw
+    );
+
+    line-height: 0.82;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) and (orientation: portrait) {
+
+  .background-inner {
+    gap: 5px;
+
+    transform: scale(0.82);
+  }
+
+  .letter {
+    font-size: min(
+      65dvh,
+      25vw
+    );
+  }
+}
+
+
+/* =========================================================
+   PHONES - LANDSCAPE
+========================================================= */
+
+@media (max-height: 600px) and (orientation: landscape) {
+
+  .background-word {
+    align-items: center;
+  }
+
+  .background-inner {
+    gap: clamp(8px, 2vw, 25px);
+
+    transform: scale(0.82);
+  }
+
+  .letter {
+    /*
+      Height becomes the limiting dimension in landscape.
+    */
+    font-size: min(
+      70dvh,
+      11vw
+    );
+  }
+}
+
+
+/* =========================================================
+   VERY SHORT BROWSER WINDOWS
+   Example: Chrome window dragged very short
+========================================================= */
+
+@media (max-height: 450px) {
+
+  .background-inner {
+    transform: scale(0.72);
+  }
+
+  .letter {
+    font-size: min(
+      68dvh,
+      13vw
+    );
+  }
+}
+
+
+/* =========================================================
+   ULTRA-WIDE MONITORS
+========================================================= */
+
+@media (min-aspect-ratio: 2/1) {
+
+  .background-inner {
+    transform: scale(0.92);
+  }
+
+  .letter {
+    font-size: min(
+      78dvh,
+      8.5vw
+    );
+  }
+}
+
+
+/* =========================================================
+   VERY TALL SCREENS
+========================================================= */
+
+@media (max-aspect-ratio: 2/3) {
+
+  .background-inner {
+    transform: scale(0.82);
+  }
+
+  .letter {
+    font-size: min(
+      68dvh,
+      25vw
+    );
+  }
+}
+
+
+/* =========================================================
+   SAFER MOBILE VIEWPORT HEIGHT
+   Handles browser address bars appearing/disappearing.
+========================================================= */
+
+@supports (height: 100svh) {
+
+  .page {
+    min-height: 100svh;
+    height: 100svh;
+  }
+
+  #main-site {
+    height: 100svh;
+  }
+
+  .background-word {
+    height: 100svh;
+  }
+}
+
+@supports (height: 100dvh) {
+
+  .page {
+    min-height: 100dvh;
+    height: 100dvh;
+  }
+
+  #main-site {
+    height: 100dvh;
+  }
+
+  .background-word {
+    height: 100dvh;
+  }
+}
+
+
+/* =========================================================
+   PREVENT HORIZONTAL SCROLL FROM THE HUGE WORD
+========================================================= */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#main-site {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   KEEP FOREGROUND CONTENT ABOVE BACKGROUND
+========================================================= */
+
+.home-content {
+  position: relative;
+  z-index: 3;
+}
+
+.background-word {
+  z-index: 0;
+}
+
+
+/* =========================================================
+   MOBILE FOREGROUND ALIGNMENT
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .brand-lockup {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .small-underground {
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .brand-lockup h1 {
+    text-align: left;
+  }
+}
