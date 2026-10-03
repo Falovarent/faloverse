@@ -26,12 +26,10 @@ p,
     font-family: "Further", Impact, sans-serif;
 }
 /* =========================================================
-   RESPONSIVE BACKGROUND UNDERGROUND
-   Add this at the VERY BOTTOM of style.css
+   RESPONSIVE GIANT UNDERGROUND
 ========================================================= */
 
-/* ---------- DESKTOP + LARGE SCREENS ---------- */
-
+/* Main background container */
 .background-word {
   position: absolute;
   inset: 0;
@@ -43,136 +41,110 @@ p,
   align-items: center;
   justify-content: center;
 
-  gap: clamp(10px, 2.5vw, 70px);
-
   overflow: hidden;
 
-  white-space: nowrap;
   pointer-events: none;
 
   z-index: 0;
 }
-.background-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  width: max-content;
-  height: auto;
 
-  flex-shrink: 0;
-
-  gap: clamp(12px, 2.8vw, 70px);
-
-  white-space: nowrap;
-
-  /*
-    The background scales from the viewport rather than
-    using one fixed pixel size.
-  */
-  transform-origin: center center;
-}
-
-.letter {
+/* Giant UNDERGROUND */
+.word-base {
   position: relative;
 
   display: block;
+
   flex: 0 0 auto;
 
   font-family: "Further", Impact, sans-serif;
 
   /*
+    Main responsive size.
+
+    46vw = scales with browser width.
+    75dvh = prevents it becoming enormous on short screens.
+
     The smaller value wins.
-
-    vw controls the word on wide screens.
-    dvh controls it on tall/short screens.
   */
-  font-size: min(76dvh, 10vw);
+  font-size: min(46vw, 75dvh);
 
-  line-height: 0.9;
+  line-height: 1;
 
-  color: var(--dark-red);
+  letter-spacing: 0.055em;
+
+  white-space: nowrap;
+
+  color: #310308;
+
+  transform-origin: center center;
 
   transform: translateZ(0);
 }
 
+
 /* =========================================================
-   WIDE DESKTOP
+   LARGE DESKTOP
 ========================================================= */
 
 @media (min-width: 1400px) {
 
-  .letter {
-    font-size: min(
-      78dvh,
-      10vw
-    );
+  .word-base {
+    font-size: min(46vw, 78dvh);
   }
 
-  .background-inner {
-    gap: clamp(25px, 3vw, 75px);
-  }
 }
 
 
 /* =========================================================
-   NORMAL LAPTOP / DESKTOP
+   NORMAL LAPTOP
 ========================================================= */
 
 @media (min-width: 901px) and (max-width: 1399px) {
 
-  .letter {
-    font-size: min(
-      75dvh,
-      10.5vw
-    );
+  .word-base {
+    font-size: min(46vw, 75dvh);
   }
 
-  .background-inner {
-    gap: clamp(16px, 2.5vw, 45px);
-  }
 }
 
 
 /* =========================================================
-   TABLETS
+   TABLET
 ========================================================= */
 
 @media (min-width: 601px) and (max-width: 900px) {
 
-  .background-inner {
-    gap: clamp(10px, 2vw, 25px);
+  .word-base {
+    font-size: min(58vw, 72dvh);
   }
 
-  .letter {
-    font-size: min(
-      70dvh,
-      15vw
-    );
-  }
 }
 
 
 /* =========================================================
-   PHONES - PORTRAIT
+   MOBILE PORTRAIT
 ========================================================= */
 
-@@media (max-width: 600px) {
+@media (max-width: 600px) and (orientation: portrait) {
 
   .background-word {
-    gap: clamp(5px, 2vw, 15px);
+    width: 100%;
+    height: 100%;
   }
 
-  .letter {
+  .word-base {
     /*
-      Mobile uses the screen height as the main
-      measurement so the word doesn't become tiny
-      just because the phone is narrow.
+      Width is more important on narrow phones.
+      This keeps the whole word proportional.
     */
-    font-size: min(70dvh, 24vw);
+    font-size: min(80vw, 68dvh);
+
+    letter-spacing: 0.035em;
 
     line-height: 0.9;
   }
+
 }
 
 
@@ -182,147 +154,104 @@ p,
 
 @media (max-width: 400px) and (orientation: portrait) {
 
-  .background-inner {
-    gap: 5px;
+  .word-base {
+    font-size: min(84vw, 65dvh);
 
-    transform: scale(0.82);
+    letter-spacing: 0.025em;
   }
 
-  .letter {
-    font-size: min(
-      65dvh,
-      25vw
-    );
-  }
 }
 
 
 /* =========================================================
-   PHONES - LANDSCAPE
+   LANDSCAPE PHONE
 ========================================================= */
 
 @media (max-height: 600px) and (orientation: landscape) {
 
-  .background-word {
-    align-items: center;
+  .word-base {
+    font-size: min(48vw, 70dvh);
+
+    letter-spacing: 0.04em;
   }
 
-  .background-inner {
-    gap: clamp(8px, 2vw, 25px);
-
-    transform: scale(0.82);
-  }
-
-  .letter {
-    /*
-      Height becomes the limiting dimension in landscape.
-    */
-    font-size: min(
-      70dvh,
-      11vw
-    );
-  }
 }
 
 
 /* =========================================================
-   VERY SHORT BROWSER WINDOWS
-   Example: Chrome window dragged very short
+   VERY SHORT BROWSER WINDOW
 ========================================================= */
 
 @media (max-height: 450px) {
 
-  .background-inner {
-    transform: scale(0.72);
+  .word-base {
+    font-size: min(45vw, 65dvh);
   }
 
-  .letter {
-    font-size: min(
-      68dvh,
-      13vw
-    );
-  }
 }
 
 
 /* =========================================================
-   ULTRA-WIDE MONITORS
+   ULTRA-WIDE SCREEN
 ========================================================= */
 
 @media (min-aspect-ratio: 2/1) {
 
-  .background-inner {
-    transform: scale(0.92);
+  .word-base {
+    font-size: min(40vw, 76dvh);
   }
 
-  .letter {
-    font-size: min(
-      78dvh,
-      8.5vw
-    );
-  }
 }
 
 
 /* =========================================================
-   VERY TALL SCREENS
+   VERY TALL SCREEN
 ========================================================= */
 
 @media (max-aspect-ratio: 2/3) {
 
-  .background-inner {
-    transform: scale(0.82);
+  .word-base {
+    font-size: min(78vw, 68dvh);
   }
 
-  .letter {
-    font-size: min(
-      68dvh,
-      25vw
-    );
-  }
 }
 
 
 /* =========================================================
-   SAFER MOBILE VIEWPORT HEIGHT
-   Handles browser address bars appearing/disappearing.
+   MOBILE VIEWPORT HEIGHT
 ========================================================= */
 
 @supports (height: 100svh) {
 
   .page {
-    min-height: 100svh;
     height: 100svh;
+    min-height: 100svh;
   }
 
   #main-site {
     height: 100svh;
   }
 
-  .background-word {
-    height: 100svh;
-  }
 }
 
+
+/* Dynamic viewport height */
 @supports (height: 100dvh) {
 
   .page {
-    min-height: 100dvh;
     height: 100dvh;
+    min-height: 100dvh;
   }
 
   #main-site {
     height: 100dvh;
   }
 
-  .background-word {
-    height: 100dvh;
-  }
 }
 
 
 /* =========================================================
-   PREVENT HORIZONTAL SCROLL FROM THE HUGE WORD
+   PROTECT AGAINST HORIZONTAL OVERFLOW
 ========================================================= */
 
 html,
@@ -334,145 +263,6 @@ body {
 
 #main-site {
   width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-
-/* =========================================================
-   KEEP FOREGROUND CONTENT ABOVE BACKGROUND
-========================================================= */
-
-.home-content {
-  position: relative;
-  z-index: 3;
-}
-
-.background-word {
-  z-index: 0;
-}
-
-
-/* =========================================================
-   MOBILE FOREGROUND ALIGNMENT
-========================================================= */
-
-@media (max-width: 600px) {
-
-  .brand-lockup {
-    width: fit-content;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .small-underground {
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  .brand-lockup h1 {
-    text-align: left;
-  }
-}
-
-/* =========================================================
-   RESPONSIVE BACKGROUND PROTECTION
-========================================================= */
-
-@media (min-width: 1400px) {
-
-  .letter {
-    font-size: min(78dvh, 10vw);
-  }
-
-  .background-word {
-    gap: clamp(20px, 3vw, 75px);
-  }
-}
-
-
-/* TABLET */
-
-@media (min-width: 601px) and (max-width: 900px) {
-
-  .letter {
-    font-size: min(72dvh, 15vw);
-  }
-
-  .background-word {
-    gap: clamp(8px, 2vw, 25px);
-  }
-}
-
-
-/* SMALL PHONES */
-
-@media (max-width: 400px) {
-
-  .letter {
-    font-size: min(68dvh, 25vw);
-  }
-
-  .background-word {
-    gap: 5px;
-  }
-}
-
-
-/* LANDSCAPE */
-
-@media (max-height: 600px) and (orientation: landscape) {
-
-  .letter {
-    font-size: min(70dvh, 11vw);
-  }
-
-  .background-word {
-    gap: clamp(6px, 1.8vw, 20px);
-  }
-}
-
-
-/* VERY SHORT WINDOW */
-
-@media (max-height: 450px) {
-
-  .letter {
-    font-size: min(65dvh, 12vw);
-  }
-}
-
-
-/* VERY WIDE MONITOR */
-
-@media (min-aspect-ratio: 2/1) {
-
-  .letter {
-    font-size: min(76dvh, 8.5vw);
-  }
-}
-
-
-/* VERY TALL PHONE */
-
-@media (max-aspect-ratio: 2/3) {
-
-  .letter {
-    font-size: min(68dvh, 24vw);
-  }
-}
-
-
-/* NEVER LET THE BACKGROUND CREATE A HORIZONTAL SCROLLBAR */
-
-html,
-body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-#main-site {
   max-width: 100%;
   overflow-x: hidden;
 }
