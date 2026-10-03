@@ -1,19 +1,197 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#000000"><title>Underground District</title>
-<link rel="icon" href="logo.png"><link rel="stylesheet" href="./style.css">
-<style>/* Emergency fallback if style.css is missing */html,body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}#intro{position:fixed;inset:0;background:#000;display:grid;place-items:center;z-index:100}#main-site{height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory}.page{height:100dvh;display:grid;place-items:center;text-align:center;scroll-snap-align:start}#book[hidden]{display:none!important}button{padding:14px 25px;background:transparent;color:white;border:1px solid white}</style>
-<script src="./script.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#000000">
+
+  <title>Underground District</title>
+
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="./style.css">
+
+  <script src="./script.js" defer></script>
 </head>
+
 <body>
-<div class="cursor" aria-hidden="true"></div>
-<div id="intro"><div class="intro-content"><img src="logo.png" alt="Underground District logo"><div class="loading-track"><div class="loading-line"></div></div></div></div>
-<main id="main-site">
-<section id="home" class="page home"><div class="background-word" aria-hidden="true"><span class="word-base" data-text="UNDERGROUND">UNDERGROUND</span></div><div class="content home-content"><h1>DISTRICT</h1><p class="tagline">NOTHING STAYS BURIED.</p><button class="btn" data-page="comics">ENTER THE WORLD</button></div></section>
-<section id="comics" class="page void-page"><div class="content"><h2>COMICS</h2><div class="red-rule"></div><h3>SILENT KILL</h3><p class="release">CHAPTER 01 · COMING SOON</p><button class="btn" id="read-more">READ MORE</button><button class="text-button" data-page="home">BEFORE</button></div></section>
-<section id="contact" class="page void-page"><div class="content"><h2>CONTACT</h2><div class="red-rule"></div><nav class="contact-links"><a href="mailto:faloverse@gmail.com">EMAIL</a><a href="https://instagram.com/faloverse.studio" target="_blank" rel="noopener noreferrer">INSTAGRAM</a></nav><button class="text-button" data-page="comics">BEFORE</button></div></section>
-</main>
-<section id="book" class="comic-view" hidden><div class="content"><h2>SILENT KILL</h2><div class="red-rule"></div><button class="btn" id="close-book">BACK TO COMICS</button></div></section>
-</body></html>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" aria-hidden="true"></div>
+
+
+  <!-- LOADING SCREEN -->
+  <div id="intro">
+    <div class="intro-content">
+
+      <img
+        src="logo.png"
+        alt="Underground District logo"
+      >
+
+      <div class="loading-track">
+        <div class="loading-line"></div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- MAIN WEBSITE -->
+  <main id="main-site">
+
+
+    <!-- HOME -->
+    <section id="home" class="page home">
+
+      <!-- GIANT BACKGROUND WORD -->
+      <div class="background-word" aria-hidden="true">
+        <span
+          class="word-base"
+          data-text="UNDERGROUND"
+        >UNDERGROUND</span>
+      </div>
+
+
+      <!-- FOREGROUND BRAND -->
+      <div class="content home-content">
+
+        <div class="brand-lockup">
+
+          <div class="small-underground">
+            UNDERGROUND
+          </div>
+
+          <h1>
+            DISTRICT
+          </h1>
+
+        </div>
+
+
+        <p class="tagline">
+          NOTHING STAYS BURIED.
+        </p>
+
+
+        <button
+          class="btn"
+          data-page="comics"
+        >
+          ENTER THE WORLD
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- COMICS -->
+    <section id="comics" class="page void-page">
+
+      <div class="content">
+
+        <h2>
+          COMICS
+        </h2>
+
+        <div class="red-rule"></div>
+
+        <h3>
+          SILENT KILL
+        </h3>
+
+        <p class="release">
+          CHAPTER 01 · COMING SOON
+        </p>
+
+        <button
+          class="btn"
+          id="read-more"
+        >
+          READ MORE
+        </button>
+
+        <button
+          class="text-button"
+          data-page="home"
+        >
+          BEFORE
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="page void-page">
+
+      <div class="content">
+
+        <h2>
+          CONTACT
+        </h2>
+
+        <div class="red-rule"></div>
+
+        <nav class="contact-links">
+
+          <a href="mailto:faloverse@gmail.com">
+            EMAIL
+          </a>
+
+          <a
+            href="https://instagram.com/faloverse.studio"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            INSTAGRAM
+          </a>
+
+        </nav>
+
+        <button
+          class="text-button"
+          data-page="comics"
+        >
+          BEFORE
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- SILENT KILL FULL-SCREEN VIEW -->
+  <section
+    id="book"
+    class="comic-view"
+    hidden
+  >
+
+    <div class="content">
+
+      <h2>
+        SILENT KILL
+      </h2>
+
+      <div class="red-rule"></div>
+
+      <button
+        class="btn"
+        id="close-book"
+      >
+        BACK TO COMICS
+      </button>
+
+    </div>
+
+  </section>
+
+</body>
+</html>
