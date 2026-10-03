@@ -266,3 +266,32 @@ body {
   max-width: 100%;
   overflow-x: hidden;
 }
+
+/* SMALL UNDERGROUND ABOVE DISTRICT */
+.brand-lockup {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.small-underground {
+  margin: 0 0 8px 0;
+  font-family: "SoraThin", Arial, sans-serif;
+  font-size: clamp(12px, 1.2vw, 18px);
+  font-weight: 100;
+  letter-spacing: .28em;
+  line-height: 1;
+  color: #fff;
+}
+
+.brand-lockup h1 {
+  margin: 0;
+  font-family: "SoraThin", Arial, sans-serif;
+  font-weight: 100;
+  line-height: .9;
+  font-size: clamp(55px, 10vw, 145px);
+  letter-spacing: .08em;
+}
